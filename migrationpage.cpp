@@ -17,6 +17,7 @@
 #include "migrationpage.h"
 #include "choicepage.h"
 #include "migrationpage_p.h"
+#include "diroperations/diroperations.h"
 
 
 MigrationPagePrivate::MigrationPagePrivate(MigrationPage* parent)
@@ -25,6 +26,7 @@ MigrationPagePrivate::MigrationPagePrivate(MigrationPage* parent)
   complete=false;
   backup=true;
   selection=MigrationTool::Migrate;
+  progress=new ProgressWidget(q);
 }
 
 void MigrationPagePrivate::doMagic()
@@ -66,6 +68,7 @@ MigrationPage::MigrationPage(QWidget *parent) : QWizardPage(parent)
   
   QVBoxLayout *lay = new QVBoxLayout(this);
   lay->addWidget(text);
+  lay->addWidget(d->progress);
   lay->addWidget(start);
   setLayout(lay);
   

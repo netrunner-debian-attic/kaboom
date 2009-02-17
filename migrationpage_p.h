@@ -20,6 +20,7 @@
 #include <QtCore>
 #include "migrationpage.h"
 #include "migrationtool.h"
+#include "diroperations/progresswidget.h"
 
 class MigrationPagePrivate : public QObject
 {
@@ -27,6 +28,7 @@ class MigrationPagePrivate : public QObject
   public:
     MigrationPagePrivate(MigrationPage *parent);
     MigrationTool::Selection selection;
+    ProgressWidget *progress;
     MigrationPage *q;
     bool backup;
     bool complete;
