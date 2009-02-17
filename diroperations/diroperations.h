@@ -74,8 +74,8 @@ namespace DirOperations {
      *  in destPath, it will stay and if it only exists in sourcePath, it will be ~
      *  copied over 
      */
-    void mergeDir(const QString & sourcePath, const QString & destPath,
-                        bool force = false, ProgressDialogInterface *pd = 0);
+    void mergeDirs(const QString & sourcePath, const QString & destPath,
+			ProgressDialogInterface *pd = 0);
     /*! Deletes directory \a dir and all of its contents. Works like "rm -r". */
     void recursiveRmDir(const QString & dir, ProgressDialogInterface *pd = 0);
 
