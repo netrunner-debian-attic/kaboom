@@ -26,6 +26,11 @@ int main(int argc, char* argv[])
   }
   MigrationTool main;
   main.show();
-  return app.exec();
+  int exitvalue = app.exec();
+  if(exitvalue==0)
+  {
+//disable for debugging    QFile(QDir::homePath()+"/.local/kdebian3to4").open(QIODevice::WriteOnly);
+  }
+  return exitvalue;
 
 }
