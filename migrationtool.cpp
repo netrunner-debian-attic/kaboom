@@ -33,7 +33,6 @@ MigrationTool::MigrationTool(QWidget *parent) : QWizard(parent)
   d->migration = new MigrationPage(this);
   
   setOptions(QWizard::NoBackButtonOnStartPage|QWizard::NoCancelButton|options());  
-  setTitle("
   
   setPage(Intro,d->intro);
   setPage(Choice, d->choice);
