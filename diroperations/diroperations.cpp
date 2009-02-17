@@ -1,5 +1,6 @@
 /*
     Copyright (C) 2007-2009  George Kiagiadakis <gkiagia@users.sourceforge.net>
+    Copyright (C) 2009 Sune Vuorela <sune@vuorela.dk>
 
     This library is free software; you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published

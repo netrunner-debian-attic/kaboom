@@ -1,5 +1,6 @@
 /*
     Copyright (C) 2007-2009  George Kiagiadakis <gkiagia@users.sourceforge.net>
+    Copyright (C) 2009 Sune Vuorela <sune@vuorela.dk>
 
     This library is free software; you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -68,6 +69,13 @@ namespace DirOperations {
     void recursiveCpDir(const QString & sourcePath, const QString & destPath,
                         bool force = false, ProgressDialogInterface *pd = 0);
 
+    /*! Merges two directories, meaning that if a file exists in \a sourcePath and 
+     *  in \a destPath, then the the file will be overwritten, if a file only exists 
+     *  in destPath, it will stay and if it only exists in sourcePath, it will be ~
+     *  copied over 
+     */
+    void mergeDir(const QString & sourcePath, const QString & destPath,
+                        bool force = false, ProgressDialogInterface *pd = 0);
     /*! Deletes directory \a dir and all of its contents. Works like "rm -r". */
     void recursiveRmDir(const QString & dir, ProgressDialogInterface *pd = 0);
 
