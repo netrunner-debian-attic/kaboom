@@ -27,10 +27,13 @@ MigrationPagePrivate::MigrationPagePrivate(MigrationPage* parent)
   backup=true;
   selection=MigrationTool::Migrate;
   progress=new ProgressWidget(q);
+  start = new QPushButton("Start",q);
 }
 
 void MigrationPagePrivate::doMagic()
 {
+  start->setEnabled(false);
+  q->wizard()->setOptions(q->wizard()->options()|QWizard::DisabledBackButtonOnLastPage);
   q->setTitle("Migration running");
   if(backup)
   {
@@ -39,6 +42,8 @@ void MigrationPagePrivate::doMagic()
   switch(selection)
   {
     case MigrationTool::Migrate:
+      //dummyy
+      DirOperations::calculateDirSize(QDir::homePath()+"/git",progress);
       qDebug() << "do nothing, let kconf_update do magic";
       break;
     case MigrationTool::Merge:
@@ -60,16 +65,15 @@ MigrationPage::MigrationPage(QWidget *parent) : QWizardPage(parent)
 {
   d=new MigrationPagePrivate(this);
   QLabel *text = new QLabel("When you click \"start\", migration will start",this);
-  QPushButton *start = new QPushButton("Start",this);
   
   setTitle("Start Migration");
 
-  connect(start,SIGNAL(clicked()),d,SLOT(doMagic()));
+  connect(d->start,SIGNAL(clicked()),d,SLOT(doMagic()));
   
   QVBoxLayout *lay = new QVBoxLayout(this);
   lay->addWidget(text);
   lay->addWidget(d->progress);
-  lay->addWidget(start);
+  lay->addWidget(d->start);
   setLayout(lay);
   
 }

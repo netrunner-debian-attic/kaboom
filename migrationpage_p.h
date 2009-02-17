@@ -29,6 +29,7 @@ class MigrationPagePrivate : public QObject
     MigrationPagePrivate(MigrationPage *parent);
     MigrationTool::Selection selection;
     ProgressWidget *progress;
+    QPushButton *start;
     MigrationPage *q;
     bool backup;
     bool complete;
