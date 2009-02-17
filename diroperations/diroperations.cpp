@@ -211,9 +211,9 @@ void mergeDirs(const QString & sourcePath, const QString & destPath, ProgressDia
 
             if ( currentItem.isSymLink() )
             {
-               if (dest.absoluteFilePath(currentName).exists())
+               if (QFileInfo(dest,"currentname").exists())
                    if(!QFile::remove(dest.absoluteFilePath(currentName)))
-                         throw Exception(Exception::RmFail,currentName.absoluteFilePath());
+                         throw Exception(Exception::RmFail,currentItem.absoluteFilePath());
                 if ( !QFile::link( relativeSymLinkTarget(source.absoluteFilePath(currentName)),
                                     dest.absoluteFilePath(currentName) ) )
                     throw Exception(Exception::CopyFail, currentItem.absoluteFilePath());
@@ -234,8 +234,8 @@ void mergeDirs(const QString & sourcePath, const QString & destPath, ProgressDia
             else
             {
                 if ( QFile::exists( dest.absoluteFilePath(currentName)))
-                     if(!QFile::remove(absoluteFilePath(currentName)))
-                        throw Exception(Exception::RmFail, dest.absoluteFilePath());
+                     if(!QFile::remove(dest.absoluteFilePath(currentName)))
+                        throw Exception(Exception::RmFail, dest.absoluteFilePath(currentName));
                 if ( !QFile::copy( source.absoluteFilePath(currentName), dest.absoluteFilePath(currentName) ) )
                     throw Exception(Exception::CopyFail, source.absoluteFilePath(currentName));
 
