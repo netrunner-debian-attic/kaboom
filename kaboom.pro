@@ -16,6 +16,9 @@ HEADERS += \
       migrationtool.h \
       migrationtool_p.h \
       warningpage.h \
+      diroperations/diroperations.h \
+      diroperations/progresswidget.h \
+      
       
 SOURCES += \
       choicepage.cpp \
@@ -24,4 +27,7 @@ SOURCES += \
       migrationpage.cpp \
       migrationtool.cpp \
       warningpage.cpp \
+      diroperations/diroperations.cpp \
+      diroperations/progresswidget.cpp \
+      
       
