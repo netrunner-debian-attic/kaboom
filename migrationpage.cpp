@@ -47,10 +47,13 @@ void MigrationPagePrivate::doMagic()
       qDebug() << "do nothing, let kconf_update do magic";
       break;
     case MigrationTool::Merge:
+	DirOperations::mergeDirs(QDir::homePath()+"tmp/dirstructure/kde4",
+			         QDir::homePath()+"tmp/dirstructure/kde");
       qDebug() << "do magic experimental merge";
       break;
     case MigrationTool::Clean:
       qDebug() << "do recursive rm of .kde dir";
+      DirOperations::recursiveRmDir(QDir::homePath()+"tmp/dirstructure/kde");
       break;
     case MigrationTool::Move:
       qDebug() << "move .kde4 over .kde";
