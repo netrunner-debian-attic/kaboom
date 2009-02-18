@@ -33,29 +33,40 @@ MigrationPagePrivate::MigrationPagePrivate(MigrationPage* parent)
 void MigrationPagePrivate::doMagic()
 {
   start->setEnabled(false);
-  q->wizard()->setOptions(q->wizard()->options()|QWizard::DisabledBackButtonOnLastPage);
+  q->wizard()->setOptions(q->wizard()->options()|QWizard::DisabledBackButtonOnLastPage); //no way back
   q->setTitle("Migration running");
   if(backup)
   {
-    qDebug() << "doing recursive copy of .kde to .kde3-backup";
+    if(QFile::exists(QDir::homePath()+KDEDIR))
+    {
+      try
+      {
+        DirOperations::recursiveCpDir(QDir::homePath()+KDEDIR,QDir::homePath()+KDE3BACKUPDIR,true,progress);
+      }
+      catch (DirOperations::Exception e)
+      {
+        qDebug() << e.what();
+        // emit q->error(e) or something
+      }
+      qDebug() << "doing recursive copy of .kde to .kde3-backup";
+    }
   }
   switch(selection)
   {
     case MigrationTool::Migrate:
-      //dummyy
-      DirOperations::calculateDirSize(QDir::homePath()+"/git",progress);
       qDebug() << "do nothing, let kconf_update do magic";
       break;
     case MigrationTool::Merge:
-	DirOperations::mergeDirs(QDir::homePath()+"tmp/dirstructure/kde4",
-			         QDir::homePath()+"tmp/dirstructure/kde");
+      DirOperations::mergeDirs(QDir::homePath()+KDE4DIR,
+			         QDir::homePath()+KDEDIR,progress);
       qDebug() << "do magic experimental merge";
       break;
     case MigrationTool::Clean:
       qDebug() << "do recursive rm of .kde dir";
-      DirOperations::recursiveRmDir(QDir::homePath()+"tmp/dirstructure/kde");
+      DirOperations::recursiveRmDir(QDir::homePath()+KDEDIR,progress);
       break;
     case MigrationTool::Move:
+      DirOperations::recursiveCpDir(QDir::homePath()+KDE4DIR,QDir::homePath()+KDEDIR,true /*force*/, progress);
       qDebug() << "move .kde4 over .kde";
       break;
   }
