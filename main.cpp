@@ -19,7 +19,6 @@
 
 int main(int argc, char* argv[])
 {
-  QApplication app(argc,argv);
   if(QFile::exists(QDir::homePath()+"/.local/kdebian3to4"))
   {
     return 0;
@@ -29,6 +28,8 @@ int main(int argc, char* argv[])
       QFile(QDir::homePath()+"/.local/kdebian3to4").open(QIODevice::WriteOnly);
       return 0;
   }
+
+  QApplication app(argc,argv);
   MigrationTool main;
   main.show();
   int exitvalue = app.exec();
