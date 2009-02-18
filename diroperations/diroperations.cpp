@@ -271,8 +271,8 @@ void recursiveRmDir(const QString & dir, ProgressDialogInterface *pd)
 {
     QDir currentDir(dir);
     if ( !currentDir.exists() )
-        throw Exception(Exception::NoSuchFileOrDirectory, dir);
-
+        return; // directory gone, no need to bother about exceptions
+        
     QDir::Filters filters = QDir::AllEntries | QDir::NoDotAndDotDot | QDir::Hidden | QDir::System | QDir::CaseSensitive;
     QFileInfoList currentList = currentDir.entryInfoList( filters, QDir::DirsLast );
     QFileInfo currentItem;
