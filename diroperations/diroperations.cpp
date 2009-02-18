@@ -211,7 +211,7 @@ void mergeDirs(const QString & sourcePath, const QString & destPath, ProgressDia
 
             if ( currentItem.isSymLink() )
             {
-               if (QFileInfo(dest,"currentname").exists())
+                if ( QFile::exists(dest.absoluteFilePath(currentName)) )
                    if(!QFile::remove(dest.absoluteFilePath(currentName)))
                          throw Exception(Exception::RmFail,currentItem.absoluteFilePath());
                 if ( !QFile::link( relativeSymLinkTarget(source.absoluteFilePath(currentName)),
@@ -220,13 +220,15 @@ void mergeDirs(const QString & sourcePath, const QString & destPath, ProgressDia
             }
             else if ( currentItem.isDir() )
             {
-                if ( !dest.cd(currentName) )
-                    if ( !dest.mkdir(currentName) )
-                        throw Exception(Exception::MkdirFail, dest.absoluteFilePath(currentName));
                 if ( !source.cd(currentName) )
                     throw Exception(Exception::AccessDenied, source.absoluteFilePath(currentName));
-                if ( !dest.cd(currentName) )
-                    throw Exception(Exception::AccessDenied, dest.absoluteFilePath(currentName)); //quite impossible
+                if ( !dest.cd(currentName) ) {
+                    //if the target dir doesn't exist, create it and try again.
+                    if ( !dest.mkdir(currentName) )
+                        throw Exception(Exception::MkdirFail, dest.absoluteFilePath(currentName));
+                    if ( !dest.cd(currentName) )
+                        throw Exception(Exception::AccessDenied, dest.absoluteFilePath(currentName)); //quite impossible
+                }
 
                 stack.push(currentList);
                 currentList = source.entryInfoList( filters, QDir::DirsLast );
