@@ -24,6 +24,11 @@ int main(int argc, char* argv[])
   {
     return 0;
   }
+  if(!QFile::exists(QDir::homePath()+KDEDIR) && !QFile::exists(QDir::homePath()+KDE4DIR))
+  {
+      QFile(QDir::homePath()+"/.local/kdebian3to4").open(QIODevice::WriteOnly);
+      return 0;
+  }
   MigrationTool main;
   main.show();
   int exitvalue = app.exec();
