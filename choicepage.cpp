@@ -27,6 +27,7 @@ class ChoicePagePrivate
     QButtonGroup *buttons;
     QCheckBox *backup;
     bool haskde4dir;
+    bool haskdedir;
 };
 
 ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
@@ -34,31 +35,44 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
   d = new ChoicePagePrivate;
   QVBoxLayout *lay = new QVBoxLayout(this);
   setTitle("Kaboom - MigrationTool");
-  d->haskde4dir = QFile::exists(QDir::homePath()+"/"+".kde4");
+  d->haskde4dir = QFile::exists(QDir::homePath()+KDE4DIR);
+  d->haskdedir = QFile::exists(QDir::homePath()+KDEDIR);
   d->buttons = new QButtonGroup(this);
   d->text = new QLabel(tr("Please select the option on how you want to migrate your settings"),this);
   lay->addWidget(d->text);
-  d->clean = new QRadioButton("Start with a fresh KDE. This option will <b>remove</b> data and settings such as contacts, local stored mails, accounts in KMail and Kopete, bookmarks and other such data",this);
-  d->migrate = new QRadioButton("Migrate settings from KDE3 to KDE4 (recommended)",this);
-  d->buttons->addButton(d->clean,MigrationTool::Clean);
-  d->buttons->addButton(d->migrate,MigrationTool::Migrate);
-  d->migrate->setChecked(true);
-  lay->addWidget(d->migrate);
-  lay->addWidget(d->clean);
+  if(d->haskdedir)
+  {
+    d->migrate = new QRadioButton("Migrate settings from KDE3 to KDE4 (recommended)",this);
+    d->buttons->addButton(d->migrate,MigrationTool::Migrate);
+    lay->addWidget(d->migrate);
+    d->migrate->setChecked(true);
+  }
   if(d->haskde4dir)
   {
     d->move = new QRadioButton("Move settings from KDE 4 dir and <b>replace</b> settings from KDE 3");
-    d->merge = new QRadioButton("Merge settings from KDE3 and KDE4 (experimental)");
     d->buttons->addButton(d->move,MigrationTool::Move);
-    d->buttons->addButton(d->merge,MigrationTool::Merge);
     lay->addWidget(d->move);
-    lay->addWidget(d->merge);
+    if(d->haskdedir)
+    {
+      d->merge = new QRadioButton("Merge settings from KDE3 and KDE4 (experimental)");
+      d->buttons->addButton(d->merge,MigrationTool::Merge);
+      lay->addWidget(d->merge);
+    }
+    else
+    {
+      d->move->setChecked(true);
+    }
   }
-  d->backup = new QCheckBox("Backup existing settings from KDE3 into .kde3-backup");
-  d->backup->setChecked(true);
-  registerField("backup",d->backup);
- // registerField("choice",d->buttons);
-  lay->addWidget(d->backup);
+  d->clean = new QRadioButton("Start with a fresh KDE. This option will <b>remove</b> data and settings such as contacts, local stored mails, accounts in KMail and Kopete, bookmarks and other such data",this);
+  d->buttons->addButton(d->clean,MigrationTool::Clean);
+  lay->addWidget(d->clean);
+  if(d->haskdedir) //if no kdedir, nothing to backup.
+  {
+    d->backup = new QCheckBox("Backup existing settings from KDE3 into .kde3-backup. (Highly recommended)");
+    d->backup->setChecked(true);
+    registerField("backup",d->backup);
+    lay->addWidget(d->backup);
+  }
 }
 
 bool ChoicePage::backupSelected() const
