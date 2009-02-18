@@ -41,7 +41,8 @@ void MigrationPagePrivate::doMagic()
     {
       try
       {
-        DirOperations::recursiveCpDir(QDir::homePath()+KDEDIR,QDir::homePath()+KDE3BACKUPDIR,true,progress);
+        DirOperations::recursiveCpDir(QDir::homePath()+KDEDIR,QDir::homePath()+KDE3BACKUPDIR,
+                                       DirOperations::RemoveDestination,progress);
       }
       catch (DirOperations::Exception e)
       {
@@ -59,8 +60,8 @@ void MigrationPagePrivate::doMagic()
       qDebug() << "do nothing, let kconf_update do magic";
       break;
     case MigrationTool::Merge:
-      DirOperations::mergeDirs(QDir::homePath()+KDE4DIR,
-			         QDir::homePath()+KDEDIR,progress);
+      DirOperations::recursiveCpDir(QDir::homePath()+KDE4DIR,QDir::homePath()+KDEDIR,
+                                     DirOperations::OverWrite,progress);
       qDebug() << "do magic experimental merge";
       break;
     case MigrationTool::Clean:
@@ -68,7 +69,8 @@ void MigrationPagePrivate::doMagic()
       DirOperations::recursiveRmDir(QDir::homePath()+KDEDIR,progress);
       break;
     case MigrationTool::Move:
-      DirOperations::recursiveCpDir(QDir::homePath()+KDE4DIR,QDir::homePath()+KDEDIR,true /*force*/, progress);
+      DirOperations::recursiveCpDir(QDir::homePath()+KDE4DIR,QDir::homePath()+KDEDIR,
+                                     DirOperations::RemoveDestination, progress);
       qDebug() << "move .kde4 over .kde";
       break;
   }

@@ -94,7 +94,7 @@ qint64 calculateDirSize(const QString & dir, ProgressDialogInterface *pd)
     return totalSize;
 }
 
-void recursiveCpDir(const QString & sourcePath, const QString & destPath, bool force, ProgressDialogInterface *pd)
+void recursiveCpDir(const QString & sourcePath, const QString & destPath, CopyOptions options, ProgressDialogInterface *pd)
 {
     QDir source(sourcePath);
     if ( !source.exists() )
@@ -102,90 +102,11 @@ void recursiveCpDir(const QString & sourcePath, const QString & destPath, bool f
 
     QDir dest(destPath);
     if ( dest.exists() ) {
-        if ( force )
+        if ( options & RemoveDestination )
             recursiveRmDir(destPath, pd);
-        else
+        else if ( !(options & OverWrite) )
             throw Exception(Exception::FileOrDirectoryExists, destPath);
-    }
-
-    QDir::Filters filters = QDir::AllEntries | QDir::NoDotAndDotDot | QDir::Hidden | QDir::System | QDir::CaseSensitive;
-    QFileInfoList currentList = source.entryInfoList( filters, QDir::DirsLast );
-    QFileInfo currentItem;
-    QStack<QFileInfoList> stack;
-    QString currentName;
-    qint64 bytesCopied = 0;
-
-    if ( pd ) {
-        pd->setMaximum(calculateDirSize(sourcePath, pd));
-        pd->setLabelText(QObject::tr("Copying files..."));
-    }
-
-    dest.mkdir(dest.absolutePath());
-
-    while(1)
-    {
-        if ( !currentList.isEmpty() )
-        {
-            currentItem = currentList.takeFirst();
-            currentName = currentItem.fileName();
-
-            if ( currentItem.isSymLink() )
-            {
-                if ( !QFile::link( relativeSymLinkTarget(source.absoluteFilePath(currentName)),
-                                    dest.absoluteFilePath(currentName) ) )
-                    throw Exception(Exception::CopyFail, currentItem.absoluteFilePath());
-            }
-            else if ( currentItem.isDir() )
-            {
-                if ( !dest.mkdir(currentName) )
-                    throw Exception(Exception::MkdirFail, dest.absoluteFilePath(currentName));
-                if ( !source.cd(currentName) )
-                    throw Exception(Exception::AccessDenied, source.absoluteFilePath(currentName));
-                if ( !dest.cd(currentName) )
-                    throw Exception(Exception::AccessDenied, dest.absoluteFilePath(currentName)); //quite impossible
-
-                stack.push(currentList);
-                currentList = source.entryInfoList( filters, QDir::DirsLast );
-            }
-            else
-            {
-                if ( !QFile::copy( source.absoluteFilePath(currentName), dest.absoluteFilePath(currentName) ) )
-                    throw Exception(Exception::CopyFail, source.absoluteFilePath(currentName));
-
-                if ( pd ) {
-                    bytesCopied += currentItem.size();
-                    pd->setValue(bytesCopied);
-                }
-            }
-        }
-        else // list is empty
-        {
-            if ( !stack.isEmpty() )
-            {
-                currentList = stack.pop();
-                source.cdUp();
-                dest.cdUp();
-            }
-            else
-                break;
-        }
-
-        if ( pd ) {
-            pd->processEvents();
-            if (pd->wasCanceled())
-                throw Exception(Exception::OperationCanceled);
-        }
-    }
-}
-
-void mergeDirs(const QString & sourcePath, const QString & destPath, ProgressDialogInterface *pd)
-{
-    QDir source(sourcePath);
-    if ( !source.exists() )
-        throw Exception(Exception::NoSuchFileOrDirectory, sourcePath);
-
-    QDir dest(destPath);
-    if ( !dest.exists() ) {
+    } else {
         dest.mkdir(dest.absolutePath());
     }
 
@@ -201,7 +122,6 @@ void mergeDirs(const QString & sourcePath, const QString & destPath, ProgressDia
         pd->setLabelText(QObject::tr("Copying files..."));
     }
 
-
     while(1)
     {
         if ( !currentList.isEmpty() )
@@ -211,12 +131,14 @@ void mergeDirs(const QString & sourcePath, const QString & destPath, ProgressDia
 
             if ( currentItem.isSymLink() )
             {
-                if ( QFile::exists(dest.absoluteFilePath(currentName)) )
-                   if(!QFile::remove(dest.absoluteFilePath(currentName)))
-                         throw Exception(Exception::RmFail,currentItem.absoluteFilePath());
+                if ( options & OverWrite ) {
+                    if ( QFile::exists(dest.absoluteFilePath(currentName)) &&
+                         !QFile::remove(dest.absoluteFilePath(currentName)) )
+                        throw Exception(Exception::RmFail, dest.absoluteFilePath(currentName));
+                }
                 if ( !QFile::link( relativeSymLinkTarget(source.absoluteFilePath(currentName)),
                                     dest.absoluteFilePath(currentName) ) )
-                    throw Exception(Exception::CopyFail, currentItem.absoluteFilePath());
+                    throw Exception(Exception::CopyFail, source.absoluteFilePath(currentName));
             }
             else if ( currentItem.isDir() )
             {
@@ -235,9 +157,11 @@ void mergeDirs(const QString & sourcePath, const QString & destPath, ProgressDia
             }
             else
             {
-                if ( QFile::exists( dest.absoluteFilePath(currentName)))
-                     if(!QFile::remove(dest.absoluteFilePath(currentName)))
+                if ( options & OverWrite ) {
+                    if ( QFile::exists(dest.absoluteFilePath(currentName)) &&
+                         !QFile::remove(dest.absoluteFilePath(currentName)) )
                         throw Exception(Exception::RmFail, dest.absoluteFilePath(currentName));
+                }
                 if ( !QFile::copy( source.absoluteFilePath(currentName), dest.absoluteFilePath(currentName) ) )
                     throw Exception(Exception::CopyFail, source.absoluteFilePath(currentName));
 

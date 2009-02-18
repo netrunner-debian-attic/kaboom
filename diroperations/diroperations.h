@@ -51,6 +51,10 @@ namespace DirOperations {
         QString m_info;
     };
 
+    enum CopyOption { NoOptions = 0x0, RemoveDestination = 0x1, OverWrite = 0x2 };
+    Q_DECLARE_FLAGS(CopyOptions, CopyOption);
+    Q_DECLARE_OPERATORS_FOR_FLAGS(CopyOptions);
+
     /*! Returns the target path of the symbolic link \a fileName .
      * The path returned is relative to the symlink. For example if
      * we have the following link:
@@ -65,17 +69,14 @@ namespace DirOperations {
 
     /*! Copies directory \a sourcePath and all of its contents
      * to directory \a destPath . Works like "cp -r".
+     * \a options can be the following:
+     * \li NoOptions - Nothing special happens
+     * \li RemoveDestination - It removes the destination directory before trying to copy.
+     * \li OverWrite - If a file exists both in \a sourcePath and in \a destPath, the the file will be overwritten.
      */
     void recursiveCpDir(const QString & sourcePath, const QString & destPath,
-                        bool force = false, ProgressDialogInterface *pd = 0);
+                        CopyOptions options = NoOptions, ProgressDialogInterface *pd = 0);
 
-    /*! Merges two directories, meaning that if a file exists in \a sourcePath and 
-     *  in \a destPath, then the the file will be overwritten, if a file only exists 
-     *  in destPath, it will stay and if it only exists in sourcePath, it will be ~
-     *  copied over 
-     */
-    void mergeDirs(const QString & sourcePath, const QString & destPath,
-			ProgressDialogInterface *pd = 0);
     /*! Deletes directory \a dir and all of its contents. Works like "rm -r". */
     void recursiveRmDir(const QString & dir, ProgressDialogInterface *pd = 0);
 
