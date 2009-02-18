@@ -54,6 +54,8 @@ void MigrationPagePrivate::doMagic()
   switch(selection)
   {
     case MigrationTool::Migrate:
+      progress->setMaximum(1); //fake the progress bar progress.
+      progress->setValue(1);
       qDebug() << "do nothing, let kconf_update do magic";
       break;
     case MigrationTool::Merge:
