@@ -43,7 +43,7 @@ Test::Test()
 void Test::docopy()
 {
     try {
-        DirOperations::recursiveCpDir(m_source->text(), m_dest->text(), true, m_progressWidget);
+        DirOperations::mergeDirs(m_source->text(), m_dest->text(), m_progressWidget);
     } catch (const DirOperations::Exception & e) {
         qDebug() << e.what();
         std::exit(1);
@@ -57,5 +57,3 @@ int main(int argc, char **argv)
     t.show();
     return a.exec();
 }
-
-#include "test.moc"
