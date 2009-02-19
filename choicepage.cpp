@@ -19,15 +19,10 @@
 class ChoicePagePrivate
 {
   public:
-    QLabel *text;
-    QRadioButton *clean;
-    QRadioButton *migrate;
-    QRadioButton *move;
-    QRadioButton *merge;
+    ChoicePagePrivate()
+        : buttons(NULL), backup(NULL) {}
     QButtonGroup *buttons;
     QCheckBox *backup;
-    bool haskde4dir;
-    bool haskdedir;
 };
 
 ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
@@ -35,38 +30,38 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
   d = new ChoicePagePrivate;
   QVBoxLayout *lay = new QVBoxLayout(this);
   setTitle("Kaboom - MigrationTool");
-  d->haskde4dir = QFile::exists(QDir::homePath()+KDE4DIR);
-  d->haskdedir = QFile::exists(QDir::homePath()+KDEDIR);
+  bool haskde4dir = QFile::exists(QDir::homePath()+KDE4DIR);
+  bool haskdedir = QFile::exists(QDir::homePath()+KDEDIR);
   d->buttons = new QButtonGroup(this);
-  d->text = new QLabel(tr("Please select the option on how you want to migrate your settings"),this);
-  lay->addWidget(d->text);
-  if(d->haskdedir)
+  QLabel *text = new QLabel(tr("Please select the option on how you want to migrate your settings"),this);
+  lay->addWidget(text);
+  if(haskdedir)
   {
-    d->migrate = new QRadioButton("Migrate settings from KDE3 to KDE4 (recommended)",this);
-    d->buttons->addButton(d->migrate,MigrationTool::Migrate);
-    lay->addWidget(d->migrate);
-    d->migrate->setChecked(true);
+    QRadioButton *migrate = new QRadioButton("Migrate settings from KDE3 to KDE4 (recommended)",this);
+    d->buttons->addButton(migrate,MigrationTool::Migrate);
+    lay->addWidget(migrate);
+    migrate->setChecked(true);
   }
-  if(d->haskde4dir)
+  if(haskde4dir)
   {
-    d->move = new QRadioButton("Move settings from KDE 4 dir and <b>replace</b> settings from KDE 3");
-    d->buttons->addButton(d->move,MigrationTool::Move);
-    lay->addWidget(d->move);
-    if(d->haskdedir)
+    QRadioButton *move = new QRadioButton("Move settings from KDE 4 dir and <b>replace</b> settings from KDE 3");
+    d->buttons->addButton(move,MigrationTool::Move);
+    lay->addWidget(move);
+    if(haskdedir)
     {
-      d->merge = new QRadioButton("Merge settings from KDE3 and KDE4 (experimental)");
-      d->buttons->addButton(d->merge,MigrationTool::Merge);
-      lay->addWidget(d->merge);
+      QRadioButton *merge = new QRadioButton("Merge settings from KDE3 and KDE4 (experimental)");
+      d->buttons->addButton(merge,MigrationTool::Merge);
+      lay->addWidget(merge);
     }
     else
     {
-      d->move->setChecked(true);
+      move->setChecked(true);
     }
   }
-  d->clean = new QRadioButton("Start with a fresh KDE. This option will <b>remove</b> data and settings such as contacts, local stored mails, accounts in KMail and Kopete, bookmarks and other such data",this);
-  d->buttons->addButton(d->clean,MigrationTool::Clean);
-  lay->addWidget(d->clean);
-  if(d->haskdedir) //if no kdedir, nothing to backup.
+  QRadioButton *clean = new QRadioButton("Start with a fresh KDE. This option will <b>remove</b> data and settings such as contacts, local stored mails, accounts in KMail and Kopete, bookmarks and other such data",this);
+  d->buttons->addButton(clean,MigrationTool::Clean);
+  lay->addWidget(clean);
+  if(haskdedir) //if no kdedir, nothing to backup.
   {
     d->backup = new QCheckBox("Backup existing settings from KDE3 into .kde3-backup. (Highly recommended)");
     d->backup->setChecked(true);
@@ -77,22 +72,12 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
 
 bool ChoicePage::backupSelected() const
 {
-  return d->backup->isChecked();
+  return d->backup != NULL ? d->backup->isChecked() : false;
 }
 
 MigrationTool::Selection ChoicePage::selected() const
 {
-  switch(d->buttons->checkedId())
-  {
-    case MigrationTool::Clean:
-      return MigrationTool::Clean;
-    case MigrationTool::Migrate:
-      return MigrationTool::Migrate;
-    case MigrationTool::Merge:
-      return MigrationTool::Merge;
-    case MigrationTool::Move:
-      return MigrationTool::Move;
-    default:
-      abort();
-  }
+  int selection = d->buttons->checkedId();
+  Q_ASSERT(selection >= 0 && selection < 4); //update if more options are added
+  return (MigrationTool::Selection) selection;
 }
