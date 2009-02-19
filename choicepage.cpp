@@ -19,6 +19,7 @@
 class ChoicePagePrivate
 {
   public:
+    ChoicePagePrivate() : backup(NULL) {}
     QLabel *text;
     QRadioButton *clean;
     QRadioButton *migrate;
@@ -77,7 +78,7 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
 
 bool ChoicePage::backupSelected() const
 {
-  return d->backup->isChecked();
+  return d->backup ? d->backup->isChecked() : false;
 }
 
 MigrationTool::Selection ChoicePage::selected() const
