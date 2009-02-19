@@ -19,6 +19,7 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QStack>
+#include <QDebug>
 #include <climits> //for PATH_MAX
 
 namespace DirOperations {
@@ -118,8 +119,15 @@ void recursiveCpDir(const QString & sourcePath, const QString & destPath, CopyOp
     qint64 bytesCopied = 0;
 
     if ( pd ) {
-        pd->setMaximum(calculateDirSize(sourcePath, pd));
         pd->setLabelText(QObject::tr("Copying files..."));
+        qint64 dirSize = calculateDirSize(sourcePath, pd);
+        if (dirSize > 0) {
+            pd->setMaximum(dirSize);
+        } else {
+            //no files to be copied, so set the progressbar to 100%
+            pd->setMaximum(1);
+            pd->setValue(1);
+        }
     }
 
     while(1)
@@ -194,9 +202,16 @@ void recursiveCpDir(const QString & sourcePath, const QString & destPath, CopyOp
 void recursiveRmDir(const QString & dir, ProgressDialogInterface *pd)
 {
     QDir currentDir(dir);
-    if ( !currentDir.exists() )
-        return; // directory gone, no need to bother about exceptions
-        
+    if ( !currentDir.exists() ) {
+        qWarning() << "recursiveRmDir: trying to remove non-existent directory" << dir;
+        if (pd) {
+            //no files to be removed, so set the progressbar to 100%
+            pd->setMaximum(1);
+            pd->setValue(1);
+        }
+        return; // directory gone, no work to do
+    }
+
     QDir::Filters filters = QDir::AllEntries | QDir::NoDotAndDotDot | QDir::Hidden | QDir::System | QDir::CaseSensitive;
     QFileInfoList currentList = currentDir.entryInfoList( filters, QDir::DirsLast );
     QFileInfo currentItem;
@@ -204,8 +219,15 @@ void recursiveRmDir(const QString & dir, ProgressDialogInterface *pd)
     qint64 bytesRemoved = 0;
 
     if ( pd ) {
-        pd->setMaximum(calculateDirSize(dir, pd));
         pd->setLabelText(QObject::tr("Removing files..."));
+        qint64 dirSize = calculateDirSize(dir, pd);
+        if (dirSize > 0) {
+            pd->setMaximum(dirSize);
+        } else {
+            //no files to be removed, so set the progressbar to 100%
+            pd->setMaximum(1);
+            pd->setValue(1);
+        }
     }
 
     while(1)
