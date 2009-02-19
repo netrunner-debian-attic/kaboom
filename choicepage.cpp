@@ -19,10 +19,15 @@
 class ChoicePagePrivate
 {
   public:
-    ChoicePagePrivate()
-        : buttons(NULL), backup(NULL) {}
+    QLabel *text;
+    QRadioButton *clean;
+    QRadioButton *migrate;
+    QRadioButton *move;
+    QRadioButton *merge;
     QButtonGroup *buttons;
     QCheckBox *backup;
+    bool haskde4dir;
+    bool haskdedir;
 };
 
 ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
@@ -30,38 +35,38 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
   d = new ChoicePagePrivate;
   QVBoxLayout *lay = new QVBoxLayout(this);
   setTitle("Kaboom - MigrationTool");
-  bool haskde4dir = QFile::exists(QDir::homePath()+KDE4DIR);
-  bool haskdedir = QFile::exists(QDir::homePath()+KDEDIR);
+  d->haskde4dir = QFile::exists(QDir::homePath()+KDE4DIR);
+  d->haskdedir = QFile::exists(QDir::homePath()+KDEDIR);
   d->buttons = new QButtonGroup(this);
-  QLabel *text = new QLabel(tr("Please select the option on how you want to migrate your settings"),this);
-  lay->addWidget(text);
-  if(haskdedir)
+  d->text = new QLabel(tr("Please select the option on how you want to migrate your settings"),this);
+  lay->addWidget(d->text);
+  if(d->haskdedir)
   {
-    QRadioButton *migrate = new QRadioButton("Migrate settings from KDE3 to KDE4 (recommended)",this);
-    d->buttons->addButton(migrate,MigrationTool::Migrate);
-    lay->addWidget(migrate);
-    migrate->setChecked(true);
+    d->migrate = new QRadioButton("Migrate settings from KDE3 to KDE4 (recommended)",this);
+    d->buttons->addButton(d->migrate,MigrationTool::Migrate);
+    lay->addWidget(d->migrate);
+    d->migrate->setChecked(true);
   }
-  if(haskde4dir)
+  if(d->haskde4dir)
   {
-    QRadioButton *move = new QRadioButton("Move settings from KDE 4 dir and <b>replace</b> settings from KDE 3");
-    d->buttons->addButton(move,MigrationTool::Move);
-    lay->addWidget(move);
-    if(haskdedir)
+    d->move = new QRadioButton("Move settings from KDE 4 dir and <b>replace</b> settings from KDE 3");
+    d->buttons->addButton(d->move,MigrationTool::Move);
+    lay->addWidget(d->move);
+    if(d->haskdedir)
     {
-      QRadioButton *merge = new QRadioButton("Merge settings from KDE3 and KDE4 (experimental)");
-      d->buttons->addButton(merge,MigrationTool::Merge);
-      lay->addWidget(merge);
+      d->merge = new QRadioButton("Merge settings from KDE3 and KDE4 (experimental)");
+      d->buttons->addButton(d->merge,MigrationTool::Merge);
+      lay->addWidget(d->merge);
     }
     else
     {
-      move->setChecked(true);
+      d->move->setChecked(true);
     }
   }
-  QRadioButton *clean = new QRadioButton("Start with a fresh KDE. This option will <b>remove</b> data and settings such as contacts, local stored mails, accounts in KMail and Kopete, bookmarks and other such data",this);
-  d->buttons->addButton(clean,MigrationTool::Clean);
-  lay->addWidget(clean);
-  if(haskdedir) //if no kdedir, nothing to backup.
+  d->clean = new QRadioButton("Start with a fresh KDE. This option will <b>remove</b> data and settings such as contacts, local stored mails, accounts in KMail and Kopete, bookmarks and other such data",this);
+  d->buttons->addButton(d->clean,MigrationTool::Clean);
+  lay->addWidget(d->clean);
+  if(d->haskdedir) //if no kdedir, nothing to backup.
   {
     d->backup = new QCheckBox("Backup existing settings from KDE3 into .kde3-backup. (Highly recommended)");
     d->backup->setChecked(true);
@@ -72,12 +77,22 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
 
 bool ChoicePage::backupSelected() const
 {
-  return d->backup != NULL ? d->backup->isChecked() : false;
+  return d->backup->isChecked();
 }
 
 MigrationTool::Selection ChoicePage::selected() const
 {
-  int selection = d->buttons->checkedId();
-  Q_ASSERT(selection >= 0 && selection < 4); //update if more options are added
-  return (MigrationTool::Selection) selection;
+  switch(d->buttons->checkedId())
+  {
+    case MigrationTool::Clean:
+      return MigrationTool::Clean;
+    case MigrationTool::Migrate:
+      return MigrationTool::Migrate;
+    case MigrationTool::Merge:
+      return MigrationTool::Merge;
+    case MigrationTool::Move:
+      return MigrationTool::Move;
+    default:
+      abort();
+  }
 }
