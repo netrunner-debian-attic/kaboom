@@ -64,6 +64,12 @@ namespace DirOperations {
      */
     QString relativeSymLinkTarget(const QString & fileName);
 
+    /*! Calculates the free space in the partition of a dir */
+    quint64 freeDirSpace(const QString & dir);
+    
+    /*! Calculates the total space of a partition */
+    quint64 totalPartitionSize(const QString & dir);
+
     /*! Calculates the size of a directory. Works like "du -hs". */
     qint64 calculateDirSize(const QString & dir, ProgressDialogInterface *pd = 0);
 

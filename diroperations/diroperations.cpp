@@ -15,12 +15,15 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+#define _FILE_OFFSET_BITS 64
+#include <sys/statvfs.h> // for statvfs for calculating free space
 #include "diroperations.h"
 #include <QDir>
 #include <QFileInfo>
 #include <QStack>
 #include <QDebug>
 #include <climits> //for PATH_MAX
+
 
 namespace DirOperations {
 
@@ -49,6 +52,33 @@ QString relativeSymLinkTarget(const QString & fileName)
     return QString(buff);
 }
 
+quint64 freeDirSpace(const QString & dir)
+{
+    struct statvfs info;
+    int ret = statvfs(dir.toLocal8Bit(),&info);
+    if(ret < 0) {
+      qDebug() << "statvfs errors" << ret;
+      //error handling
+      return -1;
+    }
+    qDebug() << "freeDirSpace" << dir << info.f_bsize*info.f_bavail;
+    return info.f_bsize*info.f_bavail;
+  
+}
+
+quint64 totalPartitionSize(const QString & dir)
+{
+    struct statvfs info;
+    int ret = statvfs(dir.toLocal8Bit(),&info);
+    if(ret < 0) {
+      qDebug() << "statvfs errors" << ret;
+      //error handling
+      return -1;
+    }
+    qDebug() << "totalPartitionSize" << dir << info.f_bsize*info.f_blocks;
+    return info.f_frsize*info.f_blocks;
+  
+}
 
 qint64 calculateDirSize(const QString & dir, ProgressDialogInterface *pd)
 {
