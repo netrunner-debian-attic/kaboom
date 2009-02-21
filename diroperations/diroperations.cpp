@@ -77,7 +77,7 @@ qint64 calculateDirSize(const QString & dir, ProgressDialogInterface *pd)
             }
 
             if ( pd && (++refreshCounter % 100 == 0) ) {
-                pd->setLabelText(QObject::tr("Calculating... ") + QString::number(totalSize) + QObject::tr(" bytes"));
+                pd->setLabelText(QObject::tr("Calculating... %1 bytes").arg(totalSize));
                 pd->processEvents();
                 if (pd->wasCanceled())
                     throw Exception(Exception::OperationCanceled);
