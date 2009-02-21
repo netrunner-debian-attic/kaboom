@@ -44,7 +44,7 @@ void MigrationPagePrivate::doMagic()
         DirOperations::recursiveCpDir(QDir::homePath()+KDEDIR,QDir::homePath()+KDE3BACKUPDIR,
                                        DirOperations::RemoveDestination,progress);
       }
-      catch (DirOperations::Exception e)
+      catch (DirOperations::Exception &e)
       {
         qDebug() << e.what();
         // emit q->error(e) or something
