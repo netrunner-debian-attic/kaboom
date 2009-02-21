@@ -15,6 +15,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "choicepage.h"
+#include "diroperations/diroperations.h"
 
 class ChoicePagePrivate
 {
@@ -69,10 +70,31 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
   lay->addWidget(d->clean);
   if(d->haskdedir) //if no kdedir, nothing to backup.
   {
-    d->backup = new QCheckBox("Backup existing settings from KDE3 into .kde3-backup. (Highly recommended)");
-    d->backup->setChecked(true);
-    registerField("backup",d->backup);
-    lay->addWidget(d->backup);
+    quint64 dirsize = DirOperations::calculateDirSize(QDir::homePath()+KDEDIR);
+    qDebug() << "dirsize" << dirsize;
+    quint64 freespace = DirOperations::freeDirSpace(QDir::homePath());
+    qDebug() << "freespace" << freespace;
+    if(true)//dirsize > freespace)
+    {
+      quint64 partsize = DirOperations::totalPartitionSize(QDir::homePath());
+      qDebug() << "partsize" << partsize;
+      QLabel *freewarning = new QLabel("You have not enough free space to actually do a backup, please consider freeing up some space by going to TTY1",this);
+      QProgressBar *bar = new QProgressBar(this);
+      bar->setMaximum(100);
+      qDebug() << "freepercent" << (partsize-freespace)/partsize*100;
+      bar->setValue(round(static_cast<double>(partsize-freespace)/static_cast<double>(partsize)*100));
+      QLabel *freeinfo = new QLabel(QString("The current kde settings and data dir takes up %1 bytes").arg(dirsize));
+      lay->addWidget(freewarning);
+      lay->addWidget(bar);
+      lay->addWidget(freeinfo);
+    }
+    else
+    {
+      d->backup = new QCheckBox("Backup existing settings from KDE3 into .kde3-backup. (Highly recommended)");
+      d->backup->setChecked(true);
+      registerField("backup",d->backup);
+      lay->addWidget(d->backup);
+    }
   }
 }
 
