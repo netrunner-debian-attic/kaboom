@@ -137,9 +137,9 @@ void recursiveCpDir(const QString & sourcePath, const QString & destPath, CopyOp
             recursiveRmDir(destPath, pd);
         else if ( !(options & OverWrite) )
             throw Exception(Exception::FileOrDirectoryExists, destPath);
-    } else {
-        dest.mkdir(dest.absolutePath());
     }
+
+    dest.mkdir(dest.absolutePath());
 
     QDir::Filters filters = QDir::AllEntries | QDir::NoDotAndDotDot | QDir::Hidden | QDir::System | QDir::CaseSensitive;
     QFileInfoList currentList = source.entryInfoList( filters, QDir::DirsLast );
