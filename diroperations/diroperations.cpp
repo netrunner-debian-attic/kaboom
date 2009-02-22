@@ -96,14 +96,13 @@ qint64 calculateDirSize(const QString & dir, ProgressDialogInterface *pd)
     while(1){
         if ( !currentList.isEmpty() ){
             currentItem = currentList.takeFirst();
+            totalSize += currentItem.size();
 
             if ( currentItem.isDir() && !currentItem.isSymLink() ) {
                 if ( !currentDir.cd(currentItem.fileName()) )
                     throw Exception(Exception::AccessDenied, currentItem.absoluteFilePath());
                 stack.push(currentList);
                 currentList = currentDir.entryInfoList( filters, QDir::DirsLast );
-            } else {
-                totalSize += currentItem.size();
             }
 
             if ( pd && (++refreshCounter % 100 == 0) ) {
@@ -122,6 +121,7 @@ qint64 calculateDirSize(const QString & dir, ProgressDialogInterface *pd)
         }
     }
 
+    totalSize += QFileInfo(dir).size();
     return totalSize;
 }
 
@@ -153,6 +153,9 @@ void recursiveCpDir(const QString & sourcePath, const QString & destPath, CopyOp
         qint64 dirSize = calculateDirSize(sourcePath, pd);
         if (dirSize > 0) {
             pd->setMaximum(dirSize);
+            //the directory special file is already (almost) copied in dest.mkdir() above
+            bytesCopied += QFileInfo(sourcePath).size();
+            pd->setValue(bytesCopied);
         } else {
             //no files to be copied, so set the progressbar to 100%
             pd->setMaximum(1);
@@ -202,11 +205,11 @@ void recursiveCpDir(const QString & sourcePath, const QString & destPath, CopyOp
                 }
                 if ( !QFile::copy( source.absoluteFilePath(currentName), dest.absoluteFilePath(currentName) ) )
                     throw Exception(Exception::CopyFail, source.absoluteFilePath(currentName));
+            }
 
-                if ( pd ) {
-                    bytesCopied += currentItem.size();
-                    pd->setValue(bytesCopied);
-                }
+            if ( pd ) {
+                bytesCopied += currentItem.size();
+                pd->setValue(bytesCopied);
             }
         }
         else // list is empty
@@ -294,6 +297,13 @@ void recursiveRmDir(const QString & dir, ProgressDialogInterface *pd)
             //if quit == true, we remove the original dir itself, now that it is empty for sure...
             QString tmpname = currentDir.dirName();
             currentDir.cdUp();
+
+            if ( pd ) {
+                //count the directory special file before it is removed
+                bytesRemoved += QFileInfo(currentDir, tmpname).size();
+                pd->setValue(bytesRemoved);
+            }
+
             if ( !currentDir.rmdir(tmpname) )
                 throw Exception(Exception::RmFail, currentDir.absoluteFilePath(tmpname));
 
