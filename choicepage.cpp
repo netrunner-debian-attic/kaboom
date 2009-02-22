@@ -75,7 +75,7 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
     qDebug() << "dirsize" << dirsize;
     quint64 freespace = DirOperations::freeDirSpace(QDir::homePath());
     qDebug() << "freespace" << freespace;
-    if(true)//dirsize > freespace)
+    if(dirsize > freespace)
     {
       quint64 partsize = DirOperations::totalPartitionSize(QDir::homePath());
       qDebug() << "partsize" << partsize;
