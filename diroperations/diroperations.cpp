@@ -196,7 +196,7 @@ void recursiveCpDir(const QString & sourcePath, const QString & destPath, CopyOp
                 stack.push(currentList);
                 currentList = source.entryInfoList( filters, QDir::DirsLast );
             }
-            else
+            else if ( currentItem.isFile() )
             {
                 if ( options & OverWrite ) {
                     if ( QFile::exists(dest.absoluteFilePath(currentName)) &&
@@ -205,6 +205,10 @@ void recursiveCpDir(const QString & sourcePath, const QString & destPath, CopyOp
                 }
                 if ( !QFile::copy( source.absoluteFilePath(currentName), dest.absoluteFilePath(currentName) ) )
                     throw Exception(Exception::CopyFail, source.absoluteFilePath(currentName));
+            }
+            else
+            {
+                qDebug() << "Ignoring special file" << source.absoluteFilePath(currentName);
             }
 
             if ( pd ) {
