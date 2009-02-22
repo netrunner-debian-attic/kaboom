@@ -306,6 +306,9 @@ void recursiveRmDir(const QString & dir, ProgressDialogInterface *pd)
                 //count the directory special file before it is removed
                 bytesRemoved += QFileInfo(currentDir, tmpname).size();
                 pd->setValue(bytesRemoved);
+                //if we are about to quit, process events before exiting the loop (to make the progressbar reach 100%)
+                if ( quit )
+                    pd->processEvents();
             }
 
             if ( !currentDir.rmdir(tmpname) )
