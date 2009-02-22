@@ -149,8 +149,8 @@ void recursiveCpDir(const QString & sourcePath, const QString & destPath, CopyOp
     qint64 bytesCopied = 0;
 
     if ( pd ) {
-        pd->setLabelText(QObject::tr("Copying files..."));
         qint64 dirSize = calculateDirSize(sourcePath, pd);
+        pd->setLabelText(QObject::tr("Copying files..."));
         if (dirSize > 0) {
             pd->setMaximum(dirSize);
             //the directory special file is already (almost) copied in dest.mkdir() above
@@ -252,8 +252,8 @@ void recursiveRmDir(const QString & dir, ProgressDialogInterface *pd)
     qint64 bytesRemoved = 0;
 
     if ( pd ) {
-        pd->setLabelText(QObject::tr("Removing files..."));
         qint64 dirSize = calculateDirSize(dir, pd);
+        pd->setLabelText(QObject::tr("Removing files..."));
         if (dirSize > 0) {
             pd->setMaximum(dirSize);
         } else {
