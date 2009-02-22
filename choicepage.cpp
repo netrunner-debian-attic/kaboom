@@ -16,16 +16,17 @@
 */
 #include "choicepage.h"
 #include "diroperations/diroperations.h"
+#include "richradiobutton.h"
 
 class ChoicePagePrivate
 {
   public:
     ChoicePagePrivate() : backup(NULL) {}
     QLabel *text;
-    QRadioButton *clean;
-    QRadioButton *migrate;
-    QRadioButton *move;
-    QRadioButton *merge;
+    RichRadioButton *clean;
+    RichRadioButton *migrate;
+    RichRadioButton *move;
+    RichRadioButton *merge;
     QButtonGroup *buttons;
     QCheckBox *backup;
     bool haskde4dir;
@@ -44,19 +45,19 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
   lay->addWidget(d->text);
   if(d->haskdedir)
   {
-    d->migrate = new QRadioButton("Migrate settings from KDE3 to KDE4 (recommended)",this);
+    d->migrate = new RichRadioButton("Migrate settings from KDE3 to KDE4 (recommended)",this);
     d->buttons->addButton(d->migrate,MigrationTool::Migrate);
     lay->addWidget(d->migrate);
     d->migrate->setChecked(true);
   }
   if(d->haskde4dir)
   {
-    d->move = new QRadioButton("Move settings from KDE 4 dir and <b>replace</b> settings from KDE 3");
+    d->move = new RichRadioButton("Move settings from KDE 4 dir and <b>replace</b> settings from KDE 3");
     d->buttons->addButton(d->move,MigrationTool::Move);
     lay->addWidget(d->move);
     if(d->haskdedir)
     {
-      d->merge = new QRadioButton("Merge settings from KDE3 and KDE4 (experimental)");
+      d->merge = new RichRadioButton("Merge settings from KDE3 and KDE4 (experimental)");
       d->buttons->addButton(d->merge,MigrationTool::Merge);
       lay->addWidget(d->merge);
     }
@@ -65,7 +66,7 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
       d->move->setChecked(true);
     }
   }
-  d->clean = new QRadioButton("Start with a fresh KDE. This option will <b>remove</b> data and settings such as contacts, local stored mails, accounts in KMail and Kopete, bookmarks and other such data",this);
+  d->clean = new RichRadioButton("Start with a fresh KDE. This option will <b>remove</b> data and settings such as contacts, local stored mails, accounts in KMail and Kopete, bookmarks and other such data",this);
   d->buttons->addButton(d->clean,MigrationTool::Clean);
   lay->addWidget(d->clean);
   if(d->haskdedir) //if no kdedir, nothing to backup.

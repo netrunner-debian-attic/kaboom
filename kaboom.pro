@@ -19,6 +19,7 @@ HEADERS += \
       warningpage.h \
       diroperations/diroperations.h \
       diroperations/progresswidget.h \
+      richradiobutton.h
       
       
 SOURCES += \
@@ -30,5 +31,5 @@ SOURCES += \
       warningpage.cpp \
       diroperations/diroperations.cpp \
       diroperations/progresswidget.cpp \
-      
+      richradiobutton.cpp
       
