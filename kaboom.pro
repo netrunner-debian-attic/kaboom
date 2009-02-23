@@ -8,6 +8,10 @@ CONFIG += debug
 DEPENDPATH += .
 INCLUDEPATH += .
 
+TRANSLATIONS += \
+      kaboom_dk.ts \
+      kaboom_template.ts \
+      
 # Input
 HEADERS += \
       choicepage.h \
