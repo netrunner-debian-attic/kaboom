@@ -82,9 +82,9 @@ void MigrationPagePrivate::doMagic()
 MigrationPage::MigrationPage(QWidget *parent) : QWizardPage(parent)
 {
   d=new MigrationPagePrivate(this);
-  QLabel *text = new QLabel("When you click \"start\", migration will start",this);
+  QLabel *text = new QLabel(tr("When you click \"start\", migration will start"),this);
   
-  setTitle("Start Migration");
+  setTitle(tr("Start Migration"));
 
   connect(d->start,SIGNAL(clicked()),d,SLOT(doMagic()));
   
