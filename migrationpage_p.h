@@ -31,8 +31,11 @@ class MigrationPagePrivate : public QObject
     ProgressWidget *progress;
     QPushButton *start;
     MigrationPage *q;
+    QLabel *error;
+    QGroupBox *errorbox;
     bool backup;
     bool complete;
+    void errorhandling(const QString &s);
   public slots:
     void doMagic();
 };
