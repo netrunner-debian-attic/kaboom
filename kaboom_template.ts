@@ -55,6 +55,24 @@
         <source>This wizard will guide you thru the migration of KDE 3 and KDE 4 settings as required</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="intropage.cpp" line="21"/>
+        <source>Kaboom - MigrationTool</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MigrationPage</name>
+    <message>
+        <location filename="migrationpage.cpp" line="85"/>
+        <source>When you click &quot;start&quot;, migration will start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="migrationpage.cpp" line="87"/>
+        <source>Start Migration</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
