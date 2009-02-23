@@ -9,7 +9,7 @@ DEPENDPATH += .
 INCLUDEPATH += .
 
 TRANSLATIONS += \
-      kaboom_dk.ts \
+      kaboom_da.ts \
       kaboom_template.ts \
       
 # Input
