@@ -30,6 +30,16 @@ int main(int argc, char* argv[])
   }
 
   QApplication app(argc,argv);
+  
+  QString locale = QLocale::system().name();
+  
+  QTranslator translator;
+  if(!translator.load(QString("kaboom_") + locale))
+  {
+      qDebug() << "loading translation failed";
+  }
+  app.installTranslator(&translator);
+  
   MigrationTool main;
   main.show();
   int exitvalue = app.exec();
