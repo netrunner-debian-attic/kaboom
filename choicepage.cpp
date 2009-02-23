@@ -71,7 +71,14 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
   lay->addWidget(d->clean);
   if(d->haskdedir) //if no kdedir, nothing to backup.
   {
-    quint64 dirsize = DirOperations::calculateDirSize(QDir::homePath()+KDEDIR);
+    quint64 dirsize = -1;
+    try {
+      quint64 dirsize = DirOperations::calculateDirSize(QDir::homePath()+KDEDIR);
+    }
+    catch (const DirOperations::Exception&)
+    {
+      // nop - default set before.
+    }
     quint64 freespace = DirOperations::freeDirSpace(QDir::homePath());
     if(dirsize > freespace)
     {
