@@ -33,17 +33,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="choicepage.cpp" line="79"/>
+        <location filename="choicepage.cpp" line="86"/>
         <source>You have not enough free space to actually do a backup, please consider freeing up some space by going to TTY1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="choicepage.cpp" line="83"/>
+        <location filename="choicepage.cpp" line="90"/>
         <source>The current kde settings and data dir takes up %1 bytes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="choicepage.cpp" line="90"/>
+        <location filename="choicepage.cpp" line="97"/>
         <source>Backup existing settings from KDE3 into .kde3-backup. (Highly recommended)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -64,13 +64,26 @@
 <context>
     <name>MigrationPage</name>
     <message>
-        <location filename="migrationpage.cpp" line="85"/>
+        <location filename="migrationpage.cpp" line="103"/>
         <source>When you click &quot;start&quot;, migration will start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="migrationpage.cpp" line="87"/>
+        <location filename="migrationpage.cpp" line="106"/>
         <source>Start Migration</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MigrationPagePrivate</name>
+    <message>
+        <location filename="migrationpage.cpp" line="30"/>
+        <source>Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="migrationpage.cpp" line="32"/>
+        <source>Errors occured</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
