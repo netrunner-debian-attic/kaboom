@@ -22,6 +22,7 @@
 class ChoicePagePrivate;
 class ChoicePage : public QWizardPage
 {
+  Q_OBJECT
   public:
     ChoicePage(QWidget *parent=0);
     bool backupSelected() const;

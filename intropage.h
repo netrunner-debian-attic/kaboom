@@ -20,6 +20,7 @@
 
 class IntroPage : public QWizardPage
 {
+  Q_OBJECT
   public:
     IntroPage(QWidget *parent=0);
 };

@@ -21,6 +21,7 @@
 
 class WarningPage : public QWizardPage
 {
+  Q_OBJECT
   public:
     WarningPage(QWidget *parent=0);
 };
