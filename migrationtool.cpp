@@ -34,6 +34,14 @@ MigrationTool::MigrationTool(QWidget *parent) : QWizard(parent)
   
   setOptions(QWizard::NoBackButtonOnStartPage|QWizard::NoCancelButton|options());  
   
+  setButtonText(QWizard::BackButton, tr("&Back"));
+  setButtonText(QWizard::NextButton, tr("&Next"));
+  setButtonText(QWizard::FinishButton,tr("&Finish"));
+  
+  setPixmap(QWizard::WatermarkPixmap,QPixmap("watermark.png"));
+  //setPixmap(QWizard::LogoPixmap,QPixmap("logo.png"));  - we don't use subtitles, so this is never shown.
+  setWizardStyle(QWizard::ModernStyle);
+  
   setPage(Intro,d->intro);
   setPage(Choice, d->choice);
   setPage(Warning, d->warning); 
@@ -44,7 +52,6 @@ MigrationTool::MigrationTool(QWidget *parent) : QWizard(parent)
 }
 int MigrationTool::nextId() const
 {
-    qDebug() << "nextId()";
     switch(currentId())
     {
       case Intro:
