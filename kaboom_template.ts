@@ -43,7 +43,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="choicepage.cpp" line="97"/>
+        <location filename="choicepage.cpp" line="98"/>
         <source>Backup existing settings from KDE3 into .kde3-backup. (Highly recommended)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -84,6 +84,29 @@
     <message>
         <location filename="migrationpage.cpp" line="32"/>
         <source>Errors occured</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="migrationpage.cpp" line="42"/>
+        <source>Migration running</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MigrationTool</name>
+    <message>
+        <location filename="migrationtool.cpp" line="37"/>
+        <source>&amp;Back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="migrationtool.cpp" line="38"/>
+        <source>&amp;Next</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="migrationtool.cpp" line="39"/>
+        <source>&amp;Finish</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -148,8 +171,13 @@
 <context>
     <name>WarningPage</name>
     <message>
-        <location filename="warningpage.cpp" line="21"/>
+        <location filename="warningpage.cpp" line="22"/>
         <source>You have selected a potentially harmful operation and not to backup data. You will most likely lose data here. Are you completely sure?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="warningpage.cpp" line="21"/>
+        <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
