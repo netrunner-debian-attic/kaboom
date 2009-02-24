@@ -108,6 +108,8 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
 
 bool ChoicePage::backupSelected() const
 {
+  if(0)
+    qDebug() << tr("Recheck");
   return d->backup ? d->backup->isChecked() : false;
 }
 
