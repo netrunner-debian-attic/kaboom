@@ -37,11 +37,11 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
 {
   d = new ChoicePagePrivate;
   QVBoxLayout *lay = new QVBoxLayout(this);
-  setTitle(tr("Kaboom - MigrationTool"));
+  setTitle(tr("Kaboom - Migration Tool"));
   d->haskde4dir = QFile::exists(QDir::homePath()+KDE4DIR);
   d->haskdedir = QFile::exists(QDir::homePath()+KDEDIR);
   d->buttons = new QButtonGroup(this);
-  d->text = new QLabel(tr("Please select your settings migratation option"),this);
+  d->text = new QLabel(tr("Please select your settings migration option"),this);
   d->text->setWordWrap(true);
   lay->addWidget(d->text);
   if(d->haskdedir)

@@ -18,7 +18,7 @@
 
 IntroPage::IntroPage(QWidget *parent) : QWizardPage(parent)
 {
-  setTitle(tr("Kaboom - MigrationTool"));
+  setTitle(tr("Kaboom - Migration Tool"));
   QLabel *text = new QLabel(tr("This wizard will guide you through the process of migrating your KDE settings as required"),this);
   text->setWordWrap(true);
   QVBoxLayout *lay = new QVBoxLayout();
