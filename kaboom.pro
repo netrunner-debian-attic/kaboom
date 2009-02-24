@@ -10,6 +10,7 @@ INCLUDEPATH += .
 
 TRANSLATIONS += \
       kaboom_da.ts \
+      kaboom_it.ts \
       kaboom_template.ts \
       
 # Input
