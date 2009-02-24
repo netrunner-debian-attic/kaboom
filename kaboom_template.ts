@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1">
+<!DOCTYPE TS>
+<TS version="2.0">
 <context>
     <name>ChoicePage</name>
     <message>
         <location filename="choicepage.cpp" line="40"/>
-        <source>Kaboom - MigrationTool</source>
+        <source>Kaboom - Migration Tool</source>
+        <oldsource>Kaboom - MigrationTool</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="44"/>
-        <source>Please select your settings migratation option</source>
+        <source>Please select your settings migration option</source>
+        <oldsource>Please select your settings migratation option</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -57,7 +60,8 @@
     <name>IntroPage</name>
     <message>
         <location filename="intropage.cpp" line="21"/>
-        <source>Kaboom - MigrationTool</source>
+        <source>Kaboom - Migration Tool</source>
+        <oldsource>Kaboom - MigrationTool</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -70,7 +74,8 @@
     <name>MigrationPage</name>
     <message>
         <location filename="migrationpage.cpp" line="103"/>
-        <source>When you click &quot;start&quot;, settitgs migration will start</source>
+        <source>When you click &quot;Start&quot;, settings migration will start</source>
+        <oldsource>When you click &quot;start&quot;, settitgs migration will start</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
