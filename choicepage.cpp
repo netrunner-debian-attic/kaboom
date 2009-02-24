@@ -73,7 +73,7 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
   {
     quint64 dirsize = -1;
     try {
-      quint64 dirsize = DirOperations::calculateDirSize(QDir::homePath()+KDEDIR);
+      dirsize = DirOperations::calculateDirSize(QDir::homePath()+KDEDIR);
     }
     catch (const DirOperations::Exception&)
     {
