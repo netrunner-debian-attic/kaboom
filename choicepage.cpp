@@ -42,6 +42,7 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
   d->haskdedir = QFile::exists(QDir::homePath()+KDEDIR);
   d->buttons = new QButtonGroup(this);
   d->text = new QLabel(tr("Please select the option on how you want to migrate your settings"),this);
+  d->text->setWordWrap(true);
   lay->addWidget(d->text);
   if(d->haskdedir)
   {
