@@ -41,19 +41,19 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
   d->haskde4dir = QFile::exists(QDir::homePath()+KDE4DIR);
   d->haskdedir = QFile::exists(QDir::homePath()+KDEDIR);
   d->buttons = new QButtonGroup(this);
-  d->text = new QLabel(tr("Please select the option on how you want to migrate your settings"),this);
+  d->text = new QLabel(tr("Please select your settings migratation option"),this);
   d->text->setWordWrap(true);
   lay->addWidget(d->text);
   if(d->haskdedir)
   {
-    d->migrate = new RichRadioButton(tr("Migrate settings from KDE3 to KDE4 (recommended)"),this);
+    d->migrate = new RichRadioButton(tr("Migrate settings from KDE3 to KDE4 (standard)"),this);
     d->buttons->addButton(d->migrate,MigrationTool::Migrate);
     lay->addWidget(d->migrate);
     d->migrate->setChecked(true);
   }
   if(d->haskde4dir)
   {
-    d->move = new RichRadioButton(tr("Move settings from KDE 4 dir and <b>replace</b> settings from KDE 3"));
+    d->move = new RichRadioButton(tr("Use existing KDE 4 settings and <b>replace</b> KDE 3 settings"));
     d->buttons->addButton(d->move,MigrationTool::Move);
     lay->addWidget(d->move);
     if(d->haskdedir)
@@ -67,7 +67,7 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
       d->move->setChecked(true);
     }
   }
-  d->clean = new RichRadioButton(tr("Start with a fresh KDE. This option will <b>remove</b> data and settings such as contacts, local stored mails, accounts in KMail and Kopete, bookmarks and other such data"),this);
+  d->clean = new RichRadioButton(tr("Start with default KDE settings and data. This option will <b>remove</b> all data and settings such as contacts, local stored mails, accounts in KMail and Kopete, bookmarks and other such data"),this);
   d->buttons->addButton(d->clean,MigrationTool::Clean);
   lay->addWidget(d->clean);
   d->backup = new QCheckBox(tr("Backup existing settings from KDE3 into .kde3-backup. (Highly recommended)"));
@@ -89,11 +89,11 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
     if(dirsize > freespace)
     {
       quint64 partsize = DirOperations::totalPartitionSize(QDir::homePath());
-      QLabel *freewarning = new QLabel(tr("You have not enough free space to actually do a backup, please consider freeing up some space by going to TTY1"),this);
+      QLabel *freewarning = new QLabel(tr("Insufficient free space to complete a backup, please consider freeing up some space. You can go to TTY1 to do this."),this);
       QProgressBar *bar = new QProgressBar(this);
       bar->setMaximum(100);
       bar->setValue(round(static_cast<double>(partsize-freespace)/static_cast<double>(partsize)*100));
-      QLabel *freeinfo = new QLabel(tr("The current kde settings and data dir takes up %1 bytes").arg(dirsize));
+      QLabel *freeinfo = new QLabel(tr("The current KDE settings and data directory takes up %1 bytes").arg(dirsize));
       lay->addWidget(freewarning);
       lay->addWidget(bar);
       lay->addWidget(freeinfo);

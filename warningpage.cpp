@@ -19,7 +19,7 @@
 WarningPage::WarningPage(QWidget *parent) : QWizardPage(parent)
 {
   setTitle(tr("Warning"));
-  QLabel *text = new QLabel(tr("You have selected a potentially harmful operation and not to backup data. You will most likely lose data here. Are you completely sure?"),this);
+  QLabel *text = new QLabel(tr("You have selected a potentially harmful operation and to not backup data. You will most likely lose data here. Are you completely sure?"),this);
   text->setWordWrap(true);
   QHBoxLayout *lay = new QHBoxLayout();
   lay->addWidget(text);
