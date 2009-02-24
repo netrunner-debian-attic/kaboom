@@ -69,6 +69,11 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
   d->clean = new RichRadioButton(tr("Start with a fresh KDE. This option will <b>remove</b> data and settings such as contacts, local stored mails, accounts in KMail and Kopete, bookmarks and other such data"),this);
   d->buttons->addButton(d->clean,MigrationTool::Clean);
   lay->addWidget(d->clean);
+  d->backup = new QCheckBox(tr("Backup existing settings from KDE3 into .kde3-backup. (Highly recommended)"));
+  registerField("backup",d->backup);
+  lay->addWidget(d->backup);
+  d->backup->hide();
+  d->backup->setChecked(false);
   if(d->haskdedir) //if no kdedir, nothing to backup.
   {
     quint64 dirsize = -1;
@@ -94,10 +99,8 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
     }
     else
     {
-      d->backup = new QCheckBox(tr("Backup existing settings from KDE3 into .kde3-backup. (Highly recommended)"));
       d->backup->setChecked(true);
-      registerField("backup",d->backup);
-      lay->addWidget(d->backup);
+      d->backup->show();
     }
   }
 }
