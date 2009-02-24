@@ -137,10 +137,14 @@ void MigrationPage::initializePage()
   emit completeChanged();
   if(field("backup").toBool())
   {
+      d->backup=true;
       qDebug() << "BACKUP";
   }
   else
+  {
+      d->backup=false;
       qDebug() << "NOBACKUP";
+  }
   QWizardPage* page = wizard()->page(MigrationTool::Choice);
   ChoicePage* choice = static_cast<ChoicePage*>(page);
   if(choice)
