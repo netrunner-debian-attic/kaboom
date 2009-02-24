@@ -100,7 +100,7 @@ void MigrationPagePrivate::errorhandling(const QString& err)
 MigrationPage::MigrationPage(QWidget *parent) : QWizardPage(parent)
 {
   d=new MigrationPagePrivate(this);
-  QLabel *text = new QLabel(tr("When you click \"start\", migration will start"),this);
+  QLabel *text = new QLabel(tr("When you click \"start\", settitgs migration will start"),this);
   text->setWordWrap(true);
   
   setTitle(tr("Start Migration"));
