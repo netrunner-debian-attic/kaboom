@@ -39,7 +39,7 @@ void MigrationPagePrivate::doMagic()
 {
   start->setEnabled(false);
   q->wizard()->setOptions(q->wizard()->options()|QWizard::DisabledBackButtonOnLastPage); //no way back
-  q->setTitle("Migration running");
+  q->setTitle(tr("Migration running"));
   if(backup)
   {
     if(QFile::exists(QDir::homePath()+KDEDIR))
