@@ -9,55 +9,60 @@
     </message>
     <message>
         <location filename="choicepage.cpp" line="44"/>
-        <source>Please select the option on how you want to migrate your settings</source>
+        <source>Please select your settings migratation option</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="choicepage.cpp" line="48"/>
-        <source>Migrate settings from KDE3 to KDE4 (recommended)</source>
+        <location filename="choicepage.cpp" line="49"/>
+        <source>Migrate settings from KDE3 to KDE4 (standard)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="choicepage.cpp" line="55"/>
-        <source>Move settings from KDE 4 dir and &lt;b&gt;replace&lt;/b&gt; settings from KDE 3</source>
+        <location filename="choicepage.cpp" line="56"/>
+        <source>Use existing KDE 4 settings and &lt;b&gt;replace&lt;/b&gt; KDE 3 settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="choicepage.cpp" line="60"/>
+        <location filename="choicepage.cpp" line="61"/>
         <source>Merge settings from KDE3 and KDE4 (experimental)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="choicepage.cpp" line="69"/>
-        <source>Start with a fresh KDE. This option will &lt;b&gt;remove&lt;/b&gt; data and settings such as contacts, local stored mails, accounts in KMail and Kopete, bookmarks and other such data</source>
+        <location filename="choicepage.cpp" line="70"/>
+        <source>Start with default KDE settings and data. This option will &lt;b&gt;remove&lt;/b&gt; all data and settings such as contacts, local stored mails, accounts in KMail and Kopete, bookmarks and other such data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="choicepage.cpp" line="86"/>
-        <source>You have not enough free space to actually do a backup, please consider freeing up some space by going to TTY1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="choicepage.cpp" line="90"/>
-        <source>The current kde settings and data dir takes up %1 bytes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="choicepage.cpp" line="98"/>
+        <location filename="choicepage.cpp" line="73"/>
         <source>Backup existing settings from KDE3 into .kde3-backup. (Highly recommended)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="choicepage.cpp" line="92"/>
+        <source>Insufficient free space to complete a backup, please consider freeing up some space. You can go to TTY1 to do this.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="choicepage.cpp" line="96"/>
+        <source>The current KDE settings and data directory takes up %1 bytes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="choicepage.cpp" line="112"/>
+        <source>Recheck</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>IntroPage</name>
     <message>
-        <location filename="intropage.cpp" line="22"/>
-        <source>This wizard will guide you thru the migration of KDE 3 and KDE 4 settings as required</source>
+        <location filename="intropage.cpp" line="21"/>
+        <source>Kaboom - MigrationTool</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="intropage.cpp" line="21"/>
-        <source>Kaboom - MigrationTool</source>
+        <location filename="intropage.cpp" line="22"/>
+        <source>This wizard will guide you through the process of migrating your KDE settings as required</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -65,7 +70,7 @@
     <name>MigrationPage</name>
     <message>
         <location filename="migrationpage.cpp" line="103"/>
-        <source>When you click &quot;start&quot;, migration will start</source>
+        <source>When you click &quot;start&quot;, settitgs migration will start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -171,13 +176,13 @@
 <context>
     <name>WarningPage</name>
     <message>
-        <location filename="warningpage.cpp" line="22"/>
-        <source>You have selected a potentially harmful operation and not to backup data. You will most likely lose data here. Are you completely sure?</source>
+        <location filename="warningpage.cpp" line="21"/>
+        <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="warningpage.cpp" line="21"/>
-        <source>Warning</source>
+        <location filename="warningpage.cpp" line="22"/>
+        <source>You have selected a potentially harmful operation and to not backup data. You will most likely lose data here. Are you completely sure?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
