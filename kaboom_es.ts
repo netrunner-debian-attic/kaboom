@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1" language="es">
+<!DOCTYPE TS>
+<TS version="2.0" language="es">
 <defaultcodec></defaultcodec>
 <context>
     <name>ChoicePage</name>
@@ -13,7 +14,7 @@
         <location filename="choicepage.cpp" line="44"/>
         <source>Please select your settings migration option</source>
         <oldsource>Please select your settings migratation option</oldsource>
-        <translation type="unfinished">Seleccione sus opciones de configuración de migración</translation>
+        <translation type="unfinished">Seleccione la opción de migración de sus configuaciones:</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="49"/>
@@ -33,7 +34,7 @@
     <message>
         <location filename="choicepage.cpp" line="70"/>
         <source>Start with default KDE settings and data. This option will &lt;b&gt;remove&lt;/b&gt; all data and settings such as contacts, local stored mails, accounts in KMail and Kopete, bookmarks and other such data</source>
-        <translation type="unfinished">Empezar con las configuraciones y datos por defecto de KDE . Esta opción &lt;b&gt;eliminará&lt;/b&gt; todos los datos y configuraciones tales como contactos, correos almacenados, cuentas en KMail y Kopete, marcadores y otros datos por el estilo</translation>
+        <translation type="unfinished">Empezar con las configuraciones y datos por omisión de KDE . Esta opción &lt;b&gt;eliminará&lt;/b&gt; todos los datos y configuraciones tales como contactos, correos almacenados, cuentas en KMail y Kopete, marcadores y otros datos por el estilo</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="73"/>
