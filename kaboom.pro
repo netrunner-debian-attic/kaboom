@@ -11,7 +11,7 @@ INCLUDEPATH += .
 TRANSLATIONS += \
       kaboom_ca.ts \
       kaboom_da.ts \
-	  kaboon_es.ts \
+      kaboom_es.ts \
       kaboom_it.ts \
       kaboom_template.ts \
       

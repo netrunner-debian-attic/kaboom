@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="da">
-<defaultcodec></defaultcodec>
 <context>
     <name>ChoicePage</name>
     <message>
+        <location filename="" line="0"/>
         <source>Kaboom - MigrationTool</source>
         <translation type="obsolete">Kaboom - Migreringsværktøj</translation>
     </message>
     <message>
+        <location filename="" line="0"/>
         <source>Please select your settings migratation option</source>
         <translation type="obsolete">Vælg migreringsmuligheder</translation>
     </message>
@@ -65,6 +66,7 @@
 <context>
     <name>IntroPage</name>
     <message>
+        <location filename="" line="0"/>
         <source>Kaboom - MigrationTool</source>
         <translation type="obsolete">Kaboom - Migreringsværktøj</translation>
     </message>
@@ -82,6 +84,7 @@
 <context>
     <name>MigrationPage</name>
     <message>
+        <location filename="" line="0"/>
         <source>When you click &quot;start&quot;, settitgs migration will start</source>
         <translation type="obsolete">Når du trykker på &quot;start&quot;, vil migreringen af instillingerne starte</translation>
     </message>

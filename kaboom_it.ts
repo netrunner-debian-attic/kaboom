@@ -5,12 +5,12 @@
     <name>ChoicePage</name>
     <message>
         <location filename="choicepage.cpp" line="40"/>
-        <source>Kaboom - MigrationTool</source>
+        <source>Kaboom - Migration Tool</source>
         <translation>Kaboom - Strumento di migrazione</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="44"/>
-        <source>Please select your settings migratation option</source>
+        <source>Please select your settings migration option</source>
         <translation>Scegli come migrare le tue impostazioni</translation>
     </message>
     <message>
@@ -58,7 +58,7 @@
     <name>IntroPage</name>
     <message>
         <location filename="intropage.cpp" line="21"/>
-        <source>Kaboom - MigrationTool</source>
+        <source>Kaboom - Migration Tool</source>
         <translation>Kaboom - Strumento di migrazione</translation>
     </message>
     <message>
@@ -71,7 +71,7 @@
     <name>MigrationPage</name>
     <message>
         <location filename="migrationpage.cpp" line="103"/>
-        <source>When you click &quot;start&quot;, settitgs migration will start</source>
+        <source>When you click &quot;Start&quot;, settings migration will start</source>
         <translation>Quando premi &quot;avvia&quot; sarà avviata la migrazione delle impostazioni</translation>
     </message>
     <message>
