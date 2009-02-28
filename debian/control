@@ -1,0 +1,15 @@
+Source: kaboom
+Section: kde
+Priority: optional
+Maintainer: Debian Qt/KDE Maintainers <debian-qt-kde@lists.debian.org>
+Uploaders: George Kiagiadakis <gkiagiad@csd.uoc.gr>
+Build-Depends: debhelper (>= 7), libqt4-dev
+Standards-Version: 3.8.0
+
+Package: kaboom
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: The debian KDE settings migration tool
+ This is a tool that will help you migrate your KDE
+ settings from KDE 3 to KDE 4. It is meant to be run
+ automatically the first time that you login to KDE 4.
