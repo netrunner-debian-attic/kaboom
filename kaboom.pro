@@ -14,7 +14,7 @@ TRANSLATIONS += \
       kaboom_es.ts \
       kaboom_it.ts \
       kaboom_template.ts \
-      
+
 # Input
 HEADERS += \
       choicepage.h \
@@ -27,8 +27,8 @@ HEADERS += \
       diroperations/diroperations.h \
       diroperations/progresswidget.h \
       richradiobutton.h
-      
-      
+
+
 SOURCES += \
       choicepage.cpp \
       intropage.cpp \
@@ -39,4 +39,5 @@ SOURCES += \
       diroperations/diroperations.cpp \
       diroperations/progresswidget.cpp \
       richradiobutton.cpp
-      
+
+RESOURCES += resources.qrc

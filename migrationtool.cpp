@@ -31,21 +31,21 @@ MigrationTool::MigrationTool(QWidget *parent) : QWizard(parent)
   d->choice = new ChoicePage(this);
   d->warning = new WarningPage(this);
   d->migration = new MigrationPage(this);
-  
+
   setWindowTitle(tr("Kaboom - Debian KDE Settings Migration Wizard"));
-  setOptions(QWizard::NoBackButtonOnStartPage|QWizard::NoCancelButton|options());  
-  
+  setOptions(QWizard::NoBackButtonOnStartPage|QWizard::NoCancelButton|options());
+
   setButtonText(QWizard::BackButton, tr("&Back"));
   setButtonText(QWizard::NextButton, tr("&Next"));
   setButtonText(QWizard::FinishButton,tr("&Finish"));
-  
-  setPixmap(QWizard::WatermarkPixmap,QPixmap("watermark.png"));
+
+  setPixmap(QWizard::WatermarkPixmap,QPixmap(":/watermark.png"));
   //setPixmap(QWizard::LogoPixmap,QPixmap("logo.png"));  - we don't use subtitles, so this is never shown.
   setWizardStyle(QWizard::ModernStyle);
-  
+
   setPage(Intro,d->intro);
   setPage(Choice, d->choice);
-  setPage(Warning, d->warning); 
+  setPage(Warning, d->warning);
   setPage(Migration,d->migration);
 
   setStartId(MigrationTool::Intro);
