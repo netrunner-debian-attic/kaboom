@@ -16,6 +16,7 @@ TRANSLATIONS += \
 
 # Input
 HEADERS += \
+      kaboomsettings.h \
       choicepage.h \
       intropage.h \
       migrationpage.h \
@@ -29,6 +30,7 @@ HEADERS += \
 
 
 SOURCES += \
+      kaboomsettings.cpp \ 
       choicepage.cpp \
       intropage.cpp \
       main.cpp \
