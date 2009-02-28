@@ -32,6 +32,7 @@ MigrationTool::MigrationTool(QWidget *parent) : QWizard(parent)
   d->warning = new WarningPage(this);
   d->migration = new MigrationPage(this);
   
+  setWindowTitle(tr("Kaboom - Debian KDE Settings Migration Wizard"));
   setOptions(QWizard::NoBackButtonOnStartPage|QWizard::NoCancelButton|options());  
   
   setButtonText(QWizard::BackButton, tr("&Back"));
