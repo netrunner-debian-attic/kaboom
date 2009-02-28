@@ -31,6 +31,7 @@ public:
     void setText(const QString & text);
 
 protected:
+    virtual bool event(QEvent *event);
     //reimplemented because it's pure virtual in QAbstractButton
     virtual void paintEvent(QPaintEvent *event);
 

@@ -112,6 +112,7 @@ void RichRadioButton::Private::init(RichRadioButton *q)
 
     q->setCheckable(true);
     q->setAutoExclusive(true);
+    q->setAttribute(Qt::WA_Hover);
 }
 
 
@@ -139,8 +140,19 @@ void RichRadioButton::setText(const QString & text)
     QAbstractButton::setText(text);
 }
 
+bool RichRadioButton::event(QEvent *event)
+{
+    switch (event->type()) {
+        case QEvent::HoverEnter:
+        case QEvent::HoverLeave:
+            d->m_button->update();
+            return true;
+        default:
+            return QAbstractButton::event(event);
+    }
+}
+
 void RichRadioButton::paintEvent(QPaintEvent *event)
 {
-    d->m_button->update(); //this is for reacting in hover events.
     QWidget::paintEvent(event);
 }
