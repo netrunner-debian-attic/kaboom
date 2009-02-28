@@ -12,8 +12,7 @@ TRANSLATIONS += \
       kaboom_ca.ts \
       kaboom_da.ts \
       kaboom_es.ts \
-      kaboom_it.ts \
-      kaboom_template.ts \
+      kaboom_it.ts
 
 # Input
 HEADERS += \

@@ -6,7 +6,7 @@
 configure: configure-stamp
 configure-stamp:
 	dh_testdir
-	qmake
+	qmake-qt4
 	touch configure-stamp
 
 
@@ -14,6 +14,7 @@ build: build-stamp
 build-stamp: configure-stamp
 	dh_testdir
 	$(MAKE)
+	lrelease-qt4 kaboom.pro
 	touch build-stamp
 
 clean:
@@ -21,7 +22,7 @@ clean:
 	dh_testroot
 	rm -f build-stamp configure-stamp
 	[ ! -f Makefile ] || $(MAKE) distclean
-	rm -f kaboom
+	rm -f *.qm
 	dh_clean
 
 install: build
@@ -29,7 +30,9 @@ install: build
 	dh_testroot
 	dh_prep
 	dh_installdirs
-	install -D -p -m0755 kaboom $(CURDIR)/debian/kaboom/usr/bin/kaboom
+	install -D -p -m0755 kaboom debian/kaboom/usr/bin/kaboom
+	mkdir -p debian/kaboom/usr/share/kaboom
+	install -p -m0644 -t debian/kaboom/usr/share/kaboom/ *.qm
 
 
 # Build architecture-independent files here.

@@ -14,8 +14,10 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include <QtGui>
-#include <migrationtool.h>
+#include "migrationtool.h"
+#include <QApplication>
+#include <QFile>
+#include <QTranslator>
 
 int main(int argc, char* argv[])
 {
@@ -30,16 +32,16 @@ int main(int argc, char* argv[])
   }
 
   QApplication app(argc,argv);
-  
+
   QString locale = QLocale::system().name();
-  
+
   QTranslator translator;
-  if(!translator.load(QString("kaboom_") + locale))
+  if(!translator.load(QString("kaboom_") + locale, "/usr/share/kaboom"))
   {
       qDebug() << "loading translation failed";
   }
   app.installTranslator(&translator);
-  
+
   MigrationTool main;
   main.show();
   int exitvalue = app.exec();
