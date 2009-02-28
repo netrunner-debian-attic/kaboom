@@ -29,6 +29,9 @@ class ChoicePagePrivate
     RichRadioButton *merge;
     QButtonGroup *buttons;
     QCheckBox *backup;
+    QWidget *backupinformation;
+    QProgressBar *spacebar;
+    QLabel *freeinfo;
     bool haskde4dir;
     bool haskdedir;
 };
@@ -77,32 +80,20 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
   d->backup->setChecked(false);
   if(d->haskdedir) //if no kdedir, nothing to backup.
   {
-    quint64 dirsize = -1;
-    try {
-      dirsize = DirOperations::calculateDirSize(QDir::homePath()+KDEDIR);
-    }
-    catch (const DirOperations::Exception&)
-    {
-      // nop - default set before.
-    }
-    quint64 freespace = DirOperations::freeDirSpace(QDir::homePath());
-    if(dirsize > freespace)
-    {
-      quint64 partsize = DirOperations::totalPartitionSize(QDir::homePath());
-      QLabel *freewarning = new QLabel(tr("Insufficient free space to complete a backup, please consider freeing up some space. You can go to TTY1 to do this."),this);
-      QProgressBar *bar = new QProgressBar(this);
-      bar->setMaximum(100);
-      bar->setValue(round(static_cast<double>(partsize-freespace)/static_cast<double>(partsize)*100));
-      QLabel *freeinfo = new QLabel(tr("The current KDE settings and data directory takes up %1 bytes").arg(dirsize));
-      lay->addWidget(freewarning);
-      lay->addWidget(bar);
-      lay->addWidget(freeinfo);
-    }
-    else
-    {
-      d->backup->setChecked(true);
-      d->backup->show();
-    }
+    d->backupinformation = new QWidget(this);
+    QVBoxLayout *blay = new QVBoxLayout(d->backupinformation);
+    QLabel *freewarning = new QLabel(tr("Insufficient free space to complete a backup, please consider freeing up some space. You can go to TTY1 to do this."),this);
+    d->spacebar = new QProgressBar(this);
+    d->spacebar->setMaximum(100);
+    d->freeinfo = new QLabel;
+    QPushButton *recheck = new QPushButton(tr("Recheck"));
+    blay->addWidget(freewarning);
+    blay->addWidget(d->spacebar);
+    blay->addWidget(d->freeinfo);
+    blay->addWidget(recheck);
+    lay->addWidget(d->backupinformation);
+    connect(recheck,SIGNAL(clicked()),this,SLOT(checkSpaceForBackup()));
+    QTimer::singleShot(0, this, SLOT(checkSpaceForBackup()));
   }
 }
 
@@ -111,6 +102,35 @@ bool ChoicePage::backupSelected() const
   if(0)
     qDebug() << tr("Recheck");
   return d->backup ? d->backup->isChecked() : false;
+}
+
+void ChoicePage::checkSpaceForBackup()
+{
+  quint64 dirsize = -1;
+  try
+  {
+      dirsize = DirOperations::calculateDirSize(QDir::homePath()+KDEDIR);
+  }
+  catch (const DirOperations::Exception&)
+  {
+      // nop - default set before.
+  }
+  quint64 freespace = DirOperations::freeDirSpace(QDir::homePath());
+  if(dirsize > freespace)
+  {
+    quint64 partsize = DirOperations::totalPartitionSize(QDir::homePath());
+    d->spacebar->setValue(round(static_cast<double>(partsize-freespace)/static_cast<double>(partsize)*100));
+    d->freeinfo->setText(tr("The current KDE settings and data directory takes up %1 bytes").arg(dirsize));
+    d->backupinformation->setVisible(true);
+  }
+  else
+  {
+    //Troublesome when going back to the first page. It will return to the value
+    //set on construction. Thanks to the QCheckBox being a field.
+    d->backupinformation->setVisible(false);
+    d->backup->setChecked(true);
+    d->backup->show();
+  }
 }
 
 MigrationTool::Selection ChoicePage::selected() const
