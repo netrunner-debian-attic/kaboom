@@ -27,6 +27,7 @@ class ChoicePage : public QWizardPage
     ChoicePage(QWidget *parent=0);
     bool backupSelected() const;
     MigrationTool::Selection selected() const;
+    void initializePage();
   private slots:
     void checkSpaceForBackup();
   private:

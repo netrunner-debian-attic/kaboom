@@ -17,6 +17,7 @@
 #include "choicepage.h"
 #include "diroperations/diroperations.h"
 #include "richradiobutton.h"
+#include "diroperations/progresswidget.h"
 
 class ChoicePagePrivate
 {
@@ -93,8 +94,12 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
     blay->addWidget(recheck);
     lay->addWidget(d->backupinformation);
     connect(recheck,SIGNAL(clicked()),this,SLOT(checkSpaceForBackup()));
-    QTimer::singleShot(0, this, SLOT(checkSpaceForBackup()));
   }
+}
+
+void ChoicePage::initializePage()
+{
+  checkSpaceForBackup();
 }
 
 bool ChoicePage::backupSelected() const
@@ -106,10 +111,17 @@ bool ChoicePage::backupSelected() const
 
 void ChoicePage::checkSpaceForBackup()
 {
+  QDialog dialog(this);
+  QVBoxLayout *play = new QVBoxLayout(&dialog);
+  ProgressWidget *progress = new ProgressWidget;
+  play->addWidget(progress);
+  dialog.setWindowModality(Qt::WindowModal);
+  dialog.setWindowTitle(tr("Checking disk space..."));
+  dialog.show();
   quint64 dirsize = -1;
   try
   {
-      dirsize = DirOperations::calculateDirSize(QDir::homePath()+KDEDIR);
+      dirsize = DirOperations::calculateDirSize(QDir::homePath()+KDEDIR,progress);
   }
   catch (const DirOperations::Exception&)
   {
@@ -122,6 +134,7 @@ void ChoicePage::checkSpaceForBackup()
     d->spacebar->setValue(round(static_cast<double>(partsize-freespace)/static_cast<double>(partsize)*100));
     d->freeinfo->setText(tr("The current KDE settings and data directory takes up %1 bytes").arg(dirsize));
     d->backupinformation->setVisible(true);
+    d->backup->hide();
   }
   else
   {
