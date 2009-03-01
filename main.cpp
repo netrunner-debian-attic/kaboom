@@ -15,19 +15,22 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "migrationtool.h"
+#include "kaboomsettings.h"
 #include <QApplication>
 #include <QFile>
 #include <QTranslator>
 
 int main(int argc, char* argv[])
 {
-  if(QFile::exists(QDir::homePath()+"/.local/kdebian3to4"))
+  KaboomSettings settings(argc, argv);
+
+  if(settings.stampExists())
   {
     return 0;
   }
-  if(!QFile::exists(QDir::homePath()+KDEDIR) && !QFile::exists(QDir::homePath()+KDE4DIR))
+  if(!settings.kdehomeDir().exists() && !settings.kde4homeDir().exists())
   {
-      QFile(QDir::homePath()+"/.local/kdebian3to4").open(QIODevice::WriteOnly);
+      settings.touchStamp();
       return 0;
   }
 

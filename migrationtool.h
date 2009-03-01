@@ -17,9 +17,6 @@
 #include <QtGui>
 #ifndef MIGRATIONTOOL_H
 #define MIGRATIONTOOL_H
-#define KDE4DIR "/tmp/dirstructure/kde4"
-#define KDEDIR "/tmp/dirstructure/kde"
-#define KDE3BACKUPDIR "/tmp/dirstructure/kde3-backup"
 
 class MigrationToolPrivate;
 class MigrationTool : public QWizard
@@ -46,4 +43,4 @@ class MigrationTool : public QWizard
     
 };
 
-#endif // MAINWINDOW_
+#endif // MIGRATIONTOOL_H

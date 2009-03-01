@@ -18,6 +18,7 @@
 #include "diroperations/diroperations.h"
 #include "richradiobutton.h"
 #include "diroperations/progresswidget.h"
+#include "kaboomsettings.h"
 
 class ChoicePagePrivate
 {
@@ -34,8 +35,6 @@ class ChoicePagePrivate
     QProgressBar *spacebar;
     ProgressWidget *progresswidget;
     QLabel *freeinfo;
-    bool haskde4dir;
-    bool haskdedir;
 };
 
 ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
@@ -43,25 +42,23 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
   d = new ChoicePagePrivate;
   QVBoxLayout *lay = new QVBoxLayout(this);
   setTitle(tr("Kaboom - Migration Tool"));
-  d->haskde4dir = QFile::exists(QDir::homePath()+KDE4DIR);
-  d->haskdedir = QFile::exists(QDir::homePath()+KDEDIR);
   d->buttons = new QButtonGroup(this);
   d->text = new QLabel(tr("Please select your settings migration option"),this);
   d->text->setWordWrap(true);
   lay->addWidget(d->text);
-  if(d->haskdedir)
+  if(KaboomSettings::instance().kdehomeDir().exists())
   {
     d->migrate = new RichRadioButton(tr("Migrate settings from KDE3 to KDE4 (standard)"),this);
     d->buttons->addButton(d->migrate,MigrationTool::Migrate);
     lay->addWidget(d->migrate);
     d->migrate->setChecked(true);
   }
-  if(d->haskde4dir)
+  if(KaboomSettings::instance().kde4homeDir().exists())
   {
     d->move = new RichRadioButton(tr("Use existing KDE 4 settings and <b>replace</b> KDE 3 settings"));
     d->buttons->addButton(d->move,MigrationTool::Move);
     lay->addWidget(d->move);
-    if(d->haskdedir)
+    if(KaboomSettings::instance().kdehomeDir().exists())
     {
       d->merge = new RichRadioButton(tr("Merge settings from KDE3 and KDE4 (experimental)"));
       d->buttons->addButton(d->merge,MigrationTool::Merge);
@@ -83,7 +80,7 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
   lay->addWidget(d->backup);
   d->backup->hide();
   d->backup->setChecked(false);
-  if(d->haskdedir) //if no kdedir, nothing to backup.
+  if(KaboomSettings::instance().kdehomeDir().exists()) //if no kdedir, nothing to backup.
   {
     d->backupinformation = new QWidget(this);
     QVBoxLayout *blay = new QVBoxLayout(d->backupinformation);

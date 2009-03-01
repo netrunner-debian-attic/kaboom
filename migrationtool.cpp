@@ -17,7 +17,7 @@
 
 #include "migrationtool.h"
 #include "migrationtool_p.h"
-
+#include "kaboomsettings.h"
 
 MigrationToolPrivate::MigrationToolPrivate(MigrationTool* parent ) : QObject(parent)
 {
@@ -59,7 +59,9 @@ int MigrationTool::nextId() const
 	return Choice;
 	break;
       case Choice:
-	if(!d->choice->backupSelected() && (d->choice->selected()==Clean||d->choice->selected()==Merge) && QFile::exists(QDir::homePath()+KDEDIR))
+	if(!d->choice->backupSelected() &&
+       (d->choice->selected()==Clean||d->choice->selected()==Merge) &&
+       KaboomSettings::instance().kdehomeDir().exists())
 	{
 	    return Warning;
 	}

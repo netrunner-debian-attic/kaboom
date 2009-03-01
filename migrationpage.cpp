@@ -18,6 +18,7 @@
 #include "choicepage.h"
 #include "migrationpage_p.h"
 #include "diroperations/diroperations.h"
+#include "kaboomsettings.h"
 
 
 MigrationPagePrivate::MigrationPagePrivate(MigrationPage* parent)
@@ -42,12 +43,13 @@ void MigrationPagePrivate::doMagic()
   q->setTitle(tr("Migration running"));
   if(backup)
   {
-    if(QFile::exists(QDir::homePath()+KDEDIR))
+    if(KaboomSettings::instance().kdehomeDir().exists())
     {
       try
       {
-        DirOperations::recursiveCpDir(QDir::homePath()+KDEDIR,QDir::homePath()+KDE3BACKUPDIR,
-                                       DirOperations::RemoveDestination,progress);
+        DirOperations::recursiveCpDir(KaboomSettings::instance().kdehomeDir().canonicalPath(),
+                                      KaboomSettings::instance().kde3backupDir().canonicalPath(),
+                                      DirOperations::RemoveDestination, progress);
       }
       catch (DirOperations::Exception &e)
       {
@@ -68,16 +70,18 @@ void MigrationPagePrivate::doMagic()
         qDebug() << "do nothing, let kconf_update do magic";
         break;
       case MigrationTool::Merge:
-        DirOperations::recursiveCpDir(QDir::homePath()+KDE4DIR,QDir::homePath()+KDEDIR,
+        DirOperations::recursiveCpDir(KaboomSettings::instance().kde4homeDir().canonicalPath(),
+                                      KaboomSettings::instance().kdehomeDir().canonicalPath(),
                                       DirOperations::OverWrite,progress);
         qDebug() << "do magic experimental merge";
         break;
       case MigrationTool::Clean:
         qDebug() << "do recursive rm of .kde dir";
-        DirOperations::recursiveRmDir(QDir::homePath()+KDEDIR,progress);
+        DirOperations::recursiveRmDir(KaboomSettings::instance().kdehomeDir().canonicalPath(), progress);
         break;
       case MigrationTool::Move:
-        DirOperations::recursiveCpDir(QDir::homePath()+KDE4DIR,QDir::homePath()+KDEDIR,
+        DirOperations::recursiveCpDir(KaboomSettings::instance().kde4homeDir().canonicalPath(),
+                                      KaboomSettings::instance().kdehomeDir().canonicalPath(),
                                       DirOperations::RemoveDestination, progress);
         qDebug() << "move .kde4 over .kde";
         break;
