@@ -25,10 +25,15 @@ class RichRadioButton : public QAbstractButton
 public:
     explicit RichRadioButton(QWidget *parent = 0);
     explicit RichRadioButton(const QString & text, QWidget *parent = 0);
+    explicit RichRadioButton(const QString & text, const QString & details, QWidget *parent = 0);
     virtual ~RichRadioButton();
 
     //not virtual, do not call the parent's implementation!
     void setText(const QString & text);
+    void setDetailsText(const QString & text);
+
+public slots:
+    void setDetailsVisible(bool visible);
 
 protected:
     virtual bool event(QEvent *event);
