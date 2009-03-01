@@ -116,7 +116,7 @@ void ChoicePage::checkSpaceForBackup()
   quint64 dirsize = -1;
   try
   {
-      dirsize = DirOperations::calculateDirSize(QDir::homePath()+KDEDIR,d->progresswidget);
+      dirsize = DirOperations::calculateDirSize(KaboomSettings::instance().kdehomeDir().canonicalPath(),d->progresswidget);
   }
   catch (const DirOperations::Exception&)
   {
