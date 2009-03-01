@@ -48,7 +48,7 @@ void MigrationPagePrivate::doMagic()
       try
       {
         DirOperations::recursiveCpDir(KaboomSettings::instance().kdehomeDir().canonicalPath(),
-                                      KaboomSettings::instance().kde3backupDir().canonicalPath(),
+                                      KaboomSettings::instance().kde3backupDir().path(),
                                       DirOperations::RemoveDestination, progress);
       }
       catch (DirOperations::Exception &e)
@@ -81,7 +81,7 @@ void MigrationPagePrivate::doMagic()
         break;
       case MigrationTool::Move:
         DirOperations::recursiveCpDir(KaboomSettings::instance().kde4homeDir().canonicalPath(),
-                                      KaboomSettings::instance().kdehomeDir().canonicalPath(),
+                                      KaboomSettings::instance().kdehomeDir().path(),
                                       DirOperations::RemoveDestination, progress);
         qDebug() << "move .kde4 over .kde";
         break;
