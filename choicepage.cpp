@@ -32,6 +32,7 @@ class ChoicePagePrivate
     QCheckBox *backup;
     QWidget *backupinformation;
     QProgressBar *spacebar;
+    ProgressWidget *progresswidget;
     QLabel *freeinfo;
     bool haskde4dir;
     bool haskdedir;
@@ -74,6 +75,9 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
   d->clean = new RichRadioButton(tr("Start with default KDE settings and data. This option will <b>remove</b> all data and settings such as contacts, local stored mails, accounts in KMail and Kopete, bookmarks and other such data"),this);
   d->buttons->addButton(d->clean,MigrationTool::Clean);
   lay->addWidget(d->clean);
+  d->progresswidget = new ProgressWidget;
+  d->progresswidget->setMaximum(10);
+  lay->addWidget(d->progresswidget);
   d->backup = new QCheckBox(tr("Backup existing settings from KDE3 into .kde3-backup. (Highly recommended)"));
   registerField("backup",d->backup);
   lay->addWidget(d->backup);
@@ -99,7 +103,7 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
 
 void ChoicePage::initializePage()
 {
-  checkSpaceForBackup();
+  QTimer::singleShot(0, this, SLOT(checkSpaceForBackup()));
 }
 
 bool ChoicePage::backupSelected() const
@@ -111,17 +115,11 @@ bool ChoicePage::backupSelected() const
 
 void ChoicePage::checkSpaceForBackup()
 {
-  QDialog dialog(this);
-  QVBoxLayout *play = new QVBoxLayout(&dialog);
-  ProgressWidget *progress = new ProgressWidget;
-  play->addWidget(progress);
-  dialog.setWindowModality(Qt::WindowModal);
-  dialog.setWindowTitle(tr("Checking disk space..."));
-  dialog.show();
+  d->progresswidget->setVisible(true);
   quint64 dirsize = -1;
   try
   {
-      dirsize = DirOperations::calculateDirSize(QDir::homePath()+KDEDIR,progress);
+      dirsize = DirOperations::calculateDirSize(QDir::homePath()+KDEDIR,d->progresswidget);
   }
   catch (const DirOperations::Exception&)
   {
@@ -138,9 +136,8 @@ void ChoicePage::checkSpaceForBackup()
   }
   else
   {
-    //Troublesome when going back to the first page. It will return to the value
-    //set on construction. Thanks to the QCheckBox being a field.
     d->backupinformation->setVisible(false);
+    d->progresswidget->setVisible(false);
     d->backup->setChecked(true);
     d->backup->show();
   }
