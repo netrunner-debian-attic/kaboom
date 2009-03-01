@@ -15,23 +15,24 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "intropage.h"
+#include "kaboomsettings.h"
 
 IntroPage::IntroPage(QWidget *parent) : QWizardPage(parent)
 {
   setTitle(tr("Welcome to the Debian KDE Settings Migration Wizard!"));
-  QLabel *text = new QLabel(tr("<html>"
-    "<p align='justify'>This version of KDE 4 in Debian uses <u>~/.kde</u> "
+  QLabel *text = new QLabel(tr(
+    "<p align='justify'>This version of KDE 4 in Debian uses <u>%1</u> "
     "directory (where ~ refers to the path of your Home directory) to "
     "store user settings and data. The wizard has detected that you have "
     "recently upgraded to this version of KDE 4 from KDE 3 and/or previous "
-    "Debian KDE 4 release that used <u>~/.kde4</u> directory to store user "
+    "Debian KDE 4 release that used <u>%2</u> directory to store user "
     "settings.</p>"
 
     "<p align='justify'>This wizard will guide you through the process of "
     "backing up, copying, moving or merging your user settings and data which "
     "were created by the old KDE installation. Please note, however, that it "
     "does not migrate configuration files directly. It operates on the "
-    "filesystem level and sets up <u>~/.kde</u> directory the way you request "
+    "filesystem level and sets up <u>%1</u> directory the way you request "
     "in the next step.</p>"
     
     "<p align='justify'>Once you finish with this wizard, migration of the "
@@ -41,7 +42,8 @@ IntroPage::IntroPage(QWidget *parent) : QWizardPage(parent)
     "settings and data in the next step to avoid data loss in hopefully rare "
     "cases when some KDE 4 applications fail to migrate your important user "
     "settings and/or data properly.</p>"
-    "</html>"), this);
+    ).arg(KaboomSettings::instance().kdehomePrettyPath())
+     .arg(KaboomSettings::instance().kde4homePrettyPath()), this);
   text->setWordWrap(true);
   QVBoxLayout *lay = new QVBoxLayout();
   lay->addWidget(text);
