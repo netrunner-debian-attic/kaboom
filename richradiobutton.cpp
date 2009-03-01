@@ -30,9 +30,12 @@
 class EventEater : public QObject
 {
 public:
-    EventEater(QObject *parent) : QObject(parent) {}
+    EventEater(QObject *parent, bool enableToolTips=true)
+        : QObject(parent), m_enableToolTips(enableToolTips) {}
 protected:
     virtual bool eventFilter(QObject *watched, QEvent *event);
+private:
+    bool m_enableToolTips;
 };
 
 bool EventEater::eventFilter(QObject *watched, QEvent *event)
@@ -48,6 +51,12 @@ bool EventEater::eventFilter(QObject *watched, QEvent *event)
         case QEvent::HoverMove:
             event->ignore();
             return true;
+        case QEvent::QEvent::ToolTip:
+            if (m_enableToolTips) {
+                return QObject::eventFilter(watched, event);
+            } else {
+                return true; // discard event
+            }
         default:
             return QObject::eventFilter(watched, event);
     }
@@ -122,9 +131,10 @@ void RichRadioButton::Private::init(RichRadioButton *q)
 
     //install event filter to reject keyboard & mouse events from child objects
     EventEater *eventEater = new EventEater(q);
+    EventEater *eventEaterNoTT = new EventEater(q, false);
     m_button->installEventFilter(eventEater);
     m_label->installEventFilter(eventEater);
-    m_detailsLabel->installEventFilter(eventEater);
+    m_detailsLabel->installEventFilter(eventEaterNoTT);
 
     q->setCheckable(true);
     q->setAutoExclusive(true);
