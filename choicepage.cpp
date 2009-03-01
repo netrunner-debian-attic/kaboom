@@ -41,24 +41,26 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
 {
   d = new ChoicePagePrivate;
   QVBoxLayout *lay = new QVBoxLayout(this);
+  KaboomSettings& s = KaboomSettings::instance();
+
   setTitle(tr("Setting migration options"));
   d->buttons = new QButtonGroup(this);
   d->text = new QLabel(tr("Please choose one of the following migration scenarios:"),this);
   d->text->setWordWrap(true);
   lay->addWidget(d->text);
-  if(KaboomSettings::instance().kdehomeDir().exists())
+  if(s.kdehomeDir().exists())
   {
     d->migrate = new RichRadioButton(tr("Migrate settings from KDE3 to KDE4 (standard)"),this);
     d->buttons->addButton(d->migrate,MigrationTool::Migrate);
     lay->addWidget(d->migrate);
     d->migrate->setChecked(true);
   }
-  if(KaboomSettings::instance().kde4homeDir().exists())
+  if(s.kde4homeDir().exists())
   {
     d->move = new RichRadioButton(tr("Use existing KDE 4 settings and <b>replace</b> KDE 3 settings"));
     d->buttons->addButton(d->move,MigrationTool::Move);
     lay->addWidget(d->move);
-    if(KaboomSettings::instance().kdehomeDir().exists())
+    if(s.kdehomeDir().exists())
     {
       d->merge = new RichRadioButton(tr("Merge settings from KDE3 and KDE4 (experimental)"));
       d->buttons->addButton(d->merge,MigrationTool::Merge);
@@ -80,7 +82,7 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
   lay->addWidget(d->backup);
   d->backup->hide();
   d->backup->setChecked(false);
-  if(KaboomSettings::instance().kdehomeDir().exists()) //if no kdedir, nothing to backup.
+  if(s.kdehomeDir().exists()) //if no kdedir, nothing to backup.
   {
     d->backupinformation = new QWidget(this);
     QVBoxLayout *blay = new QVBoxLayout(d->backupinformation);
