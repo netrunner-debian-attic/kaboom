@@ -21,12 +21,12 @@ IntroPage::IntroPage(QWidget *parent) : QWizardPage(parent)
 {
   setTitle(tr("Welcome to the Debian KDE Settings Migration Wizard!"));
   QLabel *text = new QLabel(tr(
-    "<p align='justify'>This version of KDE 4 in Debian uses <u>%1</u> "
+    "<p align='justify'>This version of KDE&nbsp;4 in Debian uses <u>%1</u> "
     "directory (where ~ refers to the path of your Home directory) to "
     "store user settings and data. The wizard has detected that you have "
-    "recently upgraded to this version of KDE 4 from KDE 3 and/or previous "
-    "Debian KDE 4 release that used <u>%2</u> directory to store user "
-    "settings.</p>"
+    "recently upgraded to this version of KDE&nbsp;4 from KDE&nbsp;3 and/or "
+    "previous Debian KDE&nbsp;4 release that used <u>%2</u> directory to "
+    "store user settings.</p>"
 
     "<p align='justify'>This wizard will guide you through the process of "
     "backing up, copying, moving or merging your user settings and data which "
@@ -36,11 +36,11 @@ IntroPage::IntroPage(QWidget *parent) : QWizardPage(parent)
     "in the next step.</p>"
     
     "<p align='justify'>Once you finish with this wizard, migration of the "
-    "configuration files will be performed by KDE 4 applications themselves as "
-    "necessary. Therefore, if you are upgrading from KDE 3, it is "
-    "<strong>highly recommended</strong> to enable backing up of your old "
+    "configuration files will be performed by KDE&nbsp;4 applications "
+    "themselves as necessary. Therefore, if you are upgrading from KDE&nbsp;3, "
+    "it is <strong>highly recommended</strong> to enable backing up of your old "
     "settings and data in the next step to avoid data loss in hopefully rare "
-    "cases when some KDE 4 applications fail to migrate your important user "
+    "cases when some KDE&nbsp;4 applications fail to migrate your important user "
     "settings and/or data properly.</p>"
     ).arg(KaboomSettings::instance().kdehomePrettyPath())
      .arg(KaboomSettings::instance().kde4homePrettyPath()), this);
