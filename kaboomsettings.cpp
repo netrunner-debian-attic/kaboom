@@ -83,19 +83,17 @@ void KaboomSettings::setKdehomePath(KdeHomeType type, const QString & path)
     m_kdehomes[type] = dir;
     m_prettyKdehomes[type] = path;
 
-    if (dir.exists()) {
-        /* Determine pretty path (replace $HOME with ~) */
-        QStringList paths;
-        QString homepath = QDir::homePath();
+    /* Determine pretty path (replace $HOME with ~) */
+    QStringList paths;
+    QString homepath = QDir::homePath();
 
-        paths.append(dir.absolutePath());
-        paths.append(dir.canonicalPath());
-        foreach (QString path, paths) {
-            if (path.indexOf(homepath) == 0) {
-                path.replace(0, homepath.length(), "~");
-                m_prettyKdehomes[type] = path;
-                break;
-            }
+    paths.append(dir.absolutePath());
+    paths.append(dir.canonicalPath());
+    foreach (QString path, paths) {
+        if (path.indexOf(homepath) == 0) {
+            path.replace(0, homepath.length(), "~");
+            m_prettyKdehomes[type] = path;
+            break;
         }
     }
 }
