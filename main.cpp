@@ -23,6 +23,7 @@
 int main(int argc, char* argv[])
 {
   KaboomSettings settings(argc, argv);
+  settings.dump(); // dump settings for debugging purposes
 
   if(settings.stampExists())
   {
