@@ -24,7 +24,8 @@ class ChoicePagePrivate
 {
   public:
     ChoicePagePrivate() : backup(NULL) {}
-    QLabel *text;
+    QLabel *configInfoLabel, *configLabel, *onceDoneLabel;
+    QLabel *scenariosLabel;
     RichRadioButton *clean;
     RichRadioButton *migrate;
     RichRadioButton *move;
@@ -45,9 +46,40 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
 
   setTitle(tr("Setting migration options"));
   d->buttons = new QButtonGroup(this);
-  d->text = new QLabel(tr("Please choose one of the following migration scenarios:"),this);
-  d->text->setWordWrap(true);
-  lay->addWidget(d->text);
+
+  d->configInfoLabel = new QLabel(tr("Current configuration:"));
+  d->configInfoLabel->setWordWrap(true);
+
+  d->configLabel = new QLabel(tr("%1%2")
+    .arg((s.kdehomeDir().exists()) ?
+        tr("<strong>KDE&nbsp;3</strong> settings and data are at <u>%1</u><br/>").arg(s.kdehomePrettyPath()) : "")
+    .arg((s.kde4homeDir().exists()) ?
+        tr("<strong>KDE&nbsp;4</strong> settings and data are at <u>%1</u><br/>").arg(s.kde4homePrettyPath()) : ""),
+    this);
+  d->configLabel->setWordWrap(true);
+  d->configLabel->setIndent(20);
+
+  d->onceDoneLabel = new QLabel(
+    tr("Once you finish with this wizard, <strong>KDE&nbsp;4</strong> will use <u>%1</u> "
+       "to store user settings and data. Optionally, <strong>KDE&nbsp;3</strong> "
+       "settings and data may be backed up to <u>%2</u>.")
+            .arg(s.kdehomePrettyPath())
+            .arg(s.kdehomePrettyPath(KaboomSettings::Kde3Backup)),
+    this);
+  d->onceDoneLabel->setWordWrap(true);
+
+  d->scenariosLabel = new QLabel(tr("Please choose one of the following migration scenarios:"),this);
+  QFont font;
+  font.setBold(true);
+  d->scenariosLabel->setFont(font);
+  d->scenariosLabel->setWordWrap(true);
+
+  lay->addWidget(d->configInfoLabel);
+  lay->addWidget(d->configLabel);
+  lay->addWidget(d->onceDoneLabel);
+  lay->addSpacing(10);
+  lay->addWidget(d->scenariosLabel);
+
   if(s.kdehomeDir().exists())
   {
     d->migrate = new RichRadioButton(tr("Migrate settings from KDE3 to KDE4 (standard)"),this);
