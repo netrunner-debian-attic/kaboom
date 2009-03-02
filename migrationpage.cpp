@@ -30,7 +30,7 @@ MigrationPagePrivate::MigrationPagePrivate(MigrationPage* parent)
   progress=new ProgressWidget(q);
   start = new QPushButton(tr("Start"),q);
   error = new QLabel(q);
-  errorbox = new QGroupBox(tr("Errors occured"),q);
+  errorbox = new QGroupBox(tr("Errors occurred"),q);
   QBoxLayout *errorboxlayout = new QHBoxLayout(errorbox);
   errorboxlayout->addWidget(error);
   errorbox->hide();

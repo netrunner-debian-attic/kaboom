@@ -89,7 +89,7 @@
     </message>
     <message>
         <location filename="migrationpage.cpp" line="32"/>
-        <source>Errors occured</source>
+        <source>Errors occurred</source>
         <translation>Errors en el procés</translation>
     </message>
     <message>

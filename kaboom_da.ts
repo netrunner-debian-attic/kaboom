@@ -108,7 +108,7 @@
     </message>
     <message>
         <location filename="migrationpage.cpp" line="32"/>
-        <source>Errors occured</source>
+        <source>Errors occurred</source>
         <translation>Der opstod fejl</translation>
     </message>
     <message>
