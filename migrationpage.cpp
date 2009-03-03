@@ -76,8 +76,8 @@ void MigrationPagePrivate::doMagic()
         qDebug() << "do magic experimental merge";
         break;
       case MigrationTool::Clean:
-        qDebug() << "do recursive rm of .kde dir";
-        DirOperations::recursiveRmDir(KaboomSettings::instance().kdehomeDir().canonicalPath(), progress);
+        qDebug() << "do recursive rm of .kde dir if exists";
+        DirOperations::recursiveRmDir(KaboomSettings::instance().kdehomeDir().path(), progress);
         break;
       case MigrationTool::Move:
         DirOperations::recursiveCpDir(KaboomSettings::instance().kde4homeDir().canonicalPath(),
