@@ -24,7 +24,7 @@
 class ChoicePagePrivate
 {
   public:
-    ChoicePagePrivate() : backup(NULL) {}
+    ChoicePagePrivate() : backup(NULL), backupinformation(NULL) {}
     QLabel *configInfoLabel, *configLabel, *onceDoneLabel;
     QLabel *scenariosLabel;
     RichRadioButton *clean;
@@ -80,6 +80,10 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
   lay->addWidget(d->onceDoneLabel);
   lay->addSpacing(10);
   lay->addWidget(d->scenariosLabel);
+  
+  d->backupinformation = new QWidget(this);
+  d->backupinformation->hide();
+  lay->addWidget(d->backupinformation);
 
   if(s.kdehomeDir().exists())
   {
@@ -158,7 +162,6 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
   d->backup->setChecked(false);
   if(s.kdehomeDir().exists()) //if no kdedir, nothing to backup.
   {
-    d->backupinformation = new QWidget(this);
     QVBoxLayout *blay = new QVBoxLayout(d->backupinformation);
     QLabel *freewarning = new QLabel(tr("Insufficient free space to complete a backup, please consider freeing up some space. You can go to TTY1 to do this."),this);
     d->spacebar = new QProgressBar(this);
@@ -169,7 +172,7 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
     blay->addWidget(d->spacebar);
     blay->addWidget(d->freeinfo);
     blay->addWidget(recheck);
-    lay->addWidget(d->backupinformation);
+    d->backupinformation->show();
     connect(recheck,SIGNAL(clicked()),this,SLOT(checkSpaceForBackup()));
   }
 }
@@ -209,7 +212,7 @@ void ChoicePage::checkSpaceForBackup()
   }
   else
   {
-    d->backupinformation->setVisible(false);
+    d->backupinformation->hide();
     d->progresswidget->setVisible(false);
     d->backup->setChecked(true);
     d->backup->show();
