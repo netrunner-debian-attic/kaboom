@@ -1,2 +1,7 @@
 *.qm
 build/
+moc_*
+*.o
+qrc_*
+kaboom
+Makefile
