@@ -25,12 +25,14 @@ HEADERS += \
       migrationtool_p.h \
       warningpage.h \
       diroperations/diroperations.h \
+      diroperations/recursivedirjob.h \
+      diroperations/recursivedirjob_p.h \
       diroperations/progresswidget.h \
       richradiobutton.h
 
 
 SOURCES += \
-      kaboomsettings.cpp \ 
+      kaboomsettings.cpp \
       choicepage.cpp \
       intropage.cpp \
       main.cpp \
@@ -38,6 +40,7 @@ SOURCES += \
       migrationtool.cpp \
       warningpage.cpp \
       diroperations/diroperations.cpp \
+      diroperations/recursivedirjob.cpp \
       diroperations/progresswidget.cpp \
       richradiobutton.cpp
 

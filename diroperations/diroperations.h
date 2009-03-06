@@ -18,7 +18,8 @@
 #ifndef DIROPERATIONS_H
 #define DIROPERATIONS_H
 
-#include <QString>
+#include <QtCore/QString>
+#include <QtCore/QMetaType>
 
 namespace DirOperations {
 
@@ -28,22 +29,21 @@ namespace DirOperations {
         virtual ~ProgressDialogInterface() {}
 
         virtual void setLabelText(const QString & text) = 0;
-        virtual bool wasCanceled() const = 0;
-        virtual void setMaximum(int max) = 0;
-        virtual void setValue(int value) = 0;
-        virtual void processEvents() = 0;
+        virtual void setMaximum(quint64 max) = 0;
+        virtual void setValue(quint64 value) = 0;
     };
 
     class Exception
     {
     public:
         enum Type { OperationCanceled, AccessDenied, NoSuchFileOrDirectory,
-                    FileOrDirectoryExists, CopyFail, MkdirFail, RmFail };
+                    FileOrDirectoryExists, CopyFail, MkdirFail, RmFail, NoError };
 
+        explicit Exception() : m_type(NoError) {}
         explicit Exception(Type type, const QString & extraInfo = QString())
                     : m_type(type), m_info(extraInfo) {}
 
-        Type exceptionType() const { return m_type; }
+        Type type() const { return m_type; }
         QString what() const;
 
     private:
@@ -53,7 +53,6 @@ namespace DirOperations {
 
     enum CopyOption { NoOptions = 0x0, RemoveDestination = 0x1, OverWrite = 0x2 };
     Q_DECLARE_FLAGS(CopyOptions, CopyOption);
-    Q_DECLARE_OPERATORS_FOR_FLAGS(CopyOptions);
 
     /*! Returns the target path of the symbolic link \a fileName .
      * The path returned is relative to the symlink. For example if
@@ -66,12 +65,12 @@ namespace DirOperations {
 
     /*! Calculates the free space in the partition of a dir */
     quint64 freeDirSpace(const QString & dir);
-    
+
     /*! Calculates the total space of a partition */
     quint64 totalPartitionSize(const QString & dir);
 
     /*! Calculates the size of a directory. Works like "du -hs". */
-    qint64 calculateDirSize(const QString & dir, ProgressDialogInterface *pd = 0);
+    quint64 calculateDirSize(const QString & dir, ProgressDialogInterface *pd = 0);
 
     /*! Copies directory \a sourcePath and all of its contents
      * to directory \a destPath . Works like "cp -r".
@@ -87,5 +86,8 @@ namespace DirOperations {
     void recursiveRmDir(const QString & dir, ProgressDialogInterface *pd = 0);
 
 } //namespace DirOperations
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(DirOperations::CopyOptions)
+Q_DECLARE_METATYPE(DirOperations::CopyOptions)
 
 #endif

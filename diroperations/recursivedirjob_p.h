@@ -14,26 +14,30 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef PROGRESSWIDGET_H
-#define PROGRESSWIDGET_H
+#ifndef RECURSIVEDIRJOB_P_H
+#define RECURSIVEDIRJOB_P_H
 
-#include "diroperations.h"
-#include <QWidget>
-class QLabel;
-class QProgressBar;
+#include "recursivedirjob.h"
 
-class ProgressWidget : public QWidget, public DirOperations::ProgressDialogInterface
+class RecursiveDirJobHelper : public QObject
 {
+    Q_OBJECT
 public:
-    ProgressWidget(QWidget *parent = 0);
+    RecursiveDirJobHelper(bool reportProgress, QObject *parent = 0)
+        : QObject(parent), m_reportProgress(reportProgress) {}
 
-    virtual void setLabelText(const QString & text);
-    virtual void setMaximum(quint64 max);
-    virtual void setValue(quint64 value);
+    quint64 calculateDirSize(const QString & dir);
+    void recursiveCpDir(const QString & sourcePath, const QString & destPath,
+                        DirOperations::CopyOptions options);
+    void recursiveRmDir(const QString & dir);
+
+signals:
+    void setValue(quint64 value);
+    void setMaximum(quint64 maxValue);
+    void setLabelText(QString text);
 
 private:
-    QLabel *m_label;
-    QProgressBar *m_progressBar;
+    bool m_reportProgress;
 };
 
 #endif

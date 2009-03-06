@@ -15,15 +15,15 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+#include "diroperations.h"
+#include "recursivedirjob.h"
+#include <QtCore/QFile>
+#include <QtCore/QEventLoop>
+#include <QtCore/QVariant>
+#include <QtCore/QDebug>
+#include <climits> //for PATH_MAX
 #define _FILE_OFFSET_BITS 64
 #include <sys/statvfs.h> // for statvfs for calculating free space
-#include "diroperations.h"
-#include <QDir>
-#include <QFileInfo>
-#include <QStack>
-#include <QDebug>
-#include <climits> //for PATH_MAX
-
 
 namespace DirOperations {
 
@@ -63,7 +63,7 @@ quint64 freeDirSpace(const QString & dir)
     }
     qDebug() << "freeDirSpace" << dir << info.f_bsize*info.f_bavail;
     return info.f_bsize*info.f_bavail;
-  
+
 }
 
 quint64 totalPartitionSize(const QString & dir)
@@ -77,253 +77,51 @@ quint64 totalPartitionSize(const QString & dir)
     }
     qDebug() << "totalPartitionSize" << dir << info.f_bsize*info.f_blocks;
     return info.f_frsize*info.f_blocks;
-  
+
 }
 
-qint64 calculateDirSize(const QString & dir, ProgressDialogInterface *pd)
+quint64 calculateDirSize(const QString & dir, ProgressDialogInterface *pd)
 {
-    QDir currentDir(dir);
-    if ( !currentDir.exists() )
-        throw Exception(Exception::NoSuchFileOrDirectory, dir);
-
-    QDir::Filters filters = QDir::AllEntries | QDir::NoDotAndDotDot | QDir::Hidden | QDir::System | QDir::CaseSensitive;
-    QFileInfoList currentList = currentDir.entryInfoList( filters, QDir::DirsLast );
-    QFileInfo currentItem;
-    QStack<QFileInfoList> stack;
-    qint64 totalSize = 0;
-    int refreshCounter = 0;
-
-    while(1){
-        if ( !currentList.isEmpty() ){
-            currentItem = currentList.takeFirst();
-            totalSize += currentItem.size();
-
-            if ( currentItem.isDir() && !currentItem.isSymLink() ) {
-                if ( !currentDir.cd(currentItem.fileName()) )
-                    throw Exception(Exception::AccessDenied, currentItem.absoluteFilePath());
-                stack.push(currentList);
-                currentList = currentDir.entryInfoList( filters, QDir::DirsLast );
-            }
-
-            if ( pd && (++refreshCounter % 100 == 0) ) {
-                pd->setLabelText(QObject::tr("Calculating... %1 bytes").arg(totalSize));
-                pd->processEvents();
-                if (pd->wasCanceled())
-                    throw Exception(Exception::OperationCanceled);
-            }
-
-        } else { // list is empty
-            if ( !stack.isEmpty() ){
-                currentList = stack.pop();
-                currentDir.cdUp();
-            } else
-                break;
-        }
-    }
-
-    totalSize += QFileInfo(dir).size();
-    return totalSize;
+    QEventLoop loop;
+    RecursiveDirJob *j = RecursiveDirJob::calculateDirSize(dir);
+    j->setProgressDialogInterface(pd);
+    //we will start the thread as soon as we are in the event loop, because if the thread
+    //finishes too early (before the event loop starts), quit() will not work and we will stay
+    //in this event loop forever.
+    QMetaObject::invokeMethod(j, "start", Qt::QueuedConnection);
+    QObject::connect(j, SIGNAL(finished()), &loop, SLOT(quit()) );
+    loop.exec();
+    j->deleteLater();
+    if ( j->hasError() )
+        throw j->lastError();
+    return qvariant_cast<quint64>(j->result());
 }
 
-void recursiveCpDir(const QString & sourcePath, const QString & destPath, CopyOptions options, ProgressDialogInterface *pd)
+void recursiveCpDir(const QString & sourcePath, const QString & destPath,
+                    CopyOptions options, ProgressDialogInterface *pd)
 {
-    QDir source(sourcePath);
-    if ( !source.exists() )
-        throw Exception(Exception::NoSuchFileOrDirectory, sourcePath);
-
-    QDir dest(destPath);
-    if ( dest.exists() ) {
-        if ( options & RemoveDestination )
-            recursiveRmDir(destPath, pd);
-        else if ( !(options & OverWrite) )
-            throw Exception(Exception::FileOrDirectoryExists, destPath);
-    }
-
-    dest.mkdir(dest.absolutePath());
-
-    QDir::Filters filters = QDir::AllEntries | QDir::NoDotAndDotDot | QDir::Hidden | QDir::System | QDir::CaseSensitive;
-    QFileInfoList currentList = source.entryInfoList( filters, QDir::DirsLast );
-    QFileInfo currentItem;
-    QStack<QFileInfoList> stack;
-    QString currentName;
-    qint64 bytesCopied = 0;
-
-    if ( pd ) {
-        qint64 dirSize = calculateDirSize(sourcePath, pd);
-        pd->setLabelText(QObject::tr("Copying files..."));
-        if (dirSize > 0) {
-            pd->setMaximum(dirSize);
-            //the directory special file is already (almost) copied in dest.mkdir() above
-            bytesCopied += QFileInfo(sourcePath).size();
-            pd->setValue(bytesCopied);
-        } else {
-            //no files to be copied, so set the progressbar to 100%
-            pd->setMaximum(1);
-            pd->setValue(1);
-        }
-    }
-
-    while(1)
-    {
-        if ( !currentList.isEmpty() )
-        {
-            currentItem = currentList.takeFirst();
-            currentName = currentItem.fileName();
-
-            if ( currentItem.isSymLink() )
-            {
-                if ( options & OverWrite ) {
-                    if ( QFile::exists(dest.absoluteFilePath(currentName)) &&
-                         !QFile::remove(dest.absoluteFilePath(currentName)) )
-                        throw Exception(Exception::RmFail, dest.absoluteFilePath(currentName));
-                }
-                if ( !QFile::link( relativeSymLinkTarget(source.absoluteFilePath(currentName)),
-                                    dest.absoluteFilePath(currentName) ) )
-                    throw Exception(Exception::CopyFail, source.absoluteFilePath(currentName));
-            }
-            else if ( currentItem.isDir() )
-            {
-                if ( !source.cd(currentName) )
-                    throw Exception(Exception::AccessDenied, source.absoluteFilePath(currentName));
-                if ( !dest.cd(currentName) ) {
-                    //if the target dir doesn't exist, create it and try again.
-                    if ( !dest.mkdir(currentName) )
-                        throw Exception(Exception::MkdirFail, dest.absoluteFilePath(currentName));
-                    if ( !dest.cd(currentName) )
-                        throw Exception(Exception::AccessDenied, dest.absoluteFilePath(currentName)); //quite impossible
-                }
-
-                stack.push(currentList);
-                currentList = source.entryInfoList( filters, QDir::DirsLast );
-            }
-            else if ( currentItem.isFile() )
-            {
-                if ( options & OverWrite ) {
-                    if ( QFile::exists(dest.absoluteFilePath(currentName)) &&
-                         !QFile::remove(dest.absoluteFilePath(currentName)) )
-                        throw Exception(Exception::RmFail, dest.absoluteFilePath(currentName));
-                }
-                if ( !QFile::copy( source.absoluteFilePath(currentName), dest.absoluteFilePath(currentName) ) )
-                    throw Exception(Exception::CopyFail, source.absoluteFilePath(currentName));
-            }
-            else
-            {
-                qDebug() << "Ignoring special file" << source.absoluteFilePath(currentName);
-            }
-
-            if ( pd ) {
-                bytesCopied += currentItem.size();
-                pd->setValue(bytesCopied);
-            }
-        }
-        else // list is empty
-        {
-            if ( !stack.isEmpty() )
-            {
-                currentList = stack.pop();
-                source.cdUp();
-                dest.cdUp();
-            }
-            else
-                break;
-        }
-
-        if ( pd ) {
-            pd->processEvents();
-            if (pd->wasCanceled())
-                throw Exception(Exception::OperationCanceled);
-        }
-    }
+    QEventLoop loop;
+    RecursiveDirJob *j = RecursiveDirJob::recursiveCpDir(sourcePath, destPath, options);
+    j->setProgressDialogInterface(pd);
+    QMetaObject::invokeMethod(j, "start", Qt::QueuedConnection);
+    QObject::connect(j, SIGNAL(finished()), &loop, SLOT(quit()) );
+    loop.exec();
+    j->deleteLater();
+    if ( j->hasError() )
+        throw j->lastError();
 }
 
 void recursiveRmDir(const QString & dir, ProgressDialogInterface *pd)
 {
-    QDir currentDir(dir);
-    if ( !currentDir.exists() ) {
-        qWarning() << "recursiveRmDir: trying to remove non-existent directory" << dir;
-        if (pd) {
-            //no files to be removed, so set the progressbar to 100%
-            pd->setMaximum(1);
-            pd->setValue(1);
-        }
-        return; // directory gone, no work to do
-    }
-
-    QDir::Filters filters = QDir::AllEntries | QDir::NoDotAndDotDot | QDir::Hidden | QDir::System | QDir::CaseSensitive;
-    QFileInfoList currentList = currentDir.entryInfoList( filters, QDir::DirsLast );
-    QFileInfo currentItem;
-    QStack<QFileInfoList> stack;
-    qint64 bytesRemoved = 0;
-
-    if ( pd ) {
-        qint64 dirSize = calculateDirSize(dir, pd);
-        pd->setLabelText(QObject::tr("Removing files..."));
-        if (dirSize > 0) {
-            pd->setMaximum(dirSize);
-        } else {
-            //no files to be removed, so set the progressbar to 100%
-            pd->setMaximum(1);
-            pd->setValue(1);
-        }
-    }
-
-    while(1)
-    {
-        if ( !currentList.isEmpty() ){
-            currentItem = currentList.takeFirst();
-
-            if ( currentItem.isDir() && !currentItem.isSymLink() )
-            {
-                if ( !currentDir.cd(currentItem.fileName()) )
-                    throw Exception(Exception::AccessDenied, currentItem.absoluteFilePath());
-                stack.push(currentList);
-                currentList = currentDir.entryInfoList( filters, QDir::DirsLast );
-            }
-            else
-            {
-                if ( pd ) {
-                    bytesRemoved += currentItem.size();
-                    pd->setValue(bytesRemoved);
-                }
-
-                if ( !currentDir.remove(currentItem.fileName()) )
-                    throw Exception(Exception::RmFail, currentItem.absoluteFilePath());
-            }
-        }
-        else // list is empty
-        {
-            bool quit = false;
-            if ( !stack.isEmpty() )
-                currentList = stack.pop();
-            else
-                quit = true;
-
-            //if quit == true, we remove the original dir itself, now that it is empty for sure...
-            QString tmpname = currentDir.dirName();
-            currentDir.cdUp();
-
-            if ( pd ) {
-                //count the directory special file before it is removed
-                bytesRemoved += QFileInfo(currentDir, tmpname).size();
-                pd->setValue(bytesRemoved);
-                //if we are about to quit, process events before exiting the loop (to make the progressbar reach 100%)
-                if ( quit )
-                    pd->processEvents();
-            }
-
-            if ( !currentDir.rmdir(tmpname) )
-                throw Exception(Exception::RmFail, currentDir.absoluteFilePath(tmpname));
-
-            if ( quit )
-                break;
-        }
-
-        if ( pd ) {
-            pd->processEvents();
-            if (pd->wasCanceled())
-                throw Exception(Exception::OperationCanceled);
-        }
-    }
+    QEventLoop loop;
+    RecursiveDirJob *j = RecursiveDirJob::recursiveRmDir(dir);
+    j->setProgressDialogInterface(pd);
+    QMetaObject::invokeMethod(j, "start", Qt::QueuedConnection);
+    QObject::connect(j, SIGNAL(finished()), &loop, SLOT(quit()) );
+    loop.exec();
+    j->deleteLater();
+    if ( j->hasError() )
+        throw j->lastError();
 }
 
 } //namespace DirOperations

@@ -18,7 +18,6 @@
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QProgressBar>
-#include <QApplication>
 
 ProgressWidget::ProgressWidget(QWidget *parent)
     : QWidget(parent)
@@ -37,22 +36,13 @@ void ProgressWidget::setLabelText(const QString & text)
     m_label->setText(text);
 }
 
-bool ProgressWidget::wasCanceled() const
-{
-    return false;
-}
-
-void ProgressWidget::setMaximum(int max)
+void ProgressWidget::setMaximum(quint64 max)
 {
     m_progressBar->setMaximum(max);
 }
 
-void ProgressWidget::setValue(int value)
+void ProgressWidget::setValue(quint64 value)
 {
     m_progressBar->setValue(value);
 }
 
-void ProgressWidget::processEvents()
-{
-    qApp->processEvents();
-}
