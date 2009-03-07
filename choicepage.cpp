@@ -1,6 +1,7 @@
 /*
     Copyright (C) 2009 Sune Vuorela <sune@vuorela.dk>
               (C) 2009 Modestas Vainius <modestas@vainius.eu>
+              (C) 2009 George Kiagiadakis <gkiagia@users.sourceforge.net>
 
     This library is free software; you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -24,7 +25,7 @@
 class ChoicePagePrivate
 {
   public:
-    ChoicePagePrivate() : backup(NULL), backupinformation(NULL) {}
+    ChoicePagePrivate() : backup(NULL) {}
     QLabel *configInfoLabel, *configLabel, *onceDoneLabel;
     QLabel *scenariosLabel;
     RichRadioButton *clean;
@@ -33,10 +34,9 @@ class ChoicePagePrivate
     RichRadioButton *merge;
     QButtonGroup *buttons;
     QCheckBox *backup;
-    QWidget *backupinformation;
-    QProgressBar *spacebar;
+    QLabel *freewarning;
     ProgressWidget *progresswidget;
-    QLabel *freeinfo;
+    QPushButton *recheck;
 };
 
 ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
@@ -48,7 +48,11 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
   setTitle(tr("Setting migration options"));
   d->buttons = new QButtonGroup(this);
 
+  QFont boldFont;
+  boldFont.setBold(true);
+
   d->configInfoLabel = new QLabel(tr("Current configuration:"));
+  d->configInfoLabel->setFont(boldFont);
   d->configInfoLabel->setWordWrap(true);
 
   d->configLabel = new QLabel(tr("%1%2")
@@ -70,9 +74,7 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
   d->onceDoneLabel->setWordWrap(true);
 
   d->scenariosLabel = new QLabel(tr("Please choose one of the following migration scenarios:"),this);
-  QFont font;
-  font.setBold(true);
-  d->scenariosLabel->setFont(font);
+  d->scenariosLabel->setFont(boldFont);
   d->scenariosLabel->setWordWrap(true);
 
   lay->addWidget(d->configInfoLabel);
@@ -80,10 +82,6 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
   lay->addWidget(d->onceDoneLabel);
   lay->addSpacing(10);
   lay->addWidget(d->scenariosLabel);
-
-  d->backupinformation = new QWidget(this);
-  d->backupinformation->hide();
-  lay->addWidget(d->backupinformation);
 
   if(s.kdehomeDir().exists())
   {
@@ -149,75 +147,94 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
     this);
   d->buttons->addButton(d->clean,MigrationTool::Clean);
   lay->addWidget(d->clean);
-  d->progresswidget = new ProgressWidget;
-  d->progresswidget->setMaximum(10);
-  lay->addWidget(d->progresswidget);
+
   d->backup = new QCheckBox(
     tr("Backup existing KDE 3 settings into %1. (Highly recommended)")
         .arg(s.kdehomePrettyPath(KaboomSettings::Kde3Backup)),
     this);
+  d->backup->setChecked(false);
   registerField("backup",d->backup);
   lay->addWidget(d->backup);
-  d->backup->hide();
-  d->backup->setChecked(false);
+
   if(s.kdehomeDir().exists()) //if no kdedir, nothing to backup.
   {
-    QVBoxLayout *blay = new QVBoxLayout(d->backupinformation);
-    QLabel *freewarning = new QLabel(tr("Insufficient free space to complete a backup, please consider freeing up some space. You can go to TTY1 to do this."),this);
-    d->spacebar = new QProgressBar(this);
-    d->spacebar->setMaximum(100);
-    d->freeinfo = new QLabel;
-    QPushButton *recheck = new QPushButton(tr("Recheck"));
-    blay->addWidget(freewarning);
-    blay->addWidget(d->spacebar);
-    blay->addWidget(d->freeinfo);
-    blay->addWidget(recheck);
-    d->backupinformation->show();
-    connect(recheck,SIGNAL(clicked()),this,SLOT(checkSpaceForBackup()));
+    d->freewarning = new QLabel(
+        tr("<p><b>Warning:</b> Insufficient free space to complete a backup, "
+        "please consider freeing up some space. You can go to TTY1 to do this.</p>"), this);
+    d->freewarning->setWordWrap(true);
+    d->freewarning->hide();
+    lay->addWidget(d->freewarning);
+
+    QHBoxLayout *hlay = new QHBoxLayout;
+    d->progresswidget = new ProgressWidget(this);
+    hlay->addWidget(d->progresswidget);
+    d->recheck = new QPushButton(tr("Recheck"));
+    hlay->addWidget(d->recheck);
+    connect(d->recheck,SIGNAL(clicked()),this,SLOT(checkSpaceForBackup()));
+    lay->addLayout(hlay);
+  }
+  else
+  {
+    d->backup->hide();
   }
 }
 
 void ChoicePage::initializePage()
 {
-  QTimer::singleShot(0, this, SLOT(checkSpaceForBackup()));
+  if ( KaboomSettings::instance().kdehomeDir().exists() )
+    QTimer::singleShot(0, this, SLOT(checkSpaceForBackup()));
 }
 
 bool ChoicePage::backupSelected() const
 {
-  if(0)
-    qDebug() << tr("Recheck");
   return d->backup ? d->backup->isChecked() : false;
 }
 
 void ChoicePage::checkSpaceForBackup()
 {
-  d->progresswidget->setVisible(true);
+  Q_ASSERT(KaboomSettings::instance().kdehomeDir().exists());
+
+  //don't allow the user to change page while we are calculating...
+  wizard()->button(QWizard::BackButton)->setEnabled(false);
+  wizard()->button(QWizard::NextButton)->setEnabled(false);
+
+  d->progresswidget->show();
+  d->recheck->hide();
+  d->freewarning->hide();
+  d->backup->setEnabled(false);
+  d->backup->setChecked(false);
+
   quint64 dirsize = -1;
-  try
-  {
-      dirsize = DirOperations::calculateDirSize(KaboomSettings::instance().kdehomeDir().canonicalPath(),d->progresswidget);
-  }
-  catch (const DirOperations::Exception&)
-  {
-      // nop - default set before.
-  }
   quint64 freespace = DirOperations::freeDirSpace(QDir::homePath());
+  try {
+      dirsize = DirOperations::calculateDirSize(
+                    KaboomSettings::instance().kdehomeDir().canonicalPath(),
+                    d->progresswidget
+                );
+  } catch (const DirOperations::Exception&) {}
+
   if(dirsize > freespace)
   {
     quint64 partsize = DirOperations::totalPartitionSize(QDir::homePath());
-    d->spacebar->setValue(round(static_cast<double>(partsize-freespace)/static_cast<double>(partsize)*100));
-    d->freeinfo->setText( tr("The current KDE settings and data directory takes up %1")
-                            .arg(DirOperations::bytesToString(dirsize)) );
-    d->backupinformation->setVisible(true);
-    d->backup->hide();
+    d->progresswidget->setMaximum(partsize);
+    d->progresswidget->setValue(partsize-freespace);
+    d->progresswidget->setLabelText(
+        tr("<p><i>The current KDE&nbsp;3 settings and data directory takes up %1</i></p>")
+            .arg(DirOperations::bytesToString(dirsize))
+    );
+    d->recheck->show();
+    d->freewarning->show();
   }
   else
   {
-    d->backupinformation->hide();
-    d->progresswidget->setVisible(false);
+    d->progresswidget->hide();
+    d->recheck->hide();
+    d->backup->setEnabled(true);
     d->backup->setChecked(true);
-    d->backup->show();
   }
+
+  wizard()->button(QWizard::BackButton)->setEnabled(true);
+  wizard()->button(QWizard::NextButton)->setEnabled(true);
 }
 
 MigrationTool::Selection ChoicePage::selected() const

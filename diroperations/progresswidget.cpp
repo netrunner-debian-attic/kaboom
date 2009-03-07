@@ -26,6 +26,7 @@ ProgressWidget::ProgressWidget(QWidget *parent)
     QVBoxLayout *layout = new QVBoxLayout(this);
 
     m_label = new QLabel(this);
+    m_label->setWordWrap(true);
     layout->addWidget(m_label);
 
     m_progressBar = new QProgressBar(this);
