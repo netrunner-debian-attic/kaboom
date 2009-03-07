@@ -20,6 +20,7 @@
 #include <QtCore/QFile>
 #include <QtCore/QEventLoop>
 #include <QtCore/QVariant>
+#include <QtCore/QCoreApplication>
 #include <QtCore/QDebug>
 #include <climits> //for PATH_MAX
 #define _FILE_OFFSET_BITS 64
@@ -41,6 +42,21 @@ QString Exception::what() const
     }
 }
 
+QString bytesToString(quint64 bytes)
+{
+    if ( bytes > (1<<30) )
+        return QCoreApplication::translate("DirOperations", "%L1 GiB")
+                                .arg(double(bytes) / (1<<30), 0, 'f', 2);
+    else if ( bytes > (1<<20) )
+        return QCoreApplication::translate("DirOperations", "%L1 MiB")
+                                .arg(double(bytes) / (1<<20), 0, 'f', 2);
+    else if ( bytes > (1<<10) )
+        return QCoreApplication::translate("DirOperations", "%L1 KiB")
+                                .arg(double(bytes) / (1<<10), 0, 'f', 2);
+    else
+        return QCoreApplication::translate("DirOperations", "%L1 bytes")
+                                .arg(bytes);
+}
 
 QString relativeSymLinkTarget(const QString & fileName)
 {

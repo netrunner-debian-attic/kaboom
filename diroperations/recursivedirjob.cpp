@@ -143,7 +143,8 @@ quint64 RecursiveDirJobHelper::calculateDirSize(const QString & dir)
             }
 
             if ( m_reportProgress && (++refreshCounter % 100 == 0) )
-                emit setLabelText(tr("Calculating... %1 bytes").arg(totalSize));
+                emit setLabelText( tr("Calculating the size of \"%1\"... %2")
+                                    .arg(dir).arg(bytesToString(totalSize)) );
 
         } else { // list is empty
             if ( !stack.isEmpty() ){
@@ -182,7 +183,7 @@ void RecursiveDirJobHelper::recursiveCpDir(const QString & sourcePath, const QSt
 
     if ( m_reportProgress ) {
         quint64 dirSize = calculateDirSize(sourcePath);
-        emit setLabelText(tr("Copying files..."));
+        emit setLabelText(tr("Copying files from \"%1\" to \"%2\"...").arg(sourcePath).arg(destPath));
         if (dirSize > 0) {
             emit setMaximum(dirSize);
             //the directory special file is already (almost) copied in dest.mkdir() above
@@ -282,7 +283,7 @@ void RecursiveDirJobHelper::recursiveRmDir(const QString & dir)
 
     if (m_reportProgress) {
         quint64 dirSize = calculateDirSize(dir);
-        emit setLabelText(tr("Removing files..."));
+        emit setLabelText(tr("Removing directory \"%1\"...").arg(dir));
         if (dirSize > 0) {
             emit setMaximum(dirSize);
             //start with the size of the directory to be removed.

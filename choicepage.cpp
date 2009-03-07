@@ -80,7 +80,7 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
   lay->addWidget(d->onceDoneLabel);
   lay->addSpacing(10);
   lay->addWidget(d->scenariosLabel);
-  
+
   d->backupinformation = new QWidget(this);
   d->backupinformation->hide();
   lay->addWidget(d->backupinformation);
@@ -206,7 +206,8 @@ void ChoicePage::checkSpaceForBackup()
   {
     quint64 partsize = DirOperations::totalPartitionSize(QDir::homePath());
     d->spacebar->setValue(round(static_cast<double>(partsize-freespace)/static_cast<double>(partsize)*100));
-    d->freeinfo->setText(tr("The current KDE settings and data directory takes up %1 bytes").arg(dirsize));
+    d->freeinfo->setText( tr("The current KDE settings and data directory takes up %1")
+                            .arg(DirOperations::bytesToString(dirsize)) );
     d->backupinformation->setVisible(true);
     d->backup->hide();
   }

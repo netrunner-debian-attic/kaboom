@@ -54,6 +54,11 @@ namespace DirOperations {
     enum CopyOption { NoOptions = 0x0, RemoveDestination = 0x1, OverWrite = 0x2 };
     Q_DECLARE_FLAGS(CopyOptions, CopyOption);
 
+    /*! Returns a string that describes the number of bytes given in a human-friendly way.
+     * (i.e. suffixed with KiB, MiB, GiB etc...)
+     */
+    QString bytesToString(quint64 bytes);
+
     /*! Returns the target path of the symbolic link \a fileName .
      * The path returned is relative to the symlink. For example if
      * we have the following link:
