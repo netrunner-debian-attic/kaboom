@@ -18,9 +18,10 @@
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QProgressBar>
+#include <climits>
 
 ProgressWidget::ProgressWidget(QWidget *parent)
-    : QWidget(parent)
+    : QWidget(parent), m_overflow(false), m_max(0)
 {
     QVBoxLayout *layout = new QVBoxLayout(this);
 
@@ -38,11 +39,15 @@ void ProgressWidget::setLabelText(const QString & text)
 
 void ProgressWidget::setMaximum(quint64 max)
 {
-    m_progressBar->setMaximum(max);
+    m_overflow = (max > INT_MAX);
+    m_max = max;
+    m_progressBar->setMaximum(m_overflow ? 100 : static_cast<int>(max));
 }
 
 void ProgressWidget::setValue(quint64 value)
 {
-    m_progressBar->setValue(value);
+    if ( m_overflow )
+        value = static_cast<int>((double(value) / double(m_max)) * 100);
+    m_progressBar->setValue(static_cast<int>(value));
 }
 

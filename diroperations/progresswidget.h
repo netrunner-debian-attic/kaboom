@@ -34,6 +34,8 @@ public:
 private:
     QLabel *m_label;
     QProgressBar *m_progressBar;
+    bool m_overflow;
+    quint64 m_max;
 };
 
 #endif
