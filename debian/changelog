@@ -1,5 +1,5 @@
-kaboom (0.9~pre1) UNRELEASED; urgency=low
+kaboom (0.9) experimental; urgency=low
 
   * Initial Release.
 
- -- George Kiagiadakis <gkiagiad@csd.uoc.gr>  Sat, 28 Feb 2009 12:01:57 +0200
+ -- Debian Qt/KDE Maintainers <debian-qt-kde@lists.debian.org>  Sat, 07 Mar 2009 21:45:49 +0200

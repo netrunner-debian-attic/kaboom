@@ -34,6 +34,6 @@ Public License can be found in `/usr/share/common-licenses/LGPL-2.1'.
 
 The Debian packaging is:
 
-    Copyright © 2009, George Kiagiadakis <gkiagiad@csd.uoc.gr>
+    Copyright © 2009, Debian Qt/KDE Maintainers <debian-qt-kde@lists.debian.org>
 
 and is licensed under the LGPL, see above.
