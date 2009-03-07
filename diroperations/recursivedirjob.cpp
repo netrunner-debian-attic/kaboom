@@ -285,6 +285,12 @@ void RecursiveDirJobHelper::recursiveRmDir(const QString & dir)
         emit setLabelText(tr("Removing files..."));
         if (dirSize > 0) {
             emit setMaximum(dirSize);
+            //start with the size of the directory to be removed.
+            //we do this before starting removing files, because on some filesystems
+            //(like reiserfs) the directory size is variable and will be smaller
+            //when all files have been removed
+            bytesRemoved += QFileInfo(dir).size();
+            emit setValue(bytesRemoved);
         } else {
             //no files to be removed, so set the progressbar to 100%
             emit setMaximum(1);
@@ -297,6 +303,11 @@ void RecursiveDirJobHelper::recursiveRmDir(const QString & dir)
         if ( !currentList.isEmpty() ){
             currentItem = currentList.takeFirst();
 
+            if ( m_reportProgress ) {
+                bytesRemoved += currentItem.size();
+                emit setValue(bytesRemoved);
+            }
+
             if ( currentItem.isDir() && !currentItem.isSymLink() )
             {
                 if ( !currentDir.cd(currentItem.fileName()) )
@@ -306,11 +317,6 @@ void RecursiveDirJobHelper::recursiveRmDir(const QString & dir)
             }
             else
             {
-                if ( m_reportProgress ) {
-                    bytesRemoved += currentItem.size();
-                    emit setValue(bytesRemoved);
-                }
-
                 if ( !currentDir.remove(currentItem.fileName()) )
                     throw Exception(Exception::RmFail, currentItem.absoluteFilePath());
             }
@@ -326,12 +332,6 @@ void RecursiveDirJobHelper::recursiveRmDir(const QString & dir)
             //if quit == true, we remove the original dir itself, now that it is empty for sure...
             QString tmpname = currentDir.dirName();
             currentDir.cdUp();
-
-            if ( m_reportProgress ) {
-                //count the directory special file before it is removed
-                bytesRemoved += QFileInfo(currentDir, tmpname).size();
-                emit setValue(bytesRemoved);
-            }
 
             if ( !currentDir.rmdir(tmpname) )
                 throw Exception(Exception::RmFail, currentDir.absoluteFilePath(tmpname));
