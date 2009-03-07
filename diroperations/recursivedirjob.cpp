@@ -130,6 +130,12 @@ quint64 RecursiveDirJobHelper::calculateDirSize(const QString & dir)
     quint64 totalSize = 0;
     int refreshCounter = 0;
 
+    if ( m_reportProgress ) {
+        //show busy waiting indicator
+        emit setMaximum(0);
+        emit setValue(0);
+    }
+
     while(1){
         if ( !currentList.isEmpty() ){
             currentItem = currentList.takeFirst();
