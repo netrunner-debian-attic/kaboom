@@ -22,6 +22,7 @@
 #include <QtCore/QVariant>
 #include <QtCore/QDebug>
 #include <climits> //for PATH_MAX
+#include <unistd.h> //for readlink()
 #define _FILE_OFFSET_BITS 64
 #include <sys/statvfs.h> // for statvfs for calculating free space
 
@@ -60,7 +61,7 @@ QString bytesToString(quint64 bytes)
 QString relativeSymLinkTarget(const QString & fileName)
 {
     char buff[PATH_MAX+1];
-    int len = readlink(QFile::encodeName(fileName), buff, PATH_MAX);
+    int len = ::readlink(QFile::encodeName(fileName), buff, PATH_MAX);
     if ( len < 0 )
         return QString();
     buff[len] = '\0';
@@ -70,7 +71,7 @@ QString relativeSymLinkTarget(const QString & fileName)
 quint64 freeDirSpace(const QString & dir)
 {
     struct statvfs info;
-    int ret = statvfs(dir.toLocal8Bit(),&info);
+    int ret = ::statvfs(QFile::encodeName(dir),&info);
     if(ret < 0) {
       qDebug() << "statvfs errors" << ret;
       //error handling
@@ -84,7 +85,7 @@ quint64 freeDirSpace(const QString & dir)
 quint64 totalPartitionSize(const QString & dir)
 {
     struct statvfs info;
-    int ret = statvfs(dir.toLocal8Bit(),&info);
+    int ret = ::statvfs(QFile::encodeName(dir),&info);
     if(ret < 0) {
       qDebug() << "statvfs errors" << ret;
       //error handling
