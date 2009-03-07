@@ -20,8 +20,19 @@
 #include <QFile>
 #include <QTranslator>
 
+#if (DISABLE_KABOOM == 1)
+# include <iostream>
+#endif
+
 int main(int argc, char* argv[])
 {
+#if (DISABLE_KABOOM == 1)
+  using namespace std;
+  cout << "This tool is disabled for now." << endl;
+  cout << "This is not a bug." << endl;
+  return 0;
+#endif
+
   KaboomSettings settings(argc, argv);
   settings.dump(); // dump settings for debugging purposes
 
