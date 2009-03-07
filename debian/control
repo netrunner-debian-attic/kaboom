@@ -10,6 +10,7 @@ Package: kaboom
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: The Debian KDE settings migration tool
- This is a tool that will help you migrate your KDE
- settings from KDE 3 to KDE 4. It is meant to be run
- automatically the first time that you login to KDE 4.
+ This is a tool that will help you migrate your KDE settings from KDE 3 
+ to KDE 4. It is meant to be run automatically the first time that you 
+ login to KDE 4.
+

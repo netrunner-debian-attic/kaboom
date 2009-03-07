@@ -1,3 +1,12 @@
+kaboom (0.9.1) experimental; urgency=low
+
+  +++ Changes by Ana Beatriz Guerrero Lopez:
+
+  * Add "source" line in the copyright file.
+  * Rewrap long description in the control file.
+
+ -- Debian Qt/KDE Maintainers <debian-qt-kde@lists.debian.org>  Sat, 07 Mar 2009 21:45:49 +0200
+
 kaboom (0.9) experimental; urgency=low
 
   * Initial Release.
