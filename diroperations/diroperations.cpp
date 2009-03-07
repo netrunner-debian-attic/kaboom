@@ -20,7 +20,6 @@
 #include <QtCore/QFile>
 #include <QtCore/QEventLoop>
 #include <QtCore/QVariant>
-#include <QtCore/QCoreApplication>
 #include <QtCore/QDebug>
 #include <climits> //for PATH_MAX
 #define _FILE_OFFSET_BITS 64
@@ -31,14 +30,14 @@ namespace DirOperations {
 QString Exception::what() const
 {
     switch (m_type) {
-        case OperationCanceled: return QObject::tr("User canceled the operation");
-        case AccessDenied: return QObject::tr("Access was denied to the file or directory %1").arg(m_info);
-        case NoSuchFileOrDirectory: return QObject::tr("%1: No such file or directory").arg(m_info);
-        case FileOrDirectoryExists: return QObject::tr("%1 already exists").arg(m_info);
-        case CopyFail: return QObject::tr("Could not copy %1").arg(m_info);
-        case MkdirFail: return QObject::tr("Could not create directory %1").arg(m_info);
-        case RmFail: return QObject::tr("Could not remove %1").arg(m_info);
-        default: return QObject::tr("Unknown error");
+        case OperationCanceled: return tr("User canceled the operation");
+        case AccessDenied: return tr("Access was denied to the file or directory \"%1\"").arg(m_info);
+        case NoSuchFileOrDirectory: return tr("\"%1\": No such file or directory").arg(m_info);
+        case FileOrDirectoryExists: return tr("\"%1\" already exists").arg(m_info);
+        case CopyFail: return tr("Could not copy \"%1\"").arg(m_info);
+        case MkdirFail: return tr("Could not create directory \"%1\"").arg(m_info);
+        case RmFail: return tr("Could not remove \"%1\"").arg(m_info);
+        default: return tr("Unknown error");
     }
 }
 

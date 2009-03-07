@@ -20,6 +20,7 @@
 
 #include <QtCore/QString>
 #include <QtCore/QMetaType>
+#include <QtCore/QCoreApplication>
 
 namespace DirOperations {
 
@@ -35,6 +36,7 @@ namespace DirOperations {
 
     class Exception
     {
+        Q_DECLARE_TR_FUNCTIONS(Exception)
     public:
         enum Type { OperationCanceled, AccessDenied, NoSuchFileOrDirectory,
                     FileOrDirectoryExists, CopyFail, MkdirFail, RmFail, NoError };
