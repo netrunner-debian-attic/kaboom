@@ -87,7 +87,7 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
   {
     d->migrate = new RichRadioButton(
         tr("Use current KDE&nbsp;3 settings as initial for KDE&nbsp;4. (<i>standard</i>)"),
-        tr("<p>The wizard won't make any changes to your current KDE&nbsp;3 settings directory. "
+        tr("<p>The wizard will not make any changes to your current KDE&nbsp;3 settings directory. "
            "It may only optionally back this directory up if the appropriate option below is "
            "enabled. This scenario is recommended for users who have not actively used KDE&nbsp;4 "
            "or any of its applications (e.g. Okular or KTorrent which were released with Lenny) on "
@@ -136,11 +136,11 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
   d->clean = new RichRadioButton(
     tr("Start with default KDE settings and data."),
     tr("<p>The wizard will <strong>remove</strong> existing KDE&nbsp;3 settings directory "
-       "(optionally backing it up first) and won't touch existing KDE&nbsp;4 settings "
+       "(optionally backing it up first) and will not touch existing KDE&nbsp;4 settings "
        "directory if it exists. Effectively, once this wizard is complete you will be "
        "presented with default KDE&nbsp;4 desktop. Do not select this scenario (without "
-       "enabling the backup option below) if you don't want to irreversibly lose such data "
-       "as contacts, locally stored mails, accounts in KMail and Kopete, bookmarks etc. "
+       "enabling the backup option below) if you do not want to irreversibly lose such data "
+       "as contacts, locally stored mails, accounts in KMail and Kopete, bookmarks, etc. "
        "as stored by previous KDE&nbsp;3 versions of the respective applications. This "
        "scenario is recommended for users who want to start with fresh KDE&nbsp;4 profile and, "
        "optionally, do migration of KDE&nbsp;3 and/or old KDE&nbsp;4 settings manually.</p>"),
@@ -168,7 +168,7 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
     QHBoxLayout *hlay = new QHBoxLayout;
     d->progresswidget = new ProgressWidget(this);
     hlay->addWidget(d->progresswidget);
-    d->recheck = new QPushButton(tr("Recheck"));
+    d->recheck = new QPushButton(tr("Check again"));
     hlay->addWidget(d->recheck);
     connect(d->recheck,SIGNAL(clicked()),this,SLOT(checkSpaceForBackup()));
     lay->addLayout(hlay);
