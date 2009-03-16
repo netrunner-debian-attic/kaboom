@@ -22,7 +22,6 @@
 #include <QtCore/QDebug>
 
 #include <cstdio> //for perror()
-#include <cstdlib> //for abort()
 
 //for lstat()
 #define _FILE_OFFSET_BITS 64
@@ -128,7 +127,8 @@ static quint64 stat_size(const QString & fileName)
     struct stat buf;
     if ( ::lstat(QFile::encodeName(fileName), &buf) != 0 ) {
         perror("lstat");
-        abort();
+        qWarning() << "lstat failed on" << fileName;
+        return 0;
     }
     return buf.st_size;
 }
