@@ -21,6 +21,15 @@
 #include <QtCore/QStack>
 #include <QtCore/QDebug>
 
+#include <cstdio> //for perror()
+#include <cstdlib> //for abort()
+
+//for lstat()
+#define _FILE_OFFSET_BITS 64
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
 using namespace DirOperations;
 
 struct RecursiveDirJob::Private
@@ -114,8 +123,18 @@ void RecursiveDirJob::run()
     }
 }
 
+static quint64 stat_size(const QString & fileName)
+{
+    struct stat buf;
+    if ( ::lstat(QFile::encodeName(fileName), &buf) != 0 ) {
+        perror("lstat");
+        abort();
+    }
+    return buf.st_size;
+}
+
 //constant defining the QDir filters that are used in the RecursiveDirJobHelper functions
-const QDir::Filters dirFilters = QDir::AllEntries | QDir::NoDotAndDotDot |
+static const QDir::Filters dirFilters = QDir::AllEntries | QDir::NoDotAndDotDot |
                                  QDir::Hidden | QDir::System | QDir::CaseSensitive;
 
 quint64 RecursiveDirJobHelper::calculateDirSize(const QString & dir)
@@ -139,7 +158,7 @@ quint64 RecursiveDirJobHelper::calculateDirSize(const QString & dir)
     while(1){
         if ( !currentList.isEmpty() ){
             currentItem = currentList.takeFirst();
-            totalSize += currentItem.size();
+            totalSize += stat_size(currentItem.absoluteFilePath());
 
             if ( currentItem.isDir() && !currentItem.isSymLink() ) {
                 if ( !currentDir.cd(currentItem.fileName()) )
@@ -161,7 +180,8 @@ quint64 RecursiveDirJobHelper::calculateDirSize(const QString & dir)
         }
     }
 
-    totalSize += QFileInfo(dir).size();
+    totalSize += stat_size(dir);
+    qDebug() << "calculateDirSize" << dir << totalSize;
     return totalSize;
 }
 
@@ -193,7 +213,7 @@ void RecursiveDirJobHelper::recursiveCpDir(const QString & sourcePath, const QSt
         if (dirSize > 0) {
             emit setMaximum(dirSize);
             //the directory special file is already (almost) copied in dest.mkdir() above
-            bytesCopied += QFileInfo(sourcePath).size();
+            bytesCopied += stat_size(sourcePath);
             emit setValue(bytesCopied);
         } else {
             //no files to be copied, so set the progressbar to 100%
@@ -251,7 +271,7 @@ void RecursiveDirJobHelper::recursiveCpDir(const QString & sourcePath, const QSt
             }
 
             if ( m_reportProgress ) {
-                bytesCopied += currentItem.size();
+                bytesCopied += stat_size(currentItem.absoluteFilePath());
                 emit setValue(bytesCopied);
             }
         }
@@ -296,7 +316,7 @@ void RecursiveDirJobHelper::recursiveRmDir(const QString & dir)
             //we do this before starting removing files, because on some filesystems
             //(like reiserfs) the directory size is variable and will be smaller
             //when all files have been removed
-            bytesRemoved += QFileInfo(dir).size();
+            bytesRemoved += stat_size(dir);
             emit setValue(bytesRemoved);
         } else {
             //no files to be removed, so set the progressbar to 100%
@@ -311,7 +331,7 @@ void RecursiveDirJobHelper::recursiveRmDir(const QString & dir)
             currentItem = currentList.takeFirst();
 
             if ( m_reportProgress ) {
-                bytesRemoved += currentItem.size();
+                bytesRemoved += stat_size(currentItem.absoluteFilePath());
                 emit setValue(bytesRemoved);
             }
 
