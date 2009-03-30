@@ -23,6 +23,8 @@
 int main(int argc, char* argv[])
 {
   KaboomSettings settings(argc, argv);
+  int exitvalue;
+
   settings.dump(); // dump settings for debugging purposes
 
   if(settings.stampExists())
@@ -47,12 +49,15 @@ int main(int argc, char* argv[])
   app.installTranslator(&translator);
 
   MigrationTool main;
-  main.show();
-  int exitvalue = app.exec();
-  if(exitvalue==0)
+  exitvalue = main.exec();
+  if(exitvalue == QDialog::Accepted)
   {
-//disable for debugging    QFile(QDir::homePath()+"/.local/kdebian3to4").open(QIODevice::WriteOnly);
+      // disable for debugging
+      // settings.touchStamp();
+      return 0;
+  } else if(exitvalue == QDialog::Rejected) {
+     exitvalue = 1; // Canceled
   }
-  return exitvalue;
 
+  return exitvalue;
 }
