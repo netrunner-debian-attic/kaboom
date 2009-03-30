@@ -30,10 +30,22 @@ MigrationPagePrivate::MigrationPagePrivate(MigrationPage* parent)
   selection=MigrationTool::Migrate;
   progress=new ProgressWidget(q);
   start = new QPushButton(tr("Start"),q);
+
   error = new QLabel(q);
-  errorbox = new QGroupBox(tr("Errors occurred"),q);
-  QBoxLayout *errorboxlayout = new QHBoxLayout(errorbox);
+  error->setWordWrap(true);
+  error->setAlignment(Qt::AlignJustify);
+
+  QLabel *warning = new QLabel(q);
+  warning->setText(tr("WARNING: depending on the severity of the errors above, it might not be safe "
+                      "to go back and you may need to resolve problems manually!"));
+  warning->setWordWrap(true);
+  warning->setAlignment(Qt::AlignJustify);
+
+  errorbox = new QGroupBox(tr("The following error(s) occurred during migration process:"),q);
+  QBoxLayout *errorboxlayout = new QVBoxLayout(errorbox);
   errorboxlayout->addWidget(error);
+  errorboxlayout->addSpacing(5);
+  errorboxlayout->addWidget(warning);
   errorbox->hide();
 }
 
@@ -41,7 +53,7 @@ void MigrationPagePrivate::doMagic()
 {
   start->setEnabled(false);
   errorhandling();
-  q->setTitle(tr("Migration running"));
+  q->setTitle(tr("Migration is in progress ..."));
   if(backup)
   {
     if(KaboomSettings::instance().kdehomeDir().exists())
@@ -110,10 +122,10 @@ void MigrationPagePrivate::errorhandling(const QString& err)
 MigrationPage::MigrationPage(QWidget *parent) : QWizardPage(parent)
 {
   d=new MigrationPagePrivate(this);
-  QLabel *text = new QLabel(tr("When you click \"Start\", settings migration will start"),this);
+  QLabel *text = new QLabel(tr("Please click \"Start\" button to proceed."),this);
   text->setWordWrap(true);
   
-  setTitle(tr("Start Migration"));
+  setTitle(tr("Ready to start migration process"));
 
   connect(d->start,SIGNAL(clicked()),d,SLOT(doMagic()));
   
