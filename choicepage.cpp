@@ -135,15 +135,11 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
   }
   d->clean = new RichRadioButton(
     tr("Start with default KDE settings and data."),
-    tr("<p>The wizard will <strong>remove</strong> existing KDE&nbsp;3 settings directory "
-       "(optionally backing it up first) and will not touch existing KDE&nbsp;4 settings "
-       "directory if it exists. Effectively, once this wizard is complete you will be "
-       "presented with default KDE&nbsp;4 desktop. Do not select this scenario (without "
-       "enabling the backup option below) if you do not want to irreversibly lose such data "
-       "as contacts, locally stored mails, accounts in KMail and Kopete, bookmarks, etc. "
-       "as stored by previous KDE&nbsp;3 versions of the respective applications. This "
-       "scenario is recommended for users who want to start with fresh KDE&nbsp;4 profile and, "
-       "optionally, do migration of KDE&nbsp;3 and/or old KDE&nbsp;4 settings manually.</p>"),
+    tr("<p>The wizard will <strong>remove</strong> (or move to backup) existing KDE&nbsp;3 "
+       "settings directory including such data as contacts, locally stored mails, accounts "
+       "in KMail and Kopete, bookmarks, etc. It will not touch KDE&nbsp;4 settings directory "
+       "if it exists. Choose this scenario if you would like to start with default KDE&nbsp;4 "
+       "desktop and/or want to do migration of old KDE settings manually.</p>"),
     this);
   d->buttons->addButton(d->clean,MigrationTool::Clean);
   lay->addWidget(d->clean);
