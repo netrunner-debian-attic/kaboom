@@ -30,6 +30,9 @@ MigrationPagePrivate::MigrationPagePrivate(MigrationPage* parent)
   selection=MigrationTool::Migrate;
   progress=new ProgressWidget(q);
   start = new QPushButton(tr("Start"),q);
+  start->setToolTip(tr("Start migration process"));
+  start->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+  start->setMinimumSize(start->minimumSizeHint().width()+30, start->minimumSizeHint().height()+10);
 
   error = new QLabel(q);
   error->setWordWrap(true);
