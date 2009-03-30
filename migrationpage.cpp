@@ -19,6 +19,7 @@
 #include "migrationpage_p.h"
 #include "diroperations/diroperations.h"
 #include "kaboomsettings.h"
+#include "migrationtool.h"
 
 
 MigrationPagePrivate::MigrationPagePrivate(MigrationPage* parent)
@@ -39,7 +40,7 @@ MigrationPagePrivate::MigrationPagePrivate(MigrationPage* parent)
 void MigrationPagePrivate::doMagic()
 {
   start->setEnabled(false);
-  q->wizard()->setOptions(q->wizard()->options()|QWizard::DisabledBackButtonOnLastPage); //no way back
+  errorhandling();
   q->setTitle(tr("Migration running"));
   if(backup)
   {
@@ -91,14 +92,19 @@ void MigrationPagePrivate::doMagic()
   {
     errorhandling(e.what());
   }
-  
-  complete=true;
-  emit q->completeChanged();
+  if (error->text().isEmpty()) // No error
+  {
+    complete=true;
+    q->wizard()->setOptions(q->wizard()->options()|QWizard::DisabledBackButtonOnLastPage); //no way back
+    emit q->completeChanged();
+  }
 }
 void MigrationPagePrivate::errorhandling(const QString& err)
 {
+  q->wizard()->button(QWizard::CancelButton)->setEnabled(!err.isEmpty());
+  static_cast<MigrationTool*>(q->wizard())->setMigrationError(err);
   error->setText(err);
-  errorbox->show();
+  errorbox->setVisible(!err.isEmpty());
 }
 
 MigrationPage::MigrationPage(QWidget *parent) : QWizardPage(parent)
@@ -139,6 +145,12 @@ void MigrationPage::initializePage()
 {
   d->complete=false;
   emit completeChanged();
+  d->start->setEnabled(true);
+
+  // Initialize error handling and reenable Cancel button
+  d->errorhandling();
+  d->q->wizard()->button(QWizard::CancelButton)->setEnabled(true);
+
   if(field("backup").toBool())
   {
       d->backup=true;
@@ -159,5 +171,4 @@ void MigrationPage::initializePage()
   {
     qFatal("Cast failed");
   }
-  
 }

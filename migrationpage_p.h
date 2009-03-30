@@ -35,7 +35,7 @@ class MigrationPagePrivate : public QObject
     QGroupBox *errorbox;
     bool backup;
     bool complete;
-    void errorhandling(const QString &s);
+    void errorhandling(const QString &s = QString::null);
   public slots:
     void doMagic();
 };

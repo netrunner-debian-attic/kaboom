@@ -54,9 +54,14 @@ int main(int argc, char* argv[])
   {
       // disable for debugging
       // settings.touchStamp();
-      return 0;
-  } else if(exitvalue == QDialog::Rejected) {
-     exitvalue = 1; // Canceled
+      exitvalue = 0; // OK
+  } else if (exitvalue == QDialog::Rejected) {
+      if (!main.migrationError().isEmpty()) {
+          qDebug() << "Migration failed with error:" << main.migrationError();
+          exitvalue = 2; // Failed
+      } else {
+          exitvalue = 1; // Canceled by the user
+      }
   }
 
   return exitvalue;

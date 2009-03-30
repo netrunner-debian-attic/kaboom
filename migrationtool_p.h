@@ -33,6 +33,7 @@ class MigrationToolPrivate: public QObject
     ChoicePage *choice;
     WarningPage *warning;
     MigrationPage *migration;
+    QString migrationError;
 };
 
 

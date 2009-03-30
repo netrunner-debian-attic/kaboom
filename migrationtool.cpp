@@ -79,3 +79,13 @@ int MigrationTool::nextId() const
 	break;
     }
 }
+
+void MigrationTool::setMigrationError(const QString& error)
+{
+    d->migrationError = error;
+}
+
+QString MigrationTool::migrationError() const
+{
+    return d->migrationError;
+}

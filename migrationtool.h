@@ -38,6 +38,8 @@ class MigrationTool : public QWizard
     };
     MigrationTool(QWidget *parent=0);
     int nextId() const;
+    void setMigrationError(const QString& error);
+    QString migrationError() const;
   private:
     MigrationToolPrivate *d;
     
