@@ -39,6 +39,7 @@ MigrationTool::MigrationTool(QWidget *parent) : QWizard(parent)
   setButtonText(QWizard::NextButton, tr("&Next"));
   setButtonText(QWizard::FinishButton,tr("&Finish"));
   setButtonText(QWizard::CancelButton,tr("&Cancel"));
+  button(QWizard::CancelButton)->setToolTip(tr("Cancel the wizard and terminate this session"));
 
   setPixmap(QWizard::WatermarkPixmap,QPixmap(":/watermark.png"));
   //setPixmap(QWizard::LogoPixmap,QPixmap("logo.png"));  - we don't use subtitles, so this is never shown.

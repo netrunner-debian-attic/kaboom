@@ -42,6 +42,10 @@ IntroPage::IntroPage(QWidget *parent) : QWizardPage(parent)
     "settings and data in the next step to avoid data loss in hopefully rare "
     "cases when some KDE&nbsp;4 applications fail to migrate your important user "
     "settings and/or data properly.</p>"
+
+    "<p align='justify'>If you need to make manual adjustments, you can cancel the "
+    "wizard. KDE will not start and the current session will be terminated. You will "
+    "see this wizard when you try to start KDE session again.</p>"
     ).arg(KaboomSettings::instance().kdehomePrettyPath())
      .arg(KaboomSettings::instance().kde4homePrettyPath()), this);
   text->setWordWrap(true);
