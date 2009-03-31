@@ -37,6 +37,9 @@ MigrationPagePrivate::MigrationPagePrivate(MigrationPage* parent)
   error = new QLabel(q);
   error->setWordWrap(true);
   error->setAlignment(Qt::AlignJustify);
+  QPalette pal = error->palette();
+  pal.setColor(QPalette::Text, Qt::red);
+  error->setPalette(pal);
 
   QLabel *warning = new QLabel(q);
   warning->setText(tr("WARNING: depending on the severity of the errors above, it might not be safe "
