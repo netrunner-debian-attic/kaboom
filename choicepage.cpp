@@ -101,14 +101,20 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
   if(s.kde4homeDir().exists())
   {
     d->move = new RichRadioButton(
-        tr("Use existing KDE&nbsp;4 settings and <strong>replace</strong> current KDE&nbsp;3 settings."),
-        tr("<p>The wizard will remove current KDE&nbsp;3 settings directory and move "
+        tr("<html>Use existing KDE&nbsp;4 settings%1.</html>")
+          .arg(s.kdehomeDir().exists() ?
+              tr(" and <strong>replace</strong> current KDE&nbsp;3 settings") : ""),
+        (s.kdehomeDir().exists()) ?
+          tr("<p>The wizard will remove current KDE&nbsp;3 settings directory and move "
            "current KDE&nbsp;4 settings directory into its place. Effectively, you will "
            "lose all settings and data the KDE&nbsp;3 desktop and applications have stored "
            "unless the backup option below is enabled. This scenario should be useful for "
            "users who already actively and almost exclusively use KDE&nbsp;4 desktop and "
            "applications as previously packaged by Debian and do not care about losing "
-           "settings of (a few) KDE&nbsp;3 applications anymore.</p>"),
+           "settings of (a few) KDE&nbsp;3 applications anymore.</p>") :
+          tr("<p>The wizard will rename your current old KDE&nbsp;4 settings directory. "
+              "Select this option if you would like to keep all KDE 4 settings and "
+              "continue using KDE 4 desktop as before.</p>"),
         this);
     d->buttons->addButton(d->move,MigrationTool::Move);
     lay->addWidget(d->move);
@@ -135,11 +141,13 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
   }
   d->clean = new RichRadioButton(
     tr("Start with default KDE settings and data."),
-    tr("<p>The wizard will <strong>remove</strong> (or move to backup) existing KDE&nbsp;3 "
+    tr("<p>%1The wizard will not touch KDE&nbsp;4 settings directory if it exists. Choose "
+        "this scenario if you would like to start with default KDE&nbsp;4 "
+       "desktop and/or want to do migration of old KDE settings manually.</p>")
+    .arg((s.kdehomeDir().exists()) ?
+      tr("<p>The wizard will <strong>remove</strong> (or move to backup) existing KDE&nbsp;3 "
        "settings directory including such data as contacts, locally stored mails, accounts "
-       "in KMail and Kopete, bookmarks, etc. It will not touch KDE&nbsp;4 settings directory "
-       "if it exists. Choose this scenario if you would like to start with default KDE&nbsp;4 "
-       "desktop and/or want to do migration of old KDE settings manually.</p>"),
+       "in KMail and Kopete, bookmarks, etc. ") : ""),
     this);
   d->buttons->addButton(d->clean,MigrationTool::Clean);
   lay->addWidget(d->clean);
