@@ -127,7 +127,7 @@ static quint64 stat_size(const QString & fileName)
     struct stat buf;
     if ( ::lstat(QFile::encodeName(fileName), &buf) != 0 ) {
         perror("lstat");
-        qWarning() << "lstat failed on" << fileName;
+        qWarning() << "lstat failed on" << QFile::encodeName(fileName);
         return 0;
     }
     return buf.st_size;
