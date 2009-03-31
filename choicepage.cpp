@@ -144,10 +144,7 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
   d->buttons->addButton(d->clean,MigrationTool::Clean);
   lay->addWidget(d->clean);
 
-  d->backup = new QCheckBox(
-    tr("Backup existing KDE 3 settings into %1. (Highly recommended)")
-        .arg(s.kdehomePrettyPath(KaboomSettings::Kde3Backup)),
-    this);
+  d->backup = new QCheckBox(tr("Backup existing KDE 3 settings (highly recommended)"), this);
   d->backup->setChecked(false);
   registerField("backup",d->backup);
   lay->addWidget(d->backup);
