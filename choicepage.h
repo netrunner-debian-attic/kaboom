@@ -30,6 +30,7 @@ class ChoicePage : public QWizardPage
     void initializePage();
   private slots:
     void checkSpaceForBackup();
+    void setFreeWarningText(bool show);
   private:
     ChoicePagePrivate *d;
 

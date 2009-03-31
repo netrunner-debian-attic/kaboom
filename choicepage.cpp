@@ -154,20 +154,18 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
 
   if(s.kdehomeDir().exists()) //if no kdedir, nothing to backup.
   {
-    d->freewarning = new QLabel(
-        tr("<p><b>Warning:</b> Insufficient free space to complete a backup, "
-        "please consider freeing up some space. You can go to TTY1 to do this.</p>"), this);
+    d->freewarning = new QLabel(this);
     d->freewarning->setWordWrap(true);
     d->freewarning->hide();
-    lay->addWidget(d->freewarning);
 
     QHBoxLayout *hlay = new QHBoxLayout;
     d->progresswidget = new ProgressWidget(this);
     hlay->addWidget(d->progresswidget);
     d->recheck = new QPushButton(tr("Check again"));
-    hlay->addWidget(d->recheck);
+    hlay->addWidget(d->recheck, 0, Qt::AlignBottom);
     connect(d->recheck,SIGNAL(clicked()),this,SLOT(checkSpaceForBackup()));
     lay->addLayout(hlay);
+    lay->addWidget(d->freewarning);
   }
   else
   {
@@ -186,6 +184,17 @@ bool ChoicePage::backupSelected() const
   return d->backup ? d->backup->isChecked() : false;
 }
 
+void ChoicePage::setFreeWarningText(bool show)
+{
+    d->freewarning->setText((show) ?
+        tr("<p><strong>Warning:</strong> Insufficient free space to complete a backup. "
+        "Consider freeing up some space.") : QString::null);
+    d->freewarning->setToolTip((show) ?
+        tr("To free up some disk case, cancel the wizard now or switch to virtual terminal.") :
+        QString::null);
+    if (show) d->freewarning->show();
+}
+
 void ChoicePage::checkSpaceForBackup()
 {
   Q_ASSERT(KaboomSettings::instance().kdehomeDir().exists());
@@ -195,10 +204,11 @@ void ChoicePage::checkSpaceForBackup()
   wizard()->button(QWizard::NextButton)->setEnabled(false);
 
   d->progresswidget->show();
+  d->progresswidget->setToolTip(QString::null);
   d->recheck->hide();
-  d->freewarning->hide();
   d->backup->setEnabled(false);
   d->backup->setChecked(false);
+  setFreeWarningText(false);
 
   quint64 dirsize = -1;
   quint64 freespace = DirOperations::freeDirSpace(QDir::homePath());
@@ -218,13 +228,15 @@ void ChoicePage::checkSpaceForBackup()
         tr("<p><i>The current KDE&nbsp;3 settings and data directory takes up %1</i></p>")
             .arg(DirOperations::bytesToString(dirsize))
     );
+    d->progresswidget->setToolTip(tr("% of disk space currently used"));
     d->recheck->show();
-    d->freewarning->show();
+    setFreeWarningText(true);
   }
   else
   {
     d->progresswidget->hide();
     d->recheck->hide();
+    d->freewarning->hide();
     d->backup->setEnabled(true);
     d->backup->setChecked(true);
   }
