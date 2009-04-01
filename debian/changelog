@@ -1,3 +1,10 @@
+kaboom (1.0.0) unstable; urgency=low
+
+  * Let us go live with kaboom. Default to .kde and .kde4. 
+    And do touch-file on exit.
+
+ -- Sune Vuorela <debian@pusling.com>  Wed, 01 Apr 2009 22:28:07 +0200
+
 kaboom (0.9.1) experimental; urgency=low
 
   +++ Changes by Ana Beatriz Guerrero Lopez:

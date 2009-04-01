@@ -53,7 +53,7 @@ int main(int argc, char* argv[])
   if(exitvalue == QDialog::Accepted)
   {
       // disable for debugging
-      // settings.touchStamp();
+      settings.touchStamp();
       exitvalue = 0; // OK
   } else if (exitvalue == QDialog::Rejected) {
       if (!main.migrationError().isEmpty()) {

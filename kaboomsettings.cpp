@@ -21,9 +21,9 @@
 
 #include "kaboomsettings.h"
 
-#define DEFAULT_KDEDIR "/tmp/dirstructure/kde"
-#define DEFAULT_KDE4DIR "/tmp/dirstructure/kde4"
-#define DEFAULT_KDE3BACKUPDIR "/tmp/dirstructure/kde3-backup"
+#define DEFAULT_KDEDIR ".kde"
+#define DEFAULT_KDE4DIR ".kde4"
+#define DEFAULT_KDE3BACKUPDIR "kde3-backup"
 
 KaboomSettings* KaboomSettings::s_instance = 0;
 
