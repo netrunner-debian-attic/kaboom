@@ -59,6 +59,7 @@ void MigrationPagePrivate::doMagic()
 {
   start->setEnabled(false);
   errorhandling();
+  q->wizard()->setOptions(q->wizard()->options()|QWizard::DisabledBackButtonOnLastPage); //don't go back during migration.
   q->setTitle(tr("Migration is in progress ..."));
   if(backup)
   {
@@ -110,12 +111,12 @@ void MigrationPagePrivate::doMagic()
   {
     errorhandling(e.what());
   }
-  if (error->text().isEmpty()) // No error
+  if (!error->text().isEmpty()) // if errors, ...
   {
-    complete=true;
-    q->wizard()->setOptions(q->wizard()->options()|QWizard::DisabledBackButtonOnLastPage); //no way back
-    emit q->completeChanged();
+    q->wizard()->setOptions(q->wizard()->options()&QWizard::DisabledBackButtonOnLastPage); //allow people going back now.>
   }
+  complete=true;
+  emit q->completeChanged();
 }
 void MigrationPagePrivate::errorhandling(const QString& err)
 {
