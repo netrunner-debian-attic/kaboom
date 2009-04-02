@@ -1,3 +1,10 @@
+kaboom (1.0.2) unstable; urgency=low
+
+  * Fix up what you can/can't do in case of errors. Give possibility to
+    continue anyways.
+
+ -- Sune Vuorela <debian@pusling.com>  Thu, 02 Apr 2009 22:38:55 +0200
+
 kaboom (1.0.1) unstable; urgency=low
 
   * Fix paths. Thanks Lisandro.
