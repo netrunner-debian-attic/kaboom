@@ -143,7 +143,7 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
     tr("Start with default KDE settings and data."),
     tr("<p>%1The wizard will not touch KDE&nbsp;4 settings directory if it exists. Choose "
         "this scenario if you would like to start with default KDE&nbsp;4 "
-       "desktop and/or want to do migration of old KDE settings manually.</p>")
+       "desktop and/or want to do migration of old KDE settings manually (from backup).</p>")
     .arg((s.kdehomeDir().exists()) ?
       tr("<p>The wizard will <strong>remove</strong> (or move to backup) existing KDE&nbsp;3 "
        "settings directory including such data as contacts, locally stored mails, accounts "
