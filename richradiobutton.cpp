@@ -122,9 +122,9 @@ void RichRadioButton::Private::init(RichRadioButton *q)
     layout->addWidget(m_button, 0, 0);
     layout->addWidget(m_label, 0, 1);
     layout->addWidget(m_detailsLabel, 1, 1);
-    // 640 minus watermark width, Qt is not able to properly sizeHint() it.
-    layout->setColumnMinimumWidth(1, 506); 
-
+    // 640 minus watermark width minus button width
+    // Qt is not able to properly sizeHint() this column.
+    layout->setColumnMinimumWidth(1, 506-m_button->sizeHint().width()-4); 
     m_button->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     m_label->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     m_detailsLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
