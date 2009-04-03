@@ -1,23 +1,25 @@
-kaboom (1.0.2) unstable; urgency=low
+kaboom (1.0.3) unstable; urgency=low
 
-  * Fix up what you can/can't do in case of errors. Give possibility to
-    continue anyways.
+  * NOT RELEASED YET (final version will be 1.1.0).
 
- -- Sune Vuorela <debian@pusling.com>  Thu, 02 Apr 2009 22:38:55 +0200
-
-kaboom (1.0.1) unstable; urgency=low
-
-  * Fix paths. Thanks Lisandro.
-
- -- Sune Vuorela <debian@pusling.com>  Thu, 02 Apr 2009 20:33:53 +0200
-
-kaboom (1.0.0) unstable; urgency=low
+  +++ Changes by Sune Vuorela:
 
   * Let us go live with kaboom. Default to .kde and .kde4. 
     And do touch-file on exit.
   * Do aggressive conflicts as extra safety.
+  * Fix paths. Thanks Lisandro.
+  * Fix up what you can/can't do in case of errors. Give possibility to
+    continue anyways.
+  
+  +++ Changes by Modestas Vainius:
 
- -- Sune Vuorela <debian@pusling.com>  Wed, 01 Apr 2009 22:28:07 +0200
+  * Tell a user when kaboom does not need to do anything (as per
+    selected set of options).
+  * Be more verbose in the MigrationPage about selected options.
+  * Fix layouting of ChoicePage (more stable).
+  * Add myself to debian/copyright as author.
+
+ -- Debian Qt/KDE Maintainers <debian-qt-kde@lists.debian.org>  Fri, 03 Apr 2009 19:48:45 +0300
 
 kaboom (0.9.1) experimental; urgency=low
 
