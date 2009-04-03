@@ -30,12 +30,15 @@ class ChoicePage : public QWizardPage
     void initializePage();
   private slots:
     void checkSpaceForBackup();
-    void setFreeWarningText(bool show);
   private:
+    enum SpaceWidget {
+        SpaceChecking = 0,
+        SpaceLack = 1,
+        SpaceOk = 2,
+    };
     ChoicePagePrivate *d;
 
-
-
+    void showSpaceWidget(SpaceWidget widgetIndex);
 };
 
 

@@ -40,6 +40,7 @@ class MigrationTool : public QWizard
     int nextId() const;
     void setMigrationError(const QString& error);
     QString migrationError() const;
+    virtual QSize minimumSizeHint() const;
   private:
     MigrationToolPrivate *d;
     

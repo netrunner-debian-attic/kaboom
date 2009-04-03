@@ -22,10 +22,12 @@
 #include "diroperations/progresswidget.h"
 #include "kaboomsettings.h"
 
+#include <QtGui/QStackedLayout>
+
 class ChoicePagePrivate
 {
   public:
-    ChoicePagePrivate() : backup(NULL) {}
+    ChoicePagePrivate() : backup(0), spaceLayout(0) {}
     QLabel *configInfoLabel, *configLabel, *onceDoneLabel;
     QLabel *scenariosLabel;
     RichRadioButton *clean;
@@ -34,9 +36,12 @@ class ChoicePagePrivate
     RichRadioButton *merge;
     QButtonGroup *buttons;
     QCheckBox *backup;
-    QLabel *freewarning;
     ProgressWidget *progresswidget;
+    ProgressWidget *freespace;
+    QLabel *freewarning;
+    QLabel *kdehomeSize;
     QPushButton *recheck;
+    QStackedLayout *spaceLayout;
 };
 
 ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
@@ -96,7 +101,6 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
         this);
     d->buttons->addButton(d->migrate,MigrationTool::Migrate);
     lay->addWidget(d->migrate);
-    d->migrate->setChecked(true);
   }
   if(s.kde4homeDir().exists())
   {
@@ -134,10 +138,6 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
       d->buttons->addButton(d->merge,MigrationTool::Merge);
       lay->addWidget(d->merge);
     }
-    else
-    {
-      d->move->setChecked(true);
-    }
   }
   d->clean = new RichRadioButton(
     tr("Start with default KDE settings and data."),
@@ -157,25 +157,72 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
   registerField("backup",d->backup);
   lay->addWidget(d->backup);
 
+  // Default choice
+  if (s.kdehomeDir().exists())
+  {
+    d->migrate->setChecked(true);
+  }
+  else
+  {
+    if (s.kde4homeDir().exists()) {
+      d->move->setChecked(true);
+    }
+  }
+
   if(s.kdehomeDir().exists()) //if no kdedir, nothing to backup.
   {
-    d->freewarning = new QLabel(this);
-    d->freewarning->setWordWrap(true);
-    d->freewarning->hide();
+    // Use stacked layout to prevent wizard window from changing
+    // size
+    d->spaceLayout = new QStackedLayout;
+    QWidget *spaceCheck  = new QWidget(this);
+    QWidget *spaceLack = new QWidget(this);
+    QWidget *spaceOk = new QWidget(this);
+    QHBoxLayout *spaceCheckLay = new QHBoxLayout(spaceCheck);
+    QGridLayout *spaceLackLay = new QGridLayout(spaceLack);
+    QVBoxLayout *spaceOkLay = new QVBoxLayout(spaceOk);
 
-    QHBoxLayout *hlay = new QHBoxLayout;
     d->progresswidget = new ProgressWidget(this);
-    hlay->addWidget(d->progresswidget);
     d->recheck = new QPushButton(tr("Check again"));
-    hlay->addWidget(d->recheck, 0, Qt::AlignBottom);
     connect(d->recheck,SIGNAL(clicked()),this,SLOT(checkSpaceForBackup()));
-    lay->addLayout(hlay);
-    lay->addWidget(d->freewarning);
+
+    d->freespace = new ProgressWidget(this);
+    d->freewarning = new QLabel(spaceCheck);
+    d->freewarning->setWordWrap(true);
+    d->freewarning->setText(
+        tr("<strong>Warning</strong>: insufficient free space to complete a backup. "
+           "Consider freeing up some space."));
+    d->freewarning->setToolTip(
+        tr("To free up some disk case, cancel the wizard now or switch to the Linux virtual terminal."));
+    d->freewarning->setMinimumWidth(506);
+    d->freewarning->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
+
+    d->kdehomeSize = new QLabel(spaceOk);
+
+    spaceCheckLay->addWidget(d->progresswidget, 0, Qt::AlignTop);
+    spaceLackLay->addWidget(d->freespace, 0, 0, Qt::AlignTop);
+    spaceLackLay->addWidget(d->recheck, 0, 1, Qt::AlignBottom);
+    spaceLackLay->addWidget(d->freewarning, 1, 0, 1, -1, Qt::AlignTop);
+    spaceOkLay->addSpacing(7);
+    spaceOkLay->addWidget(d->kdehomeSize, 0, Qt::AlignTop);
+
+    d->spaceLayout->addWidget(spaceCheck);
+    d->spaceLayout->addWidget(spaceLack);
+    d->spaceLayout->addWidget(spaceOk);
+    lay->addLayout(d->spaceLayout);
+
+    showSpaceWidget(SpaceOk);
   }
   else
   {
     d->backup->hide();
   }
+}
+
+void ChoicePage::showSpaceWidget(SpaceWidget widgetIndex)
+{
+    if (d->spaceLayout) {
+        d->spaceLayout->setCurrentIndex(widgetIndex);
+    }
 }
 
 void ChoicePage::initializePage()
@@ -189,17 +236,6 @@ bool ChoicePage::backupSelected() const
   return d->backup ? d->backup->isChecked() : false;
 }
 
-void ChoicePage::setFreeWarningText(bool show)
-{
-    d->freewarning->setText((show) ?
-        tr("<p><strong>Warning:</strong> Insufficient free space to complete a backup. "
-        "Consider freeing up some space.") : QString::null);
-    d->freewarning->setToolTip((show) ?
-        tr("To free up some disk case, cancel the wizard now or switch to virtual terminal.") :
-        QString::null);
-    if (show) d->freewarning->show();
-}
-
 void ChoicePage::checkSpaceForBackup()
 {
   Q_ASSERT(KaboomSettings::instance().kdehomeDir().exists());
@@ -208,12 +244,9 @@ void ChoicePage::checkSpaceForBackup()
   wizard()->button(QWizard::BackButton)->setEnabled(false);
   wizard()->button(QWizard::NextButton)->setEnabled(false);
 
-  d->progresswidget->show();
-  d->progresswidget->setToolTip(QString::null);
-  d->recheck->hide();
   d->backup->setEnabled(false);
   d->backup->setChecked(false);
-  setFreeWarningText(false);
+  showSpaceWidget(SpaceChecking);
 
   quint64 dirsize = -1;
   quint64 freespace = DirOperations::freeDirSpace(QDir::homePath());
@@ -227,23 +260,21 @@ void ChoicePage::checkSpaceForBackup()
   if(dirsize > freespace)
   {
     quint64 partsize = DirOperations::totalPartitionSize(QDir::homePath());
-    d->progresswidget->setMaximum(partsize);
-    d->progresswidget->setValue(partsize-freespace);
-    d->progresswidget->setLabelText(
+    d->freespace->setMaximum(partsize);
+    d->freespace->setValue(partsize-freespace);
+    d->freespace->setLabelText(
         tr("<p><i>The current KDE&nbsp;3 settings and data directory takes up %1</i></p>")
             .arg(DirOperations::bytesToString(dirsize))
     );
-    d->progresswidget->setToolTip(tr("% of disk space currently used"));
-    d->recheck->show();
-    setFreeWarningText(true);
+    d->freespace->setToolTip(tr("%1 of disk space currently used").arg((partsize-freespace)*100/freespace));
+    showSpaceWidget(SpaceLack);
   }
   else
   {
-    d->progresswidget->hide();
-    d->recheck->hide();
-    d->freewarning->hide();
+    d->kdehomeSize->setText(tr("Backup needs <strong>%1 MiB</strong> of free disk space").arg(dirsize / 1024 / 1024));
     d->backup->setEnabled(true);
     d->backup->setChecked(true);
+    showSpaceWidget(SpaceOk);
   }
 
   wizard()->button(QWizard::BackButton)->setEnabled(true);

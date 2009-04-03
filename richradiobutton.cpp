@@ -24,8 +24,7 @@
 #include <QtGui/QStyle>
 #include <QtGui/QStylePainter>
 #include <QtGui/QStyleOptionButton>
-
-//#include <QtCore/QDebug>
+#include <QtCore/QDebug>
 
 class EventEater : public QObject
 {
@@ -123,7 +122,8 @@ void RichRadioButton::Private::init(RichRadioButton *q)
     layout->addWidget(m_button, 0, 0);
     layout->addWidget(m_label, 0, 1);
     layout->addWidget(m_detailsLabel, 1, 1);
-    layout->setRowMinimumHeight(1, 0);
+    // 640 minus watermark width, Qt is not able to properly sizeHint() it.
+    layout->setColumnMinimumWidth(1, 506); 
 
     m_button->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     m_label->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
