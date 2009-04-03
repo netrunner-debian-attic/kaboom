@@ -28,6 +28,9 @@ class MigrationPagePrivate : public QObject
   public:
     MigrationPagePrivate(MigrationPage *parent);
     MigrationTool::Selection selection;
+    QLabel *scenario;
+    QLabel *text;
+    QWidget *operationbox;
     ProgressWidget *progress;
     QPushButton *start;
     MigrationPage *q;
@@ -36,6 +39,8 @@ class MigrationPagePrivate : public QObject
     bool backup;
     bool complete;
     void errorhandling(const QString &s = QString::null);
+    void setupPage();
+    bool haveSomethingToDo();
   public slots:
     void doMagic();
 };

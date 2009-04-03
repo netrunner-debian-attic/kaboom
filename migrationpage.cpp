@@ -1,5 +1,6 @@
 /*
     Copyright (C) 2009 Sune Vuorela <sune@vuorela.dk>
+                  2009 Modestas Vainius <modestas@vainius.eu>
 
     This library is free software; you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -28,31 +29,78 @@ MigrationPagePrivate::MigrationPagePrivate(MigrationPage* parent)
   complete=false;
   backup=true;
   selection=MigrationTool::Migrate;
-  progress=new ProgressWidget(q);
-  start = new QPushButton(tr("Start"),q);
+
+  scenario = new QLabel;
+  text = new QLabel;
+  text->setWordWrap(true);
+
+  progress = new ProgressWidget;
+  start = new QPushButton(tr("Start"));
   start->setToolTip(tr("Start migration process"));
   start->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
   start->setMinimumSize(start->minimumSizeHint().width()+30, start->minimumSizeHint().height()+10);
 
-  error = new QLabel(q);
+  error = new QLabel;
   error->setWordWrap(true);
   error->setAlignment(Qt::AlignJustify);
   QPalette pal = error->palette();
   pal.setColor(QPalette::Text, Qt::red);
   error->setPalette(pal);
 
-  QLabel *warning = new QLabel(q);
+  QLabel *warning = new QLabel;
   warning->setText(tr("WARNING: depending on the severity of the errors above, it might not be safe "
                       "to go back and you may need to resolve problems manually!"));
   warning->setWordWrap(true);
   warning->setAlignment(Qt::AlignJustify);
 
-  errorbox = new QGroupBox(tr("The following error(s) occurred during migration process:"),q);
-  QBoxLayout *errorboxlayout = new QVBoxLayout(errorbox);
+  // Errorbox and its layout
+  errorbox = new QGroupBox(tr("The following error(s) occurred during migration process:"));
+  QBoxLayout *errorboxlayout = new QVBoxLayout;
   errorboxlayout->addWidget(error);
   errorboxlayout->addSpacing(5);
   errorboxlayout->addWidget(warning);
-  errorbox->hide();
+  errorbox->setLayout(errorboxlayout);
+
+  // Operation box
+  operationbox = new QWidget;
+  QVBoxLayout *opLay = new QVBoxLayout;
+  opLay->addWidget(progress);
+  opLay->addWidget(start);
+  opLay->addWidget(errorbox);
+  operationbox->setLayout(opLay);
+
+  // Main layout
+  QVBoxLayout *lay = new QVBoxLayout;
+  lay->addWidget(scenario);
+  lay->addSpacing(8);
+  lay->addWidget(text);
+  lay->addWidget(operationbox);
+  q->setLayout(lay);
+}
+
+void MigrationPagePrivate::setupPage()
+{
+  if (haveSomethingToDo()) {
+    q->setTitle(tr("Ready to start migration process"));
+    text->setText(tr("Please click \"Start\" button to proceed."));
+    operationbox->show();
+  } else {
+    q->setTitle(tr("Migration - nothing to do"));
+    text->setText(tr("According to the migration options you selected, nothing needs to be done."));
+    complete = true;
+    operationbox->hide();
+    emit q->completeChanged();
+  }
+}
+
+bool MigrationPagePrivate::haveSomethingToDo()
+{
+  if ((selection == MigrationTool::Migrate && !backup) ||
+      (selection == MigrationTool::Clean &&
+       !KaboomSettings::instance().kdehomeDir().exists()))
+      return false;
+  else
+      return true;
 }
 
 void MigrationPagePrivate::doMagic()
@@ -60,7 +108,7 @@ void MigrationPagePrivate::doMagic()
   start->setEnabled(false);
   errorhandling();
   q->wizard()->setOptions(q->wizard()->options()|QWizard::DisabledBackButtonOnLastPage); //don't go back during migration.
-  q->setTitle(tr("Migration is in progress ..."));
+  q->setTitle(tr("Migration is in progress..."));
   if(backup)
   {
     if(KaboomSettings::instance().kdehomeDir().exists())
@@ -114,6 +162,8 @@ void MigrationPagePrivate::doMagic()
   if (!error->text().isEmpty()) // if errors, ...
   {
     q->wizard()->setOptions(q->wizard()->options()&QWizard::DisabledBackButtonOnLastPage); //allow people going back now.>
+  } else {
+      text->setText(tr("Completed successfully."));
   }
   complete=true;
   emit q->completeChanged();
@@ -129,20 +179,18 @@ void MigrationPagePrivate::errorhandling(const QString& err)
 MigrationPage::MigrationPage(QWidget *parent) : QWizardPage(parent)
 {
   d=new MigrationPagePrivate(this);
-  QLabel *text = new QLabel(tr("Please click \"Start\" button to proceed."),this);
-  text->setWordWrap(true);
-  
-  setTitle(tr("Ready to start migration process"));
-
   connect(d->start,SIGNAL(clicked()),d,SLOT(doMagic()));
-  
-  QVBoxLayout *lay = new QVBoxLayout(this);
-  lay->addWidget(text);
-  lay->addWidget(d->progress);
-  lay->addWidget(d->start);
-  lay->addWidget(d->errorbox);
-  setLayout(lay);
-  
+  connect(this,SIGNAL(completeChanged()),this,SLOT(operationComplete()));
+}
+
+void MigrationPage::operationComplete()
+{
+  if (isComplete()) {
+    if (!d->text->text().endsWith(" ")) {
+        d->text->setText(d->text->text() + " ");
+    }
+    d->text->setText(d->text->text() + tr("Click \"Finish\" to exit the wizard and start loading KDE 4."));
+  }
 }
 
 void MigrationPage::setMigrationType(MigrationTool::Selection selection)
@@ -185,6 +233,11 @@ void MigrationPage::initializePage()
   if(choice)
   {
     d->selection=choice->selected();
+    d->scenario->setText(tr("<strong>Selected scenario:</strong> %1<br/>"
+        "<strong>Backup:</strong> %2")
+            .arg(choice->selectedText())
+            .arg((d->backup) ? tr("enabled") : tr("disabled")));
+    d->setupPage();
   }
   else
   {

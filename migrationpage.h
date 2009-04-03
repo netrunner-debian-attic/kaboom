@@ -30,13 +30,13 @@ class MigrationPage : public QWizardPage
     void setBackup(bool b); 
     bool isComplete() const;
     void initializePage();
-  signals:
-    void completeChanged();
+
+  private slots:
+    void operationComplete();
 
   private:
     MigrationPagePrivate *d;
     friend class MigrationPagePrivate;
-
 };
 
 

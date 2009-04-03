@@ -297,3 +297,10 @@ MigrationTool::Selection ChoicePage::selected() const
       abort();
   }
 }
+
+QString ChoicePage::selectedText() const
+{
+  QAbstractButton *btn = d->buttons->checkedButton();
+  return (btn) ? btn->text() : QString::null;
+}
+
