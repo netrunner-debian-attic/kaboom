@@ -4,7 +4,7 @@
 
 TEMPLATE = app
 TARGET = kaboom
-CONFIG += debug
+CONFIG += release
 DEPENDPATH += .
 INCLUDEPATH += .
 

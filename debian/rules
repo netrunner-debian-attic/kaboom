@@ -6,7 +6,7 @@
 configure: configure-stamp
 configure-stamp:
 	dh_testdir
-	qmake-qt4 "DEFINES += DISABLE_KABOOM=1"
+	qmake-qt4
 	touch configure-stamp
 
 
