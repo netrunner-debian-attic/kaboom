@@ -20,7 +20,11 @@ kaboom (1.0.4) unstable; urgency=low
   * Add myself to debian/copyright as author.
   * Change default kaboom stamp path to ~/.local/kaboom.
 
- -- Debian Qt/KDE Maintainers <debian-qt-kde@lists.debian.org>  Sat, 04 Apr 2009 19:58:45 +0300
+  +++ Changes by Pino Toscano:
+
+  * Update Italian translation.
+
+ -- Debian Qt/KDE Maintainers <debian-qt-kde@lists.debian.org>  Sat, 04 Apr 2009 21:13:50 +0200
 
 kaboom (0.9.1) experimental; urgency=low
 
