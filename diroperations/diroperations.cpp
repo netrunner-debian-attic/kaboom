@@ -49,7 +49,7 @@ QString relativeSymLinkTarget(const QString & fileName)
     if ( len < 0 )
         return QString();
     buff[len] = '\0';
-    return QString(buff);
+    return QFile::decodeName(buff);
 }
 
 quint64 freeDirSpace(const QString & dir)
