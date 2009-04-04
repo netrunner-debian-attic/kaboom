@@ -46,6 +46,7 @@ class KaboomSettings {
     const QDir& kde3backupDir() const { return kdehomeDir(Kde3Backup); }
 
     /* Stamp handling */
+    const QFile& stampFile() const;
     bool stampExists() const;
     void touchStamp();
 
@@ -57,6 +58,7 @@ class KaboomSettings {
 
     QDir m_kdehomes[KDEHOMES_COUNT];
     QString m_prettyKdehomes[KDEHOMES_COUNT];
+    QFile m_stampFile;
     void initDefaults();
 };
 

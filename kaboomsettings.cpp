@@ -18,12 +18,14 @@
 #include <QtCore/QStringList>
 #include <QtCore/QDebug>
 #include <cstring>
+#include <unistd.h>
 
 #include "kaboomsettings.h"
 
 #define DEFAULT_KDEDIR "/.kde"
 #define DEFAULT_KDE4DIR "/.kde4"
 #define DEFAULT_KDE3BACKUPDIR "/kde3-backup"
+#define KABOOM_STAMP "/.local/kaboom"
 
 KaboomSettings* KaboomSettings::s_instance = 0;
 
@@ -40,6 +42,7 @@ void KaboomSettings::initDefaults()
     setKdehomePath(KdeHome, homedir + DEFAULT_KDEDIR);
     setKdehomePath(Kde4Home, homedir + DEFAULT_KDE4DIR);
     setKdehomePath(Kde3Backup, homedir + DEFAULT_KDE3BACKUPDIR);
+    m_stampFile.setFileName(homedir + KABOOM_STAMP);
 }
 
 KaboomSettings::KaboomSettings()
@@ -58,6 +61,8 @@ KaboomSettings::KaboomSettings(int argc, char** argv)
             setKdehomePath(Kde4Home, QString::fromLocal8Bit(argv[++i]));
         } else if (strcmp(argv[i], "--kde3backup") == 0 && i+1 < argc) {
             setKdehomePath(Kde3Backup, QString::fromLocal8Bit(argv[++i]));
+        } else if (strcmp(argv[i], "--stamp") == 0 && i+1 < argc) {
+            m_stampFile.setFileName(QString::fromLocal8Bit(argv[++i]));
         } else if (strcmp(argv[i], "--help") == 0) {
             // TODO: show help
         }
@@ -73,7 +78,8 @@ void KaboomSettings::dump()
         ((kde4homeDir().exists()) ? "YES" : "NO");
     qDebug() << "kde3backup -" << kde3backupDir().path() << "- exists?:" <<
         ((kde3backupDir().exists()) ? "YES" : "NO");
-    qDebug() << "kaboom stamp -" << "exists?: " << ((stampExists()) ? "YES" : "NO");
+    qDebug() << "kaboom stamp -" << stampFile().fileName() << "- exists?: " <<
+        ((stampExists()) ? "YES" : "NO");
     qDebug() << "---- -------------------- ----";
 }
 
@@ -108,12 +114,19 @@ QString KaboomSettings::kdehomePrettyPath(KdeHomeType type) const
     return m_prettyKdehomes[type];
 }
 
+const QFile& KaboomSettings::stampFile() const
+{
+    return m_stampFile;
+}
+
 bool KaboomSettings::stampExists() const
 {
-    return (QFile::exists(QDir::homePath()+"/.local/kdebian3to4"));
+    return m_stampFile.exists();;
 }
 
 void KaboomSettings::touchStamp()
 {
-    QFile(QDir::homePath()+"/.local/kdebian3to4").open(QIODevice::WriteOnly);
+    m_stampFile.open(QIODevice::WriteOnly);
+    m_stampFile.close();
+    sync();
 }

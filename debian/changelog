@@ -1,4 +1,4 @@
-kaboom (1.0.3) unstable; urgency=low
+kaboom (1.0.4) unstable; urgency=low
 
   * NOT RELEASED YET (final version will be 1.1.0).
 
@@ -18,8 +18,9 @@ kaboom (1.0.3) unstable; urgency=low
   * Be more verbose in the MigrationPage about selected options.
   * Fix layouting of ChoicePage (more stable).
   * Add myself to debian/copyright as author.
+  * Change default kaboom stamp path to ~/.local/kaboom.
 
- -- Debian Qt/KDE Maintainers <debian-qt-kde@lists.debian.org>  Fri, 03 Apr 2009 19:48:45 +0300
+ -- Debian Qt/KDE Maintainers <debian-qt-kde@lists.debian.org>  Sat, 04 Apr 2009 19:58:45 +0300
 
 kaboom (0.9.1) experimental; urgency=low
 
