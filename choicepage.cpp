@@ -18,6 +18,7 @@
 */
 #include "choicepage.h"
 #include "diroperations/diroperations.h"
+#include "diroperations/recursivedirjob.h"
 #include "richradiobutton.h"
 #include "diroperations/progresswidget.h"
 #include "kaboomsettings.h"
@@ -250,12 +251,14 @@ void ChoicePage::checkSpaceForBackup()
 
   quint64 dirsize = -1;
   quint64 freespace = DirOperations::freeDirSpace(QDir::homePath());
-  try {
-      dirsize = DirOperations::calculateDirSize(
-                    KaboomSettings::instance().kdehomeDir().canonicalPath(),
-                    d->progresswidget
-                );
-  } catch (const DirOperations::Exception&) {}
+  {
+      RecursiveDirJob *job = RecursiveDirJob::calculateDirSize(
+                                KaboomSettings::instance().kdehomeDir().canonicalPath()
+                            );
+      job->synchronousRun(d->progresswidget);
+      dirsize = qvariant_cast<quint64>(job->result());
+      delete job;
+  }
 
   if(dirsize > freespace)
   {

@@ -34,15 +34,15 @@ class MigrationPagePrivate : public QObject
     ProgressWidget *progress;
     QPushButton *start;
     MigrationPage *q;
-    QLabel *error;
+    QTextBrowser *error;
     QGroupBox *errorbox;
     bool backup;
     bool complete;
-    void errorhandling(const QString &s = QString::null);
     void setupPage();
     bool haveSomethingToDo();
   public slots:
     void doMagic();
+    void errorhandling(const QString &s = QString());
 };
 
 #endif // MigrationPagePrivate

@@ -17,12 +17,12 @@
 #ifndef PROGRESSWIDGET_H
 #define PROGRESSWIDGET_H
 
-#include "diroperations.h"
+#include "recursivedirjob.h"
 #include <QWidget>
 class QLabel;
 class QProgressBar;
 
-class ProgressWidget : public QWidget, public DirOperations::ProgressDialogInterface
+class ProgressWidget : public QWidget, public RecursiveDirJob::ProgressDialogInterface
 {
 public:
     ProgressWidget(QWidget *parent = 0);
