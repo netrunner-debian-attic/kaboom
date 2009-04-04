@@ -271,7 +271,7 @@ void ChoicePage::checkSpaceForBackup()
   }
   else
   {
-    d->kdehomeSize->setText(tr("Backup needs <strong>%1 MiB</strong> of free disk space").arg(dirsize / 1024 / 1024));
+    d->kdehomeSize->setText(tr("Backup needs <strong>%1</strong> of free disk space").arg(DirOperations::bytesToString(dirsize)));
     d->backup->setEnabled(true);
     d->backup->setChecked(true);
     showSpaceWidget(SpaceOk);
