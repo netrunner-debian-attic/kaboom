@@ -169,12 +169,12 @@
     </message>
     <message>
         <location filename="choicepage.cpp" line="269"/>
-        <source>%1 of disk space currently used</source>
+        <source>%1% of disk space currently used</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="274"/>
-        <source>Backup needs &lt;strong&gt;%1 MiB&lt;/strong&gt; of free disk space</source>
+        <source>Backup needs &lt;strong&gt;%1&lt;/strong&gt; of free disk space</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
