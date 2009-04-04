@@ -276,8 +276,7 @@ void RecursiveDirJobHelper::recursiveCpDir(const QString & sourcePath, const QSt
             if ( currentItem.isSymLink() )
             {
                 if ( options & RecursiveDirJob::OverWrite ) {
-                    if ( QFile::exists(dest.absoluteFilePath(currentName)) &&
-                         !QFile::remove(dest.absoluteFilePath(currentName)) )
+                    if ( !QFile::remove(dest.absoluteFilePath(currentName)) )
                         emit errorOccured(Error(Error::RmFail, dest.absoluteFilePath(currentName)));
                 }
                 if ( !QFile::link( DirOperations::relativeSymLinkTarget(source.absoluteFilePath(currentName)),
@@ -310,8 +309,7 @@ void RecursiveDirJobHelper::recursiveCpDir(const QString & sourcePath, const QSt
             else if ( currentItem.isFile() )
             {
                 if ( options & RecursiveDirJob::OverWrite ) {
-                    if ( QFile::exists(dest.absoluteFilePath(currentName)) &&
-                         !QFile::remove(dest.absoluteFilePath(currentName)) )
+                    if ( !QFile::remove(dest.absoluteFilePath(currentName)) )
                         emit errorOccured(Error(Error::RmFail, dest.absoluteFilePath(currentName)));
                 }
                 if ( !QFile::copy( source.absoluteFilePath(currentName), dest.absoluteFilePath(currentName) ) )
