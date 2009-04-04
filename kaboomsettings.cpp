@@ -56,13 +56,13 @@ KaboomSettings::KaboomSettings(int argc, char** argv)
 
     for (int i = 1; i < argc; i++) {
         if (strcmp(argv[i], "--kdehome") == 0 && i+1 < argc) {
-            setKdehomePath(KdeHome, QString::fromLocal8Bit(argv[++i]));
+            setKdehomePath(KdeHome, QFile::decodeName(argv[++i]));
         } else if (strcmp(argv[i], "--kde4home") == 0 && i+1 < argc) {
-            setKdehomePath(Kde4Home, QString::fromLocal8Bit(argv[++i]));
+            setKdehomePath(Kde4Home, QFile::decodeName(argv[++i]));
         } else if (strcmp(argv[i], "--kde3backup") == 0 && i+1 < argc) {
-            setKdehomePath(Kde3Backup, QString::fromLocal8Bit(argv[++i]));
+            setKdehomePath(Kde3Backup, QFile::decodeName(argv[++i]));
         } else if (strcmp(argv[i], "--stamp") == 0 && i+1 < argc) {
-            m_stampFile.setFileName(QString::fromLocal8Bit(argv[++i]));
+            m_stampFile.setFileName(QFile::decodeName(argv[++i]));
         } else if (strcmp(argv[i], "--help") == 0) {
             // TODO: show help
         }
