@@ -101,7 +101,7 @@
     <message>
         <location filename="choicepage.cpp" line="118"/>
         <source>&lt;p&gt;The wizard will remove current KDE&amp;nbsp;3 settings directory and move current KDE&amp;nbsp;4 settings directory into its place. Effectively, you will lose all settings and data the KDE&amp;nbsp;3 desktop and applications have stored unless the backup option below is enabled. This scenario should be useful for users who already actively and almost exclusively use KDE&amp;nbsp;4 desktop and applications as previously packaged by Debian and do not care about losing settings of (a few) KDE&amp;nbsp;3 applications anymore.&lt;/p&gt;</source>
-        <translation></translation>
+        <translation>&lt;p&gt;La procedura guidata non modificherà la directory delle impostazioni di KDE&amp;nbsp;3. Può salvare questa directory solo se l&apos;opzione sotto è abilitata. Questo scenario è raccomandato per utenti che non hanno già usato attivamente KDE&amp;nbsp;4 o alcuna delle sue applicazioni (ad es. Okular o KTorrent, fornite in Lenny) su questo sistema, e desiderano che KDE&amp;nbsp;4 e le sue applicazioni usino più impostazioni possibili dalle relative versioni KDE&amp;nbsp;3.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="121"/>
@@ -121,17 +121,17 @@
     <message>
         <location filename="choicepage.cpp" line="143"/>
         <source>Start with default KDE settings and data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Avvia con le impostazioni e i dati predefiniti di KDE.</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="147"/>
         <source>&lt;p&gt;%1The wizard will not touch KDE&amp;nbsp;4 settings directory if it exists. Choose this scenario if you would like to start with default KDE&amp;nbsp;4 desktop and/or want to do migration of old KDE settings manually (from backup).&lt;/p&gt;</source>
-        <translation type="unfinished">&lt;p&gt;%1La procedura guidata non toccherà la directory delle impostazioni di KDE&amp;nbsp;4, se esiste. Scegli questo scenario se vuoi partire con il desktop predefinito di KDE&amp;nbsp;4 e/o migrare manualmente le vecchie impostazioni di KDE (dalla copia di sicurezza).&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;%1La procedura guidata non toccherà la directory delle impostazioni di KDE&amp;nbsp;4, se esiste. Scegli questo scenario se vuoi partire con il desktop predefinito di KDE&amp;nbsp;4 e/o migrare manualmente le vecchie impostazioni di KDE (usando la copia di sicurezza).&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="150"/>
         <source>&lt;p&gt;The wizard will &lt;strong&gt;remove&lt;/strong&gt; (or move to backup) existing KDE&amp;nbsp;3 settings directory including such data as contacts, locally stored mails, accounts in KMail and Kopete, bookmarks, etc. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;La procedura guidata &lt;strong&gt;rimuoverà&lt;/strong&gt; (o sposterà nella copia di sicurezza) la directory delle impostazioni di KDE&amp;nbsp;3, con dati quali rubriche, posta elettronica salvata localmente, account in KMail e Kopete, segnalibri, ecc.</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="155"/>
@@ -160,13 +160,13 @@
     </message>
     <message>
         <location filename="choicepage.cpp" line="269"/>
-        <source>%1 of disk space currently used</source>
-        <translation type="unfinished"></translation>
+        <source>%1% of disk space currently used</source>
+        <translation type="unfinished">Spazio su disco usato: %1%</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="274"/>
-        <source>Backup needs &lt;strong&gt;%1 MiB&lt;/strong&gt; of free disk space</source>
-        <translation>La copia di sicurezza richiede &lt;strong&gt;%1 MiByte&lt;/strong&gt; di spazio libero</translation>
+        <source>Backup needs &lt;strong&gt;%1&lt;/strong&gt; of free disk space</source>
+        <translation>La copia di sicurezza richiede &lt;strong&gt;%1&lt;/strong&gt; di spazio libero</translation>
     </message>
 </context>
 <context>
