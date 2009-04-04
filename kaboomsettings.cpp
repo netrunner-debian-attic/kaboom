@@ -126,7 +126,8 @@ bool KaboomSettings::stampExists() const
 
 void KaboomSettings::touchStamp()
 {
-    m_stampFile.open(QIODevice::WriteOnly);
-    m_stampFile.close();
-    sync();
+    if (m_stampFile.open(QIODevice::WriteOnly)) {
+        fsync(m_stampFile.handle());
+        m_stampFile.close();
+    }
 }
