@@ -41,6 +41,7 @@ MigrationPagePrivate::MigrationPagePrivate(MigrationPage* parent)
   start->setMinimumSize(start->minimumSizeHint().width()+30, start->minimumSizeHint().height()+10);
 
   error = new QTextBrowser;
+  error->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
   QPalette pal = error->palette();
   pal.setColor(QPalette::Text, Qt::red);
   error->setPalette(pal);

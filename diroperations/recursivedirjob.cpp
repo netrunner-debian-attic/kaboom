@@ -319,7 +319,12 @@ void RecursiveDirJobHelper::recursiveCpDir(const QString & sourcePath, const QSt
             }
             else
             {
-                qDebug() << "Ignoring special file" << source.absoluteFilePath(currentName);
+                if ( currentItem.exists() ) {
+                    qDebug() << "Ignoring special file" << source.absoluteFilePath(currentName);
+                } else {
+                    //this can happen with filename encoding bugs
+                    emit errorOccured(Error(Error::NoSuchFileOrDirectory, source.absoluteFilePath(currentName)));
+                }
             }
 
             if ( m_reportProgress ) {
