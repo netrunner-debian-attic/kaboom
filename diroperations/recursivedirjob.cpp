@@ -19,6 +19,9 @@
 #include <QtCore/QDir>
 #include <QtCore/QFileInfo>
 #include <QtCore/QStack>
+#include <QtCore/QList>
+#include <QtCore/QEventLoop>
+#include <QtCore/QVariant>
 #include <QtCore/QDebug>
 
 #include <cstdio> //for perror()
@@ -29,14 +32,26 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-using namespace DirOperations;
+QString RecursiveDirJob::Error::message() const
+{
+    switch (m_type) {
+        case OperationCanceled: return tr("User canceled the operation");
+        case AccessDenied: return tr("Access was denied to the file or directory \"%1\"").arg(m_info);
+        case NoSuchFileOrDirectory: return tr("\"%1\": No such file or directory").arg(m_info);
+        case FileOrDirectoryExists: return tr("\"%1\" already exists").arg(m_info);
+        case CopyFail: return tr("Could not copy \"%1\"").arg(m_info);
+        case MkdirFail: return tr("Could not create directory \"%1\"").arg(m_info);
+        case RmFail: return tr("Could not remove \"%1\"").arg(m_info);
+        default: return tr("Unknown error");
+    }
+}
 
 struct RecursiveDirJob::Private
 {
     RecursiveDirJob::JobType m_jobType;
     QVariantList m_args;
     QVariant m_result;
-    Exception m_exception;
+    QList<Error> m_exceptions;
 };
 
 //static
@@ -61,12 +76,18 @@ RecursiveDirJob* RecursiveDirJob::recursiveRmDir(const QString & dir)
 
 bool RecursiveDirJob::hasError() const
 {
-    return (isFinished()) ? (d->m_exception.type() != Exception::NoError) : false;
+    return (isFinished()) ? (!d->m_exceptions.isEmpty()) : false;
 }
 
-Exception RecursiveDirJob::lastError() const
+QList<RecursiveDirJob::Error> RecursiveDirJob::errors() const
 {
-    return (isFinished()) ? d->m_exception : Exception();
+    return (isFinished()) ? d->m_exceptions : QList<Error>();
+}
+
+void RecursiveDirJob::slotErrorOccured(RecursiveDirJob::Error e)
+{
+    d->m_exceptions.append(e);
+    emit errorOccured(e.message());
 }
 
 QVariant RecursiveDirJob::result() const
@@ -77,6 +98,20 @@ QVariant RecursiveDirJob::result() const
 void RecursiveDirJob::setProgressDialogInterface(ProgressDialogInterface *pd)
 {
     m_pd = pd;
+}
+
+void RecursiveDirJob::synchronousRun(ProgressDialogInterface *pd)
+{
+    QEventLoop loop;
+    if (pd) {
+        setProgressDialogInterface(pd);
+    }
+    //we will start the thread as soon as we are in the event loop, because if the thread
+    //finishes too early (before the event loop starts), quit() will not work and we will stay
+    //in this event loop forever.
+    QMetaObject::invokeMethod(this, "start", Qt::QueuedConnection);
+    QObject::connect(this, SIGNAL(finished()), &loop, SLOT(quit()) );
+    loop.exec();
 }
 
 RecursiveDirJob::RecursiveDirJob(JobType jtype, const QVariantList & arguments)
@@ -102,23 +137,23 @@ void RecursiveDirJob::run()
     connect(&helper, SIGNAL(setLabelText(QString)),
             this, SLOT(setLabelText(QString)), Qt::QueuedConnection);
 
-    try {
-        switch( d->m_jobType ) {
-            case CalculateDirSize:
-                d->m_result = helper.calculateDirSize(d->m_args[0].toString());
-                break;
-            case CpDir:
-                helper.recursiveCpDir(d->m_args[0].toString(), d->m_args[1].toString(),
-                                        d->m_args[2].value<CopyOptions>());
-                break;
-            case RmDir:
-                helper.recursiveRmDir(d->m_args[0].toString());
-                break;
-            default:
-                Q_ASSERT(false);
-        }
-    } catch(const Exception & e) {
-        d->m_exception = e;
+    qRegisterMetaType<RecursiveDirJob::Error>();
+    connect(&helper, SIGNAL(errorOccured(RecursiveDirJob::Error)),
+            this, SLOT(slotErrorOccured(RecursiveDirJob::Error)), Qt::QueuedConnection);
+
+    switch( d->m_jobType ) {
+        case CalculateDirSize:
+            d->m_result = helper.calculateDirSize(d->m_args[0].toString());
+            break;
+        case CpDir:
+            helper.recursiveCpDir(d->m_args[0].toString(), d->m_args[1].toString(),
+                                    d->m_args[2].value<CopyOptions>());
+            break;
+        case RmDir:
+            helper.recursiveRmDir(d->m_args[0].toString());
+            break;
+        default:
+            Q_ASSERT(false);
     }
 }
 
@@ -140,8 +175,10 @@ static const QDir::Filters dirFilters = QDir::AllEntries | QDir::NoDotAndDotDot 
 quint64 RecursiveDirJobHelper::calculateDirSize(const QString & dir)
 {
     QDir currentDir(dir);
-    if ( !currentDir.exists() )
-        throw Exception(Exception::NoSuchFileOrDirectory, dir);
+    if ( !currentDir.exists() ) {
+        emit errorOccured(Error(Error::NoSuchFileOrDirectory, dir));
+        return 0;
+    }
 
     QFileInfoList currentList = currentDir.entryInfoList(dirFilters);
     QFileInfo currentItem;
@@ -161,15 +198,17 @@ quint64 RecursiveDirJobHelper::calculateDirSize(const QString & dir)
             totalSize += stat_size(currentItem.absoluteFilePath());
 
             if ( currentItem.isDir() && !currentItem.isSymLink() ) {
-                if ( !currentDir.cd(currentItem.fileName()) )
-                    throw Exception(Exception::AccessDenied, currentItem.absoluteFilePath());
-                stack.push(currentList);
-                currentList = currentDir.entryInfoList(dirFilters);
+                if ( !currentDir.cd(currentItem.fileName()) ) {
+                    emit errorOccured(Error(Error::AccessDenied, currentItem.absoluteFilePath()));
+                } else {
+                    stack.push(currentList);
+                    currentList = currentDir.entryInfoList(dirFilters);
+                }
             }
 
             if ( m_reportProgress && (++refreshCounter % 100 == 0) )
                 emit setLabelText( tr("Calculating the size of \"%1\"... %2")
-                                    .arg(dir).arg(bytesToString(totalSize)) );
+                                    .arg(dir).arg(DirOperations::bytesToString(totalSize)) );
 
         } else { // list is empty
             if ( !stack.isEmpty() ){
@@ -185,18 +224,23 @@ quint64 RecursiveDirJobHelper::calculateDirSize(const QString & dir)
     return totalSize;
 }
 
-void RecursiveDirJobHelper::recursiveCpDir(const QString & sourcePath, const QString & destPath, CopyOptions options)
+void RecursiveDirJobHelper::recursiveCpDir(const QString & sourcePath, const QString & destPath,
+                                            RecursiveDirJob::CopyOptions options)
 {
     QDir source(sourcePath);
-    if ( !source.exists() )
-        throw Exception(Exception::NoSuchFileOrDirectory, sourcePath);
+    if ( !source.exists() ) {
+        emit errorOccured(Error(Error::NoSuchFileOrDirectory, sourcePath));
+        return;
+    }
 
     QDir dest(destPath);
     if ( dest.exists() ) {
-        if ( options & DirOperations::RemoveDestination )
+        if ( options & RecursiveDirJob::RemoveDestination )
             recursiveRmDir(destPath);
-        else if ( !(options & DirOperations::OverWrite) )
-            throw Exception(Exception::FileOrDirectoryExists, destPath);
+        else if ( !(options & RecursiveDirJob::OverWrite) ) {
+            emit errorOccured(Error(Error::FileOrDirectoryExists, destPath));
+            return;
+        }
     }
 
     dest.mkdir(dest.absolutePath());
@@ -231,39 +275,47 @@ void RecursiveDirJobHelper::recursiveCpDir(const QString & sourcePath, const QSt
 
             if ( currentItem.isSymLink() )
             {
-                if ( options & OverWrite ) {
+                if ( options & RecursiveDirJob::OverWrite ) {
                     if ( QFile::exists(dest.absoluteFilePath(currentName)) &&
                          !QFile::remove(dest.absoluteFilePath(currentName)) )
-                        throw Exception(Exception::RmFail, dest.absoluteFilePath(currentName));
+                        emit errorOccured(Error(Error::RmFail, dest.absoluteFilePath(currentName)));
                 }
-                if ( !QFile::link( relativeSymLinkTarget(source.absoluteFilePath(currentName)),
+                if ( !QFile::link( DirOperations::relativeSymLinkTarget(source.absoluteFilePath(currentName)),
                                     dest.absoluteFilePath(currentName) ) )
-                    throw Exception(Exception::CopyFail, source.absoluteFilePath(currentName));
+                    emit errorOccured(Error(Error::CopyFail, source.absoluteFilePath(currentName)));
             }
             else if ( currentItem.isDir() )
             {
-                if ( !source.cd(currentName) )
-                    throw Exception(Exception::AccessDenied, source.absoluteFilePath(currentName));
-                if ( !dest.cd(currentName) ) {
+                bool ok = false;
+                if ( !(ok = source.cd(currentName)) ) {
+                    emit errorOccured(Error(Error::AccessDenied, source.absoluteFilePath(currentName)));
+                }
+                if ( ok && !dest.cd(currentName) ) {
                     //if the target dir doesn't exist, create it and try again.
                     if ( !dest.mkdir(currentName) )
-                        throw Exception(Exception::MkdirFail, dest.absoluteFilePath(currentName));
-                    if ( !dest.cd(currentName) )
-                        throw Exception(Exception::AccessDenied, dest.absoluteFilePath(currentName)); //quite impossible
+                        emit errorOccured(Error(Error::MkdirFail, dest.absoluteFilePath(currentName)));
+                    if ( !dest.cd(currentName) ) {
+                         //quite impossible to happen
+                        emit errorOccured(Error(Error::AccessDenied, dest.absoluteFilePath(currentName)));
+                        ok = false;
+                        source.cdUp(); //revert the state of source, as we are not going to copy this dir.
+                    }
                 }
 
-                stack.push(currentList);
-                currentList = source.entryInfoList(dirFilters);
+                if (ok) {
+                    stack.push(currentList);
+                    currentList = source.entryInfoList(dirFilters);
+                }
             }
             else if ( currentItem.isFile() )
             {
-                if ( options & OverWrite ) {
+                if ( options & RecursiveDirJob::OverWrite ) {
                     if ( QFile::exists(dest.absoluteFilePath(currentName)) &&
                          !QFile::remove(dest.absoluteFilePath(currentName)) )
-                        throw Exception(Exception::RmFail, dest.absoluteFilePath(currentName));
+                        emit errorOccured(Error(Error::RmFail, dest.absoluteFilePath(currentName)));
                 }
                 if ( !QFile::copy( source.absoluteFilePath(currentName), dest.absoluteFilePath(currentName) ) )
-                    throw Exception(Exception::CopyFail, source.absoluteFilePath(currentName));
+                    emit errorOccured(Error(Error::CopyFail, source.absoluteFilePath(currentName)));
             }
             else
             {
@@ -337,15 +389,17 @@ void RecursiveDirJobHelper::recursiveRmDir(const QString & dir)
 
             if ( currentItem.isDir() && !currentItem.isSymLink() )
             {
-                if ( !currentDir.cd(currentItem.fileName()) )
-                    throw Exception(Exception::AccessDenied, currentItem.absoluteFilePath());
-                stack.push(currentList);
-                currentList = currentDir.entryInfoList(dirFilters);
+                if ( !currentDir.cd(currentItem.fileName()) ) {
+                    emit errorOccured(Error(Error::AccessDenied, currentItem.absoluteFilePath()));
+                } else {
+                    stack.push(currentList);
+                    currentList = currentDir.entryInfoList(dirFilters);
+                }
             }
             else
             {
                 if ( !currentDir.remove(currentItem.fileName()) )
-                    throw Exception(Exception::RmFail, currentItem.absoluteFilePath());
+                    emit errorOccured(Error(Error::RmFail, currentItem.absoluteFilePath()));
             }
         }
         else // list is empty
@@ -361,7 +415,7 @@ void RecursiveDirJobHelper::recursiveRmDir(const QString & dir)
             currentDir.cdUp();
 
             if ( !currentDir.rmdir(tmpname) )
-                throw Exception(Exception::RmFail, currentDir.absoluteFilePath(tmpname));
+                emit errorOccured(Error(Error::RmFail, currentDir.absoluteFilePath(tmpname)));
 
             if ( quit )
                 break;

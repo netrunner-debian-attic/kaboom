@@ -23,18 +23,20 @@ class RecursiveDirJobHelper : public QObject
 {
     Q_OBJECT
 public:
+    typedef RecursiveDirJob::Error Error;
     RecursiveDirJobHelper(bool reportProgress, QObject *parent = 0)
         : QObject(parent), m_reportProgress(reportProgress) {}
 
     quint64 calculateDirSize(const QString & dir);
     void recursiveCpDir(const QString & sourcePath, const QString & destPath,
-                        DirOperations::CopyOptions options);
+                        RecursiveDirJob::CopyOptions options);
     void recursiveRmDir(const QString & dir);
 
 signals:
     void setValue(quint64 value);
     void setMaximum(quint64 maxValue);
     void setLabelText(QString text);
+    void errorOccured(RecursiveDirJob::Error e);
 
 private:
     bool m_reportProgress;

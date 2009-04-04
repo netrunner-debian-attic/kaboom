@@ -18,7 +18,7 @@
 #include "migrationpage.h"
 #include "choicepage.h"
 #include "migrationpage_p.h"
-#include "diroperations/diroperations.h"
+#include "diroperations/recursivedirjob.h"
 #include "kaboomsettings.h"
 #include "migrationtool.h"
 
@@ -40,9 +40,7 @@ MigrationPagePrivate::MigrationPagePrivate(MigrationPage* parent)
   start->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
   start->setMinimumSize(start->minimumSizeHint().width()+30, start->minimumSizeHint().height()+10);
 
-  error = new QLabel;
-  error->setWordWrap(true);
-  error->setAlignment(Qt::AlignJustify);
+  error = new QTextBrowser;
   QPalette pal = error->palette();
   pal.setColor(QPalette::Text, Qt::red);
   error->setPalette(pal);
@@ -113,66 +111,67 @@ void MigrationPagePrivate::doMagic()
   {
     if(KaboomSettings::instance().kdehomeDir().exists())
     {
-      try
-      {
-        DirOperations::recursiveCpDir(KaboomSettings::instance().kdehomeDir().canonicalPath(),
-                                      KaboomSettings::instance().kde3backupDir().path(),
-                                      DirOperations::RemoveDestination, progress);
-      }
-      catch (DirOperations::Exception &e)
-      {
-        qDebug() << e.what();
-        errorhandling(e.what());
-        // emit q->error(e) or something
-      }
       qDebug() << "doing recursive copy of .kde to .kde3-backup";
+      RecursiveDirJob *job = RecursiveDirJob::recursiveCpDir(KaboomSettings::instance().kdehomeDir().canonicalPath(),
+                                                             KaboomSettings::instance().kde3backupDir().path(),
+                                                             RecursiveDirJob::RemoveDestination);
+      connect(job, SIGNAL(errorOccured(QString)), this, SLOT(errorhandling(QString)) );
+      job->synchronousRun(progress);
+      delete job;
     }
   }
-  try
+
+  RecursiveDirJob *job = NULL;
+  switch(selection)
   {
-    switch(selection)
-    {
       case MigrationTool::Migrate:
         progress->setMaximum(1); //fake the progress bar progress.
         progress->setValue(1);
         qDebug() << "do nothing, let kconf_update do magic";
         break;
       case MigrationTool::Merge:
-        DirOperations::recursiveCpDir(KaboomSettings::instance().kde4homeDir().canonicalPath(),
-                                      KaboomSettings::instance().kdehomeDir().canonicalPath(),
-                                      DirOperations::OverWrite,progress);
+        job = RecursiveDirJob::recursiveCpDir(KaboomSettings::instance().kde4homeDir().canonicalPath(),
+                                              KaboomSettings::instance().kdehomeDir().canonicalPath(),
+                                              RecursiveDirJob::OverWrite);
         qDebug() << "do magic experimental merge";
         break;
       case MigrationTool::Clean:
         qDebug() << "do recursive rm of .kde dir if exists";
-        DirOperations::recursiveRmDir(KaboomSettings::instance().kdehomeDir().path(), progress);
+        job = RecursiveDirJob::recursiveRmDir(KaboomSettings::instance().kdehomeDir().path());
         break;
       case MigrationTool::Move:
-        DirOperations::recursiveCpDir(KaboomSettings::instance().kde4homeDir().canonicalPath(),
-                                      KaboomSettings::instance().kdehomeDir().path(),
-                                      DirOperations::RemoveDestination, progress);
+        job = RecursiveDirJob::recursiveCpDir(KaboomSettings::instance().kde4homeDir().canonicalPath(),
+                                              KaboomSettings::instance().kdehomeDir().path(),
+                                              RecursiveDirJob::RemoveDestination);
         qDebug() << "move .kde4 over .kde";
         break;
-    }
   }
-  catch(DirOperations::Exception & e)
-  {
-    errorhandling(e.what());
+
+  if ( job ) {
+    connect(job, SIGNAL(errorOccured(QString)), this, SLOT(errorhandling(QString)) );
+    job->synchronousRun(progress);
+    delete job;
   }
-  if (!error->text().isEmpty()) // if errors, ...
+
+  if (!error->toPlainText().isEmpty()) // if errors, ...
   {
-    q->wizard()->setOptions(q->wizard()->options()&QWizard::DisabledBackButtonOnLastPage); //allow people going back now.>
+    q->wizard()->setOptions(q->wizard()->options() & ~QWizard::DisabledBackButtonOnLastPage); //allow people going back now.>
   } else {
       text->setText(tr("Completed successfully."));
   }
   complete=true;
   emit q->completeChanged();
 }
+
 void MigrationPagePrivate::errorhandling(const QString& err)
 {
   q->wizard()->button(QWizard::CancelButton)->setEnabled(!err.isEmpty());
   static_cast<MigrationTool*>(q->wizard())->setMigrationError(err);
-  error->setText(err);
+  if ( err.isEmpty() ) {
+      error->clear();
+  } else {
+      error->append(err);
+  }
   errorbox->setVisible(!err.isEmpty());
 }
 
