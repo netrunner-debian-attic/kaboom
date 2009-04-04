@@ -266,7 +266,7 @@ void ChoicePage::checkSpaceForBackup()
         tr("<p><i>The current KDE&nbsp;3 settings and data directory takes up %1</i></p>")
             .arg(DirOperations::bytesToString(dirsize))
     );
-    d->freespace->setToolTip(tr("%1 of disk space currently used").arg((partsize-freespace)*100/freespace));
+    d->freespace->setToolTip(tr("%1% of disk space currently used").arg((partsize-freespace)*100/partsize));
     showSpaceWidget(SpaceLack);
   }
   else
