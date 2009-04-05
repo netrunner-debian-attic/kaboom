@@ -31,6 +31,9 @@ public:
     virtual void setMaximum(quint64 max);
     virtual void setValue(quint64 value);
 
+public slots:
+    virtual void reset();
+
 private:
     QLabel *m_label;
     QProgressBar *m_progressBar;

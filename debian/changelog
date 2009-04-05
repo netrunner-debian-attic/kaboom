@@ -1,4 +1,4 @@
-kaboom (1.0.4) unstable; urgency=low
+kaboom (1.0.5) unstable; urgency=low
 
   * NOT RELEASED YET (final version will be 1.1.0).
 
@@ -24,7 +24,7 @@ kaboom (1.0.4) unstable; urgency=low
 
   * Update Italian translation.
 
- -- Debian Qt/KDE Maintainers <debian-qt-kde@lists.debian.org>  Sat, 04 Apr 2009 21:13:50 +0200
+ -- Debian Qt/KDE Maintainers <debian-qt-kde@lists.debian.org>  Sun, 05 Apr 2009 02:01:42 +0300
 
 kaboom (0.9.1) experimental; urgency=low
 

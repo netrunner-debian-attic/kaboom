@@ -110,8 +110,8 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
           .arg(s.kdehomeDir().exists() ?
               tr(" and <strong>replace</strong> current KDE&nbsp;3 settings") : ""),
         (s.kdehomeDir().exists()) ?
-          tr("<p>The wizard will remove current KDE&nbsp;3 settings directory and move "
-           "current KDE&nbsp;4 settings directory into its place. Effectively, you will "
+          tr("<p>The wizard will remove current KDE&nbsp;3 settings directory and copy "
+           "current KDE&nbsp;4 settings directory to its place. Effectively, you will "
            "lose all settings and data the KDE&nbsp;3 desktop and applications have stored "
            "unless the backup option below is enabled. This scenario should be useful for "
            "users who already actively and almost exclusively use KDE&nbsp;4 desktop and "
@@ -146,7 +146,7 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
         "this scenario if you would like to start with default KDE&nbsp;4 "
        "desktop and/or want to do migration of old KDE settings manually (from backup).</p>")
     .arg((s.kdehomeDir().exists()) ?
-      tr("<p>The wizard will <strong>remove</strong> (or move to backup) existing KDE&nbsp;3 "
+      tr("<p>The wizard will <strong>remove</strong> (or leave a copy as backup) existing KDE&nbsp;3 "
        "settings directory including such data as contacts, locally stored mails, accounts "
        "in KMail and Kopete, bookmarks, etc. ") : ""),
     this);
