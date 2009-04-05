@@ -52,3 +52,9 @@ void ProgressWidget::setValue(quint64 value)
     m_progressBar->setValue(static_cast<int>(value));
 }
 
+void ProgressWidget::reset()
+{
+    m_label->setText(QString::null);
+    m_progressBar->reset();
+}
+

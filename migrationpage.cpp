@@ -47,8 +47,7 @@ MigrationPagePrivate::MigrationPagePrivate(MigrationPage* parent)
   error->setPalette(pal);
 
   QLabel *warning = new QLabel;
-  warning->setText(tr("WARNING: depending on the severity of the errors above, it might not be safe "
-                      "to go back and you may need to resolve problems manually!"));
+  warning->setText(tr("WARNING: if you go back, migration process will restarted over current state."));
   warning->setWordWrap(true);
   warning->setAlignment(Qt::AlignJustify);
 
@@ -128,23 +127,23 @@ void MigrationPagePrivate::doMagic()
       case MigrationTool::Migrate:
         progress->setMaximum(1); //fake the progress bar progress.
         progress->setValue(1);
-        qDebug() << "do nothing, let kconf_update do magic";
+        qDebug() << "operation: do nothing, let kconf_update do magic";
         break;
       case MigrationTool::Merge:
         job = RecursiveDirJob::recursiveCpDir(KaboomSettings::instance().kde4homeDir().canonicalPath(),
                                               KaboomSettings::instance().kdehomeDir().canonicalPath(),
                                               RecursiveDirJob::OverWrite);
-        qDebug() << "do magic experimental merge";
+        qDebug() << "operation: do magic experimental merge";
         break;
       case MigrationTool::Clean:
-        qDebug() << "do recursive rm of .kde dir if exists";
+        qDebug() << "operation: do recursive rm of .kde dir if exists";
         job = RecursiveDirJob::recursiveRmDir(KaboomSettings::instance().kdehomeDir().path());
         break;
       case MigrationTool::Move:
         job = RecursiveDirJob::recursiveCpDir(KaboomSettings::instance().kde4homeDir().canonicalPath(),
                                               KaboomSettings::instance().kdehomeDir().path(),
                                               RecursiveDirJob::RemoveDestination);
-        qDebug() << "move .kde4 over .kde";
+        qDebug() << "operation: copymove .kde4 over .kde";
         break;
   }
 
@@ -154,11 +153,12 @@ void MigrationPagePrivate::doMagic()
     delete job;
   }
 
-  if (!error->toPlainText().isEmpty()) // if errors, ...
+  if (errorbox->isVisible()) // if errors, ...
   {
     q->wizard()->setOptions(q->wizard()->options() & ~QWizard::DisabledBackButtonOnLastPage); //allow people going back now.>
+    text->setText(tr("Completed with errors."));
   } else {
-      text->setText(tr("Completed successfully."));
+    text->setText(tr("Completed successfully."));
   }
   complete=true;
   emit q->completeChanged();
@@ -173,7 +173,12 @@ void MigrationPagePrivate::errorhandling(const QString& err)
   } else {
       error->append(err);
   }
-  errorbox->setVisible(!err.isEmpty());
+  bool isHidden = errorbox->isHidden();
+  if (isHidden != err.isEmpty()) {
+    errorbox->setVisible(!err.isEmpty());
+    // trigger updateLayout
+    q->wizard()->setTitleFormat(q->wizard()->titleFormat());
+  }
 }
 
 MigrationPage::MigrationPage(QWidget *parent) : QWizardPage(parent)
@@ -213,6 +218,7 @@ void MigrationPage::initializePage()
   d->complete=false;
   emit completeChanged();
   d->start->setEnabled(true);
+  d->progress->reset();
 
   // Initialize error handling and reenable Cancel button
   d->errorhandling();
