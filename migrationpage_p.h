@@ -26,11 +26,11 @@ class MigrationPagePrivate : public QObject
 {
   Q_OBJECT
   public:
+    enum PageState { Initial, InProgress, FinishedSuccessfully, FinishedWithError };
     MigrationPagePrivate(MigrationPage *parent);
     MigrationTool::Selection selection;
     QLabel *scenario;
     QLabel *text;
-    QWidget *operationbox;
     ProgressWidget *progress;
     QPushButton *start;
     MigrationPage *q;
@@ -38,8 +38,8 @@ class MigrationPagePrivate : public QObject
     QGroupBox *errorbox;
     bool backup;
     bool complete;
-    void setupPage();
     bool haveSomethingToDo();
+    void setPageState(PageState s);
   public slots:
     void doMagic();
     void errorhandling(const QString &s = QString());

@@ -1,6 +1,7 @@
 /*
     Copyright (C) 2009 Sune Vuorela <sune@vuorela.dk>
                   2009 Modestas Vainius <modestas@vainius.eu>
+                  2009 George Kiagiadakis <gkiagia@users.sourceforge.net>
 
     This library is free software; you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -59,35 +60,70 @@ MigrationPagePrivate::MigrationPagePrivate(MigrationPage* parent)
   errorboxlayout->addWidget(warning);
   errorbox->setLayout(errorboxlayout);
 
-  // Operation box
-  operationbox = new QWidget;
-  QVBoxLayout *opLay = new QVBoxLayout;
-  opLay->addWidget(progress);
-  opLay->addWidget(start);
-  opLay->addWidget(errorbox);
-  operationbox->setLayout(opLay);
-
   // Main layout
   QVBoxLayout *lay = new QVBoxLayout;
   lay->addWidget(scenario);
   lay->addSpacing(8);
   lay->addWidget(text);
-  lay->addWidget(operationbox);
+  lay->addWidget(start);
+  lay->addWidget(progress);
+  lay->addWidget(errorbox);
   q->setLayout(lay);
 }
 
-void MigrationPagePrivate::setupPage()
+void MigrationPagePrivate::setPageState(PageState s)
 {
-  if (haveSomethingToDo()) {
-    q->setTitle(tr("Ready to start migration process"));
-    text->setText(tr("Please click \"Start\" button to proceed."));
-    operationbox->show();
-  } else {
-    q->setTitle(tr("Migration - nothing to do"));
-    text->setText(tr("According to the migration options you selected, nothing needs to be done."));
-    complete = true;
-    operationbox->hide();
-    emit q->completeChanged();
+  switch(s) {
+      case Initial:
+        //setup default widget visibility
+        text->show();
+        progress->hide();
+        errorhandling(); // hide the errorbox & init error handling
+        if (haveSomethingToDo()) {
+            q->setTitle(tr("Ready to start migration process"));
+            text->setText(tr("Please click \"Start\" button to proceed."));
+            complete=false;
+            emit q->completeChanged();
+            start->show();
+        } else {
+            q->setTitle(tr("Migration - nothing to do"));
+            text->setText(tr("According to the migration options you selected, nothing needs to be done."));
+            complete = true;
+            emit q->completeChanged();
+            start->hide();
+        }
+        // reenable Cancel button (disabled by errorhandling())
+        q->wizard()->button(QWizard::CancelButton)->setEnabled(true);
+        break;
+      case InProgress:
+        //previous state was Initial
+        text->hide();
+        start->hide();
+        progress->show();
+        progress->reset();
+        errorhandling(); // hide errorbox & disable cancel button
+        q->wizard()->setOptions(q->wizard()->options()|QWizard::DisabledBackButtonOnLastPage); //don't go back during migration.
+        q->setTitle(tr("Migration is in progress..."));
+        break;
+      case FinishedSuccessfully:
+      case FinishedWithError:
+        //previous state was InProgress
+        text->show();
+        progress->hide();
+        q->setTitle(tr("Migration finished"));
+
+        if ( s == FinishedWithError ) {
+            text->setText(tr("Settings migration completed with errors."));
+            //allow people going back now.>
+            q->wizard()->setOptions(q->wizard()->options() & ~QWizard::DisabledBackButtonOnLastPage);
+        } else {
+            text->setText(tr("Settings migration completed successfully."));
+        }
+        complete=true;
+        emit q->completeChanged();
+        break;
+      default:
+        Q_ASSERT(false);
   }
 }
 
@@ -103,10 +139,8 @@ bool MigrationPagePrivate::haveSomethingToDo()
 
 void MigrationPagePrivate::doMagic()
 {
-  start->setEnabled(false);
-  errorhandling();
-  q->wizard()->setOptions(q->wizard()->options()|QWizard::DisabledBackButtonOnLastPage); //don't go back during migration.
-  q->setTitle(tr("Migration is in progress..."));
+  setPageState(InProgress);
+
   if(backup)
   {
     if(KaboomSettings::instance().kdehomeDir().exists())
@@ -155,13 +189,10 @@ void MigrationPagePrivate::doMagic()
 
   if (errorbox->isVisible()) // if errors, ...
   {
-    q->wizard()->setOptions(q->wizard()->options() & ~QWizard::DisabledBackButtonOnLastPage); //allow people going back now.>
-    text->setText(tr("Completed with errors."));
+    setPageState(FinishedWithError);
   } else {
-    text->setText(tr("Completed successfully."));
+    setPageState(FinishedSuccessfully);
   }
-  complete=true;
-  emit q->completeChanged();
 }
 
 void MigrationPagePrivate::errorhandling(const QString& err)
@@ -215,15 +246,6 @@ bool MigrationPage::isComplete() const
 
 void MigrationPage::initializePage()
 {
-  d->complete=false;
-  emit completeChanged();
-  d->start->setEnabled(true);
-  d->progress->reset();
-
-  // Initialize error handling and reenable Cancel button
-  d->errorhandling();
-  d->q->wizard()->button(QWizard::CancelButton)->setEnabled(true);
-
   if(field("backup").toBool())
   {
       d->backup=true;
@@ -235,7 +257,7 @@ void MigrationPage::initializePage()
       qDebug() << "NOBACKUP";
   }
   QWizardPage* page = wizard()->page(MigrationTool::Choice);
-  ChoicePage* choice = static_cast<ChoicePage*>(page);
+  ChoicePage* choice = qobject_cast<ChoicePage*>(page);
   if(choice)
   {
     d->selection=choice->selected();
@@ -243,10 +265,12 @@ void MigrationPage::initializePage()
         "<strong>Backup:</strong> %2")
             .arg(choice->selectedText())
             .arg((d->backup) ? tr("enabled") : tr("disabled")));
-    d->setupPage();
   }
   else
   {
     qFatal("Cast failed");
   }
+
+  d->setPageState(MigrationPagePrivate::Initial);
 }
+
