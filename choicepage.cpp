@@ -61,7 +61,7 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
   d->configInfoLabel->setFont(boldFont);
   d->configInfoLabel->setWordWrap(true);
 
-  d->configLabel = new QLabel(tr("%1%2")
+  d->configLabel = new QLabel(QString("%1%2")
     .arg((s.kdehomeDir().exists()) ?
         tr("<strong>KDE&nbsp;3</strong> settings and data are at <u>%1</u><br/>").arg(s.kdehomePrettyPath()) : "")
     .arg((s.kde4homeDir().exists()) ?
@@ -146,7 +146,7 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
         "this scenario if you would like to start with default KDE&nbsp;4 "
        "desktop and/or want to do migration of old KDE settings manually (from backup).</p>")
     .arg((s.kdehomeDir().exists()) ?
-      tr("<p>The wizard will <strong>remove</strong> (or leave a copy as backup) existing KDE&nbsp;3 "
+      tr("The wizard will <strong>remove</strong> (or leave a copy as backup) existing KDE&nbsp;3 "
        "settings directory including such data as contacts, locally stored mails, accounts "
        "in KMail and Kopete, bookmarks, etc. ") : ""),
     this);
