@@ -24,6 +24,17 @@ kaboom (1.0.5) unstable; urgency=low
 
   * Update Italian translation.
 
+  +++ Changes by George Kiagiadakis:
+
+  * Use lstat() to calculate sizes so that calculation is more accurate.
+  * Change copy/remove code so that it doesn't stop when it encounters errors.
+  * Fix bug where symlinks pointing to files with non-latin characters were
+    copied wrong.
+  * When copying data from .kde4, replace "/.kde4/" with "/.kde/" in
+    configuration files that are in ~/.kde/share/config.
+  * Improve usability of MigrationPage.
+  * Add preliminary greek translation.
+
  -- Debian Qt/KDE Maintainers <debian-qt-kde@lists.debian.org>  Sun, 05 Apr 2009 02:01:42 +0300
 
 kaboom (0.9.1) experimental; urgency=low
