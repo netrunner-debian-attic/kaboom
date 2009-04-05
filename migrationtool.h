@@ -21,6 +21,7 @@
 class MigrationToolPrivate;
 class MigrationTool : public QWizard
 {
+    Q_OBJECT
   public:
     enum Selection
     {
