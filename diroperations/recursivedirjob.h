@@ -42,8 +42,8 @@ public:
     {
         Q_DECLARE_TR_FUNCTIONS(Error)
     public:
-        enum Type { OperationCanceled, AccessDenied, NoSuchFileOrDirectory,
-                    FileOrDirectoryExists, CopyFail, MkdirFail, RmFail, NoError };
+        enum Type { AccessDenied, NoSuchFileOrDirectory, FileOrDirectoryExists,
+                    CopyFail, MkdirFail, RmFail, NoError };
 
         explicit Error() : m_type(NoError) {}
         explicit Error(Type type, const QString & extraInfo = QString())
@@ -80,8 +80,8 @@ public:
 
     void setProgressDialogInterface(ProgressDialogInterface *pd);
 
-    bool hasError() const;
-    QList<Error> errors() const;
+    //bool hasError() const;
+    //QList<Error> errors() const;
     QVariant result() const;
 
     void synchronousRun(ProgressDialogInterface *pd = NULL);

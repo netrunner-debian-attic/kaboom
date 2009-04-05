@@ -37,7 +37,6 @@
 QString RecursiveDirJob::Error::message() const
 {
     switch (m_type) {
-        case OperationCanceled: return tr("User canceled the operation");
         case AccessDenied: return tr("Access was denied to the file or directory \"%1\"").arg(m_info);
         case NoSuchFileOrDirectory: return tr("\"%1\": No such file or directory").arg(m_info);
         case FileOrDirectoryExists: return tr("\"%1\" already exists").arg(m_info);
@@ -53,7 +52,7 @@ struct RecursiveDirJob::Private
     RecursiveDirJob::JobType m_jobType;
     QVariantList m_args;
     QVariant m_result;
-    QList<Error> m_exceptions;
+    //QList<Error> m_exceptions;
 };
 
 //static
@@ -76,6 +75,7 @@ RecursiveDirJob* RecursiveDirJob::recursiveRmDir(const QString & dir)
     return new RecursiveDirJob(RmDir, QVariantList() << QVariant(dir));
 }
 
+#if 0
 bool RecursiveDirJob::hasError() const
 {
     return (isFinished()) ? (!d->m_exceptions.isEmpty()) : false;
@@ -85,10 +85,11 @@ QList<RecursiveDirJob::Error> RecursiveDirJob::errors() const
 {
     return (isFinished()) ? d->m_exceptions : QList<Error>();
 }
+#endif
 
 void RecursiveDirJob::slotErrorOccured(RecursiveDirJob::Error e)
 {
-    d->m_exceptions.append(e);
+    //d->m_exceptions.append(e);
     emit errorOccured(e.message());
 }
 
