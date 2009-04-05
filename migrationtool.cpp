@@ -75,7 +75,7 @@ int MigrationTool::nextId() const
 	break;
       case Choice:
 	if(!d->choice->backupSelected() &&
-       (d->choice->selected()==Clean||d->choice->selected()==Merge) &&
+       (d->choice->selected()==Clean||d->choice->selected()==Merge||d->choice->selected()==Move) &&
        KaboomSettings::instance().kdehomeDir().exists())
 	{
 	    return Warning;
