@@ -57,7 +57,7 @@ public:
         QString m_info;
     };
 
-    enum CopyOption { NoOptions = 0x0, RemoveDestination = 0x1, OverWrite = 0x2 };
+    enum CopyOption { NoOptions = 0x0, RemoveDestination = 0x1, OverWrite = 0x2, ReplaceKde4InFiles = 0x4 };
     Q_DECLARE_FLAGS(CopyOptions, CopyOption);
 
     virtual ~RecursiveDirJob();

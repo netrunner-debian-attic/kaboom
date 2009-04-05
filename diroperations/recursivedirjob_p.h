@@ -39,6 +39,10 @@ signals:
     void errorOccured(RecursiveDirJob::Error e);
 
 private:
+    quint64 stat_size(const QString & fileName);
+    bool internal_copy(const QString & sourceFile, const QString & destFile, bool replaceKde4InFiles);
+    bool copyWithReplaceKde4(const QString & sourceFileName, const QString & destFileName);
+
     bool m_reportProgress;
 };
 

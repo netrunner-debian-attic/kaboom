@@ -133,7 +133,7 @@ void MigrationPagePrivate::doMagic()
       case MigrationTool::Merge:
         job = RecursiveDirJob::recursiveCpDir(KaboomSettings::instance().kde4homeDir().canonicalPath(),
                                               KaboomSettings::instance().kdehomeDir().canonicalPath(),
-                                              RecursiveDirJob::OverWrite);
+                                              RecursiveDirJob::OverWrite | RecursiveDirJob::ReplaceKde4InFiles);
         qDebug() << "do magic experimental merge";
         break;
       case MigrationTool::Clean:
@@ -143,7 +143,7 @@ void MigrationPagePrivate::doMagic()
       case MigrationTool::Move:
         job = RecursiveDirJob::recursiveCpDir(KaboomSettings::instance().kde4homeDir().canonicalPath(),
                                               KaboomSettings::instance().kdehomeDir().path(),
-                                              RecursiveDirJob::RemoveDestination);
+                                              RecursiveDirJob::RemoveDestination | RecursiveDirJob::ReplaceKde4InFiles);
         qDebug() << "move .kde4 over .kde";
         break;
   }

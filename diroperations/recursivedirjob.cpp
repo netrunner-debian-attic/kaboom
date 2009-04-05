@@ -16,7 +16,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "recursivedirjob_p.h"
+#include "../kaboomsettings.h"
 #include <QtCore/QDir>
+#include <QtCore/QFile>
 #include <QtCore/QFileInfo>
 #include <QtCore/QStack>
 #include <QtCore/QList>
@@ -157,7 +159,7 @@ void RecursiveDirJob::run()
     }
 }
 
-static quint64 stat_size(const QString & fileName)
+quint64 RecursiveDirJobHelper::stat_size(const QString & fileName)
 {
     struct stat buf;
     if ( ::lstat(QFile::encodeName(fileName), &buf) != 0 ) {
@@ -312,7 +314,8 @@ void RecursiveDirJobHelper::recursiveCpDir(const QString & sourcePath, const QSt
                     if ( !QFile::remove(dest.absoluteFilePath(currentName)) )
                         emit errorOccured(Error(Error::RmFail, dest.absoluteFilePath(currentName)));
                 }
-                if ( !QFile::copy( source.absoluteFilePath(currentName), dest.absoluteFilePath(currentName) ) )
+                if ( !internal_copy( source.absoluteFilePath(currentName), dest.absoluteFilePath(currentName),
+                                        options & RecursiveDirJob::ReplaceKde4InFiles ) )
                     emit errorOccured(Error(Error::CopyFail, source.absoluteFilePath(currentName)));
             }
             else
@@ -426,3 +429,71 @@ void RecursiveDirJobHelper::recursiveRmDir(const QString & dir)
     }
 }
 
+
+struct UpdateEntry {
+    enum Type { DirWithSubdirs, File };
+    Type type;
+    const char *relativePath;
+};
+
+static const UpdateEntry updateEntries[] = {
+    {UpdateEntry::DirWithSubdirs, "/share/config/"},
+};
+
+bool RecursiveDirJobHelper::internal_copy(const QString & sourceFile, const QString & destFile, bool replaceKde4InFiles)
+{
+    if ( !replaceKde4InFiles ) {
+        return QFile::copy(sourceFile, destFile);
+    } else {
+        for (unsigned int i = 0; i < sizeof(updateEntries) / sizeof(UpdateEntry); i++) {
+            UpdateEntry entry = updateEntries[i];
+            QString path = KaboomSettings::instance().kdehomeDir().absolutePath() + entry.relativePath;
+
+            if ( (entry.type == UpdateEntry::File && destFile == path) ||
+                 (entry.type == UpdateEntry::DirWithSubdirs && destFile.startsWith(path)) )
+            {
+                qDebug() << "Doing copy with s/.kde4/.kde/ of" << sourceFile;
+                return copyWithReplaceKde4(sourceFile, destFile);
+            }
+        }
+
+        return QFile::copy(sourceFile, destFile);
+    }
+}
+
+bool RecursiveDirJobHelper::copyWithReplaceKde4(const QString & sourceFileName, const QString & destFileName)
+{
+    QFile sourceFile(sourceFileName);
+    QFile destFile(destFileName);
+
+    if ( !sourceFile.open(QIODevice::ReadOnly) ) {
+        qCritical() << "copyWithReplaceKde4:" << "Could not open" << sourceFileName << "for reading";
+        return false;
+    }
+
+    if ( !destFile.open(QIODevice::WriteOnly) ) {
+        qCritical() << "copyWithReplaceKde4:" << "Could not open" << destFileName << "for writing";
+        return false;
+    }
+
+    while ( !sourceFile.atEnd() ) {
+        QByteArray b = sourceFile.readLine();
+        if ( b.isEmpty() ) {
+            qCritical() << "copyWithReplaceKde4:" << "Could not read from" << sourceFileName;
+            return false;
+        }
+        if ( destFile.write( b.replace("/.kde4/", "/.kde/") ) == -1 ) {
+            qCritical() << "copyWithReplaceKde4:" << "Could not write to" << destFileName;
+            return false;
+        }
+    }
+
+    if ( !destFile.flush() ) {
+        qCritical() << "copyWithReplaceKde4:" << "Could not flush" << destFileName;
+        return false;
+    }
+
+    destFile.close();
+    sourceFile.close();
+    return true;
+}
