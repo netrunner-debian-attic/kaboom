@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="it">
+<!DOCTYPE TS><TS version="1.1" language="it">
 <defaultcodec></defaultcodec>
 <context>
     <name>ChoicePage</name>
@@ -78,7 +77,7 @@
     <message>
         <location filename="choicepage.cpp" line="96"/>
         <source>&lt;p&gt;The wizard will not make any changes to your current KDE&amp;nbsp;3 settings directory. It may only optionally back this directory up if the appropriate option below is enabled. This scenario is recommended for users who have not actively used KDE&amp;nbsp;4 or any of its applications (e.g. Okular or KTorrent which were released with Lenny) on this system previously and wish the new KDE&amp;nbsp;4 desktop and its applications to use as much settings from the old KDE&amp;nbsp;3 counterparts as possible.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;La procedura guidata non modificherà la directory delle impostazioni di KDE&amp;nbsp;3. Può essere effettuata una copia di sicurezza, se l&apos;opzione sotto è abilitata. Questo scenario è raccomandato per utenti che non hanno usato tanto KDE&amp;nbsp;4 o alcuna delle sue applicazioni su questo sistema (ad esempio Okular o KTorrent, forniti in Lenny), e desiderano che il nuovo desktop KDE&amp;nbsp;4 e le sue applicazioni usino più impostazioni possibili da KDE&amp;nbsp;3.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="109"/>
@@ -98,7 +97,7 @@
     <message>
         <location filename="choicepage.cpp" line="149"/>
         <source>The wizard will &lt;strong&gt;remove&lt;/strong&gt; (or leave a copy as backup) existing KDE&amp;nbsp;3 settings directory including such data as contacts, locally stored mails, accounts in KMail and Kopete, bookmarks, etc. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;La procedura guidata &lt;strong&gt;rimuoverà&lt;/strong&gt; (o ne creerà una copia di sicurezza) la directory delle impostazioni di KDE&amp;nbsp;3, con dati quali rubriche, posta elettronica salvata localmente, account in KMail e Kopete, segnalibri, ecc.</translation>
     </message>
     <message>
         <source>&lt;p&gt;The wizard will remove current KDE&amp;nbsp;3 settings directory and move current KDE&amp;nbsp;4 settings directory into its place. Effectively, you will lose all settings and data the KDE&amp;nbsp;3 desktop and applications have stored unless the backup option below is enabled. This scenario should be useful for users who already actively and almost exclusively use KDE&amp;nbsp;4 desktop and applications as previously packaged by Debian and do not care about losing settings of (a few) KDE&amp;nbsp;3 applications anymore.&lt;/p&gt;</source>
@@ -331,7 +330,7 @@
     <message>
         <location filename="migrationpage.cpp" line="90"/>
         <source>According to the migration options you selected, nothing needs to be done.</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="migrationpage.cpp" line="106"/>
@@ -341,17 +340,17 @@
     <message>
         <location filename="migrationpage.cpp" line="113"/>
         <source>Migration finished</source>
-        <translation type="unfinished"></translation>
+        <translation>Migrazione completata</translation>
     </message>
     <message>
         <location filename="migrationpage.cpp" line="116"/>
         <source>Settings migration completed with errors.</source>
-        <translation type="unfinished"></translation>
+        <translation>Migrazione delle impostazioni completata con errori.</translation>
     </message>
     <message>
         <location filename="migrationpage.cpp" line="120"/>
         <source>Settings migration completed successfully.</source>
-        <translation type="unfinished"></translation>
+        <translation>Migrazione delle impostazioni completata correttamente.</translation>
     </message>
     <message>
         <source>Completed successfully.</source>
@@ -439,37 +438,37 @@
     <message>
         <location filename="diroperations/recursivedirjob.cpp" line="40"/>
         <source>Access was denied to the file or directory &quot;%1&quot;</source>
-        <translation type="unfinished">Accesso non consentito al file o alla directory «%1»</translation>
+        <translation>Accesso non consentito al file o alla directory «%1»</translation>
     </message>
     <message>
         <location filename="diroperations/recursivedirjob.cpp" line="41"/>
         <source>&quot;%1&quot;: No such file or directory</source>
-        <translation type="unfinished">«%1»: file o directory non esistente</translation>
+        <translation>«%1»: file o directory non esistente</translation>
     </message>
     <message>
         <location filename="diroperations/recursivedirjob.cpp" line="42"/>
         <source>&quot;%1&quot; already exists</source>
-        <translation type="unfinished">«%1» esiste già</translation>
+        <translation>«%1» esiste già</translation>
     </message>
     <message>
         <location filename="diroperations/recursivedirjob.cpp" line="43"/>
         <source>Could not copy &quot;%1&quot;</source>
-        <translation type="unfinished">Impossibile copiare «%1»</translation>
+        <translation>Impossibile copiare «%1»</translation>
     </message>
     <message>
         <location filename="diroperations/recursivedirjob.cpp" line="44"/>
         <source>Could not create directory &quot;%1&quot;</source>
-        <translation type="unfinished">Impossibile create la directory «%1»</translation>
+        <translation>Impossibile create la directory «%1»</translation>
     </message>
     <message>
         <location filename="diroperations/recursivedirjob.cpp" line="45"/>
         <source>Could not remove &quot;%1&quot;</source>
-        <translation type="unfinished">Impossibile rimuovere «%1»</translation>
+        <translation>Impossibile rimuovere «%1»</translation>
     </message>
     <message>
         <location filename="diroperations/recursivedirjob.cpp" line="46"/>
         <source>Unknown error</source>
-        <translation type="unfinished">Errore sconosciuto</translation>
+        <translation>Errore sconosciuto</translation>
     </message>
 </context>
 <context>
