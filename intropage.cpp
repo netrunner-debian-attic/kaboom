@@ -21,18 +21,18 @@ IntroPage::IntroPage(QWidget *parent) : QWizardPage(parent)
 {
   setTitle(tr("Welcome to the Debian KDE Settings Migration Wizard!"));
   QLabel *text = new QLabel(tr(
-    "<p align='justify'>This version of KDE&nbsp;4 in Debian uses <u>%1</u> "
+    "<p align='justify'>This version of KDE&nbsp;4 in Debian uses the <u>%1</u> "
     "directory (where ~ refers to the path of your Home directory) to "
     "store user settings and data. The wizard has detected that you have "
     "recently upgraded to this version of KDE&nbsp;4 from KDE&nbsp;3 and/or "
-    "previous Debian KDE&nbsp;4 release that used <u>%2</u> directory to "
+    "a previous Debian KDE&nbsp;4 release that used the <u>%2</u> directory to "
     "store user settings.</p>"
 
     "<p align='justify'>This wizard will guide you through the process of "
     "backing up, copying, moving or merging your user settings and data which "
     "were created by the old KDE installation. Please note, however, that it "
     "does not migrate configuration files directly. It operates on the "
-    "filesystem level and sets up <u>%1</u> directory the way you request "
+    "filesystem level and sets up the <u>%1</u> directory the way you request "
     "in the next step.</p>"
     
     "<p align='justify'>Once you finish with this wizard, migration of the "
@@ -45,7 +45,7 @@ IntroPage::IntroPage(QWidget *parent) : QWizardPage(parent)
 
     "<p align='justify'>If you need to make manual adjustments, you can cancel the "
     "wizard. KDE will not start and the current session will be terminated. You will "
-    "see this wizard when you try to start KDE session again.</p>"
+    "see this wizard when you try to start a KDE session again.</p>"
     ).arg(KaboomSettings::instance().kdehomePrettyPath())
      .arg(KaboomSettings::instance().kde4homePrettyPath()), this);
   text->setWordWrap(true);

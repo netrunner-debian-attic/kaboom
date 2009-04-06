@@ -48,7 +48,7 @@ MigrationPagePrivate::MigrationPagePrivate(MigrationPage* parent)
   error->setPalette(pal);
 
   QLabel *warning = new QLabel;
-  warning->setText(tr("WARNING: if you go back, migration process will restarted over current state."));
+  warning->setText(tr("WARNING: if you go back, the migration process will be restarted over the current state."));
   warning->setWordWrap(true);
   warning->setAlignment(Qt::AlignJustify);
 

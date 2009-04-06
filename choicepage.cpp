@@ -92,7 +92,7 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
   if(s.kdehomeDir().exists())
   {
     d->migrate = new RichRadioButton(
-        tr("Use current KDE&nbsp;3 settings as initial for KDE&nbsp;4. (<i>standard</i>)"),
+        tr("Use current KDE&nbsp;3 settings as initial settings for KDE&nbsp;4. (<i>standard</i>)"),
         tr("<p>The wizard will not make any changes to your current KDE&nbsp;3 settings directory. "
            "It may only optionally back this directory up if the appropriate option below is "
            "enabled. This scenario is recommended for users who have not actively used KDE&nbsp;4 "
@@ -110,16 +110,16 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
           .arg(s.kdehomeDir().exists() ?
               tr(" and <strong>replace</strong> current KDE&nbsp;3 settings") : ""),
         (s.kdehomeDir().exists()) ?
-          tr("<p>The wizard will remove current KDE&nbsp;3 settings directory and copy "
-           "current KDE&nbsp;4 settings directory to its place. Effectively, you will "
+          tr("<p>The wizard will remove the current KDE&nbsp;3 settings directory and copy "
+           "the current KDE&nbsp;4 settings directory to its place. Effectively, you will "
            "lose all settings and data the KDE&nbsp;3 desktop and applications have stored "
-           "unless the backup option below is enabled. This scenario should be useful for "
-           "users who already actively and almost exclusively use KDE&nbsp;4 desktop and "
-           "applications as previously packaged by Debian and do not care about losing "
+           "unless the backup option below is enabled. This scenario is useful for "
+           "users who already use a KDE&nbsp;4 desktop and applications almost exclusively "
+           "and do not care about losing "
            "settings of (a few) KDE&nbsp;3 applications anymore.</p>") :
-          tr("<p>The wizard will rename your current old KDE&nbsp;4 settings directory. "
+          tr("<p>The wizard will rename your current KDE&nbsp;4 settings directory. "
               "Select this option if you would like to keep all KDE 4 settings and "
-              "continue using KDE 4 desktop as before.</p>"),
+              "continue using the KDE 4 desktop as before.</p>"),
         this);
     d->buttons->addButton(d->move,MigrationTool::Move);
     lay->addWidget(d->move);
@@ -146,8 +146,8 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
         "this scenario if you would like to start with default KDE&nbsp;4 "
        "desktop and/or want to do migration of old KDE settings manually (from backup).</p>")
     .arg((s.kdehomeDir().exists()) ?
-      tr("The wizard will <strong>remove</strong> (or leave a copy as backup) existing KDE&nbsp;3 "
-       "settings directory including such data as contacts, locally stored mails, accounts "
+      tr("The wizard will <strong>remove</strong> (or leave a copy as backup) the existing KDE&nbsp;3 "
+       "settings directory including data such as contacts, locally stored mails, accounts "
        "in KMail and Kopete, bookmarks, etc. ") : ""),
     this);
   d->buttons->addButton(d->clean,MigrationTool::Clean);
@@ -193,7 +193,7 @@ ChoicePage::ChoicePage(QWidget *parent) : QWizardPage(parent)
         tr("<strong>Warning</strong>: insufficient free space to complete a backup. "
            "Consider freeing up some space."));
     d->freewarning->setToolTip(
-        tr("To free up some disk case, cancel the wizard now or switch to the Linux virtual terminal."));
+        tr("To free up some disk space, cancel the wizard now or switch to the Linux virtual terminal."));
     d->freewarning->setMinimumWidth(506);
     d->freewarning->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
 
@@ -266,7 +266,7 @@ void ChoicePage::checkSpaceForBackup()
     d->freespace->setMaximum(partsize);
     d->freespace->setValue(partsize-freespace);
     d->freespace->setLabelText(
-        tr("<p><i>The current KDE&nbsp;3 settings and data directory takes up %1</i></p>")
+        tr("<p><i>The current KDE&nbsp;3 settings and data directory take up %1</i></p>")
             .arg(DirOperations::bytesToString(dirsize))
     );
     d->freespace->setToolTip(tr("%1% of disk space currently used").arg((partsize-freespace)*100/partsize));
