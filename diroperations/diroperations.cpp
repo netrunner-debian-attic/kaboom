@@ -61,8 +61,9 @@ quint64 freeDirSpace(const QString & dir)
       //error handling
       return -1;
     }
-    qDebug() << "freeDirSpace" << dir << info.f_bsize*info.f_bavail;
-    return info.f_bsize*info.f_bavail;
+    quint64 result = quint64(info.f_bsize)*quint64(info.f_bavail);
+    qDebug() << "freeDirSpace" << dir << result;
+    return result;
 
 }
 
@@ -75,8 +76,9 @@ quint64 totalPartitionSize(const QString & dir)
       //error handling
       return -1;
     }
-    qDebug() << "totalPartitionSize" << dir << info.f_bsize*info.f_blocks;
-    return info.f_frsize*info.f_blocks;
+    quint64 result = quint64(info.f_bsize)*quint64(info.f_blocks);
+    qDebug() << "totalPartitionSize" << dir << result;
+    return result;
 
 }
 

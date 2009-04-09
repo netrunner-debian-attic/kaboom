@@ -8,6 +8,7 @@ kaboom (1.1.1~pre1) UNRELEASED; urgency=low
 
   * Force showing kaboom at the upper left corner of the screen,
     so that it doesn't get outside of the screen when it grows bigger.
+  * Fix integer overflow bug in 32-bit architectures. (Closes: #522834)
 
  -- Debian Qt/KDE Maintainers <debian-qt-kde@lists.debian.org>  Fri, 10 Apr 2009 00:57:13 +0300
 
