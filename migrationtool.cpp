@@ -51,6 +51,7 @@ MigrationTool::MigrationTool(QWidget *parent) : QWizard(parent)
   setPage(Migration,d->migration);
 
   setStartId(MigrationTool::Intro);
+  move(0,0);
 }
 
 QSize MigrationTool::minimumSizeHint() const
