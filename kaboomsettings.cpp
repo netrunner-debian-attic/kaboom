@@ -20,7 +20,6 @@
 
 #include <QtCore/QStringList>
 #include <QtCore/QDebug>
-#include <cstring>
 #include <unistd.h>
 
 #define DEFAULT_KDEDIR "/.kde"
@@ -38,7 +37,7 @@ KaboomSettings& KaboomSettings::instance()
 
 void KaboomSettings::initDefaults()
 {
-    const QString& homedir = QDir::homePath();
+    const QString homedir = QDir::homePath();
     s_instance = this;
 
     setKdehomePath(KdeHome, homedir + DEFAULT_KDEDIR);
@@ -59,17 +58,17 @@ KaboomSettings::KaboomSettings(int argc, char** argv)
     initDefaults();
 
     for (int i = 1; i < argc; i++) {
-        if (strcmp(argv[i], "--kdehome") == 0 && i+1 < argc) {
+        if (qstrcmp(argv[i], "--kdehome") == 0 && i+1 < argc) {
             setKdehomePath(KdeHome, QFile::decodeName(argv[++i]));
-        } else if (strcmp(argv[i], "--kde4home") == 0 && i+1 < argc) {
+        } else if (qstrcmp(argv[i], "--kde4home") == 0 && i+1 < argc) {
             setKdehomePath(Kde4Home, QFile::decodeName(argv[++i]));
-        } else if (strcmp(argv[i], "--kde3backup") == 0 && i+1 < argc) {
+        } else if (qstrcmp(argv[i], "--kde3backup") == 0 && i+1 < argc) {
             setKdehomePath(Kde3Backup, QFile::decodeName(argv[++i]));
-        } else if (strcmp(argv[i], "--stamp") == 0 && i+1 < argc) {
+        } else if (qstrcmp(argv[i], "--stamp") == 0 && i+1 < argc) {
             m_stampFile.setFileName(QFile::decodeName(argv[++i]));
         } else if (qstrcmp(argv[i], "--log") == 0) {
             m_logFile = QFile::decodeName(argv[++i]);
-        } else if (strcmp(argv[i], "--help") == 0) {
+        } else if (qstrcmp(argv[i], "--help") == 0) {
             // TODO: show help
         }
     }
