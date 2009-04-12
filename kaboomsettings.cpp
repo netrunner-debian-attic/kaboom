@@ -15,12 +15,13 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+#include "kaboomsettings.h"
+#include "kaboomlog.h"
+
 #include <QtCore/QStringList>
 #include <QtCore/QDebug>
 #include <cstring>
 #include <unistd.h>
-
-#include "kaboomsettings.h"
 
 #define DEFAULT_KDEDIR "/.kde"
 #define DEFAULT_KDE4DIR "/.kde4"
@@ -63,6 +64,8 @@ KaboomSettings::KaboomSettings(int argc, char** argv)
             setKdehomePath(Kde3Backup, QFile::decodeName(argv[++i]));
         } else if (strcmp(argv[i], "--stamp") == 0 && i+1 < argc) {
             m_stampFile.setFileName(QFile::decodeName(argv[++i]));
+        } else if (qstrcmp(argv[i], "--log") == 0) {
+            KaboomLog::init(argv[++i]);
         } else if (strcmp(argv[i], "--help") == 0) {
             // TODO: show help
         }

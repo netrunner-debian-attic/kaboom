@@ -16,6 +16,7 @@
 */
 #include "migrationtool.h"
 #include "kaboomsettings.h"
+#include "kaboomlog.h"
 #include <QApplication>
 #include <QFile>
 #include <QTranslator>
@@ -64,5 +65,6 @@ int main(int argc, char* argv[])
       }
   }
 
+  KaboomLog::cleanup();
   return exitvalue;
 }

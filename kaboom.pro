@@ -43,6 +43,7 @@ SOURCES += \
       diroperations/diroperations.cpp \
       diroperations/recursivedirjob.cpp \
       diroperations/progresswidget.cpp \
-      richradiobutton.cpp
+      richradiobutton.cpp \
+      kaboomlog.cpp
 
 RESOURCES += resources.qrc
