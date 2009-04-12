@@ -51,7 +51,14 @@ MigrationTool::MigrationTool(QWidget *parent) : QWizard(parent)
   setPage(Migration,d->migration);
 
   setStartId(MigrationTool::Intro);
-  move(0,0);
+
+  //force the application to appear at the top left corner
+  //and have maximum size the size of the screen.
+  QDesktopWidget *desktop = QApplication::desktop();
+  const QRect geometry = desktop->screenGeometry(this);
+  qDebug() << "Screen geometry:" << geometry;
+  move(geometry.x(), geometry.y());
+  setMaximumSize(geometry.size());
 }
 
 QSize MigrationTool::minimumSizeHint() const
