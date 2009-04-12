@@ -33,6 +33,7 @@ class KaboomSettings {
 
     explicit KaboomSettings(int argc, char** argv);
     explicit KaboomSettings();
+    ~KaboomSettings();
 
     static KaboomSettings& instance();
 
@@ -59,6 +60,7 @@ class KaboomSettings {
     QDir m_kdehomes[KDEHOMES_COUNT];
     QString m_prettyKdehomes[KDEHOMES_COUNT];
     QFile m_stampFile;
+    QString m_logFile;
     void initDefaults();
 };
 

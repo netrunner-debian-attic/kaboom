@@ -27,6 +27,7 @@
 #define DEFAULT_KDE4DIR "/.kde4"
 #define DEFAULT_KDE3BACKUPDIR "/kde3-backup"
 #define KABOOM_STAMP "/.local/kaboom"
+#define KABOOM_LOG "/.kaboom.log"
 
 KaboomSettings* KaboomSettings::s_instance = 0;
 
@@ -44,11 +45,13 @@ void KaboomSettings::initDefaults()
     setKdehomePath(Kde4Home, homedir + DEFAULT_KDE4DIR);
     setKdehomePath(Kde3Backup, homedir + DEFAULT_KDE3BACKUPDIR);
     m_stampFile.setFileName(homedir + KABOOM_STAMP);
+    m_logFile = homedir + KABOOM_LOG;
 }
 
 KaboomSettings::KaboomSettings()
 {
     initDefaults();
+    KaboomLog::init(m_logFile);
 }
 
 KaboomSettings::KaboomSettings(int argc, char** argv)
@@ -65,11 +68,18 @@ KaboomSettings::KaboomSettings(int argc, char** argv)
         } else if (strcmp(argv[i], "--stamp") == 0 && i+1 < argc) {
             m_stampFile.setFileName(QFile::decodeName(argv[++i]));
         } else if (qstrcmp(argv[i], "--log") == 0) {
-            KaboomLog::init(argv[++i]);
+            m_logFile = QFile::decodeName(argv[++i]);
         } else if (strcmp(argv[i], "--help") == 0) {
             // TODO: show help
         }
     }
+
+    KaboomLog::init(m_logFile);
+}
+
+KaboomSettings::~KaboomSettings()
+{
+    KaboomLog::cleanup();
 }
 
 void KaboomSettings::dump()
@@ -83,6 +93,7 @@ void KaboomSettings::dump()
         ((kde3backupDir().exists()) ? "YES" : "NO");
     qDebug() << "kaboom stamp -" << stampFile().fileName() << "- exists?: " <<
         ((stampExists()) ? "YES" : "NO");
+    qDebug() << "kaboom log -" << m_logFile;
     qDebug() << "---- -------------------- ----";
 }
 
