@@ -73,7 +73,7 @@
         <location filename="choicepage.cpp" line="95"/>
         <source>Use current KDE&amp;nbsp;3 settings as initial settings for KDE&amp;nbsp;4. (&lt;i&gt;standard&lt;/i&gt;)</source>
         <oldsource>Use current KDE&amp;nbsp;3 settings as initial for KDE&amp;nbsp;4. (&lt;i&gt;standard&lt;/i&gt;)</oldsource>
-        <translation type="unfinished">Usa le impostazioni attuali di KDE&amp;nbsp;3 come base di partenza per KDE&amp;nbsp;4 (&lt;i&gt;standard&lt;/i&gt;)</translation>
+        <translation>Usa le impostazioni attuali di KDE&amp;nbsp;3 come base di partenza per KDE&amp;nbsp;4 (&lt;i&gt;standard&lt;/i&gt;)</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="96"/>
@@ -94,13 +94,13 @@
         <location filename="choicepage.cpp" line="113"/>
         <source>&lt;p&gt;The wizard will remove the current KDE&amp;nbsp;3 settings directory and copy the current KDE&amp;nbsp;4 settings directory to its place. Effectively, you will lose all settings and data the KDE&amp;nbsp;3 desktop and applications have stored unless the backup option below is enabled. This scenario is useful for users who already use a KDE&amp;nbsp;4 desktop and applications almost exclusively and do not care about losing settings of (a few) KDE&amp;nbsp;3 applications anymore.&lt;/p&gt;</source>
         <oldsource>&lt;p&gt;The wizard will remove current KDE&amp;nbsp;3 settings directory and copy current KDE&amp;nbsp;4 settings directory to its place. Effectively, you will lose all settings and data the KDE&amp;nbsp;3 desktop and applications have stored unless the backup option below is enabled. This scenario should be useful for users who already actively and almost exclusively use KDE&amp;nbsp;4 desktop and applications as previously packaged by Debian and do not care about losing settings of (a few) KDE&amp;nbsp;3 applications anymore.&lt;/p&gt;</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;La procedura guidata eliminerà la directory delle impostazioni di KDE&amp;nbsp;3 e al suo posto copierà la directory delle impostazioni di KDE&amp;nbsp;4. Così facendo, perderai tutti i dati e le impostazioni salvati dalle varie applicazioni KDE&amp;nbsp;3, a meno che la copia di sicurezza non venga abilitata sotto. Questo scenario è utile per utenti che usano già quasi esclusivamente KDE&amp;nbsp;4 e a cui non importa perdere le impostazioni di (poche) applicazioni KDE&amp;nbsp;3.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="149"/>
         <source>The wizard will &lt;strong&gt;remove&lt;/strong&gt; (or leave a copy as backup) the existing KDE&amp;nbsp;3 settings directory including data such as contacts, locally stored mails, accounts in KMail and Kopete, bookmarks, etc. </source>
         <oldsource>The wizard will &lt;strong&gt;remove&lt;/strong&gt; (or leave a copy as backup) existing KDE&amp;nbsp;3 settings directory including such data as contacts, locally stored mails, accounts in KMail and Kopete, bookmarks, etc. </oldsource>
-        <translation type="unfinished">&lt;p&gt;La procedura guidata &lt;strong&gt;rimuoverà&lt;/strong&gt; (o ne creerà una copia di sicurezza) la directory delle impostazioni di KDE&amp;nbsp;3, con dati quali rubriche, posta elettronica salvata localmente, account in KMail e Kopete, segnalibri, ecc.</translation>
+        <translation>La procedura guidata &lt;strong&gt;rimuoverà&lt;/strong&gt; (o ne creerà una copia di sicurezza) la directory delle impostazioni di KDE&amp;nbsp;3, con dati quali rubriche, posta elettronica salvata localmente, account in KMail e Kopete, segnalibri, ecc.</translation>
     </message>
     <message>
         <source>&lt;p&gt;The wizard will remove current KDE&amp;nbsp;3 settings directory and move current KDE&amp;nbsp;4 settings directory into its place. Effectively, you will lose all settings and data the KDE&amp;nbsp;3 desktop and applications have stored unless the backup option below is enabled. This scenario should be useful for users who already actively and almost exclusively use KDE&amp;nbsp;4 desktop and applications as previously packaged by Debian and do not care about losing settings of (a few) KDE&amp;nbsp;3 applications anymore.&lt;/p&gt;</source>
@@ -110,7 +110,7 @@
         <location filename="choicepage.cpp" line="120"/>
         <source>&lt;p&gt;The wizard will rename your current KDE&amp;nbsp;4 settings directory. Select this option if you would like to keep all KDE 4 settings and continue using the KDE 4 desktop as before.&lt;/p&gt;</source>
         <oldsource>&lt;p&gt;The wizard will rename your current old KDE&amp;nbsp;4 settings directory. Select this option if you would like to keep all KDE 4 settings and continue using KDE 4 desktop as before.&lt;/p&gt;</oldsource>
-        <translation type="unfinished">&lt;p&gt;La procedura guidata rinominerà la directory con le vecchie impostazioni di KDE&amp;nbsp;4. Scegli questa opzione se vuoi mantenere tutte le impostazioni di KDE&amp;nbsp;4 e continuare ad usare KDE&amp;nbsp;4 come prima.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;La procedura guidata rinominerà la directory con le impostazioni di KDE&amp;nbsp;4. Scegli questa opzione se vuoi mantenere tutte le impostazioni di KDE&amp;nbsp;4 e continuare ad usare KDE&amp;nbsp;4 come prima.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="129"/>
@@ -149,19 +149,19 @@
     <message>
         <location filename="choicepage.cpp" line="193"/>
         <source>&lt;strong&gt;Warning&lt;/strong&gt;: insufficient free space to complete a backup. Consider freeing up some space.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="196"/>
         <source>To free up some disk space, cancel the wizard now or switch to the Linux virtual terminal.</source>
         <oldsource>To free up some disk case, cancel the wizard now or switch to the Linux virtual terminal.</oldsource>
-        <translation type="unfinished">Per liberare spazio su disco, annulla questa procedura guidata oppure passa ad una console virtuale di Linux.</translation>
+        <translation>Per liberare spazio su disco, annulla questa procedura guidata oppure passa ad una console virtuale di Linux.</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="269"/>
         <source>&lt;p&gt;&lt;i&gt;The current KDE&amp;nbsp;3 settings and data directory take up %1&lt;/i&gt;&lt;/p&gt;</source>
         <oldsource>&lt;p&gt;&lt;i&gt;The current KDE&amp;nbsp;3 settings and data directory takes up %1&lt;/i&gt;&lt;/p&gt;</oldsource>
-        <translation type="unfinished">&lt;p&gt;&lt;i&gt;Le impostazioni e i dati attuali di KDE&amp;nbsp;3 occupano %1&lt;/i&gt;&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;&lt;i&gt;Le impostazioni e i dati attuali di KDE&amp;nbsp;3 occupano %1&lt;/i&gt;&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="272"/>
@@ -251,7 +251,7 @@
         <location filename="intropage.cpp" line="23"/>
         <source>&lt;p align=&apos;justify&apos;&gt;This version of KDE&amp;nbsp;4 in Debian uses the &lt;u&gt;%1&lt;/u&gt; directory (where ~ refers to the path of your Home directory) to store user settings and data. The wizard has detected that you have recently upgraded to this version of KDE&amp;nbsp;4 from KDE&amp;nbsp;3 and/or a previous Debian KDE&amp;nbsp;4 release that used the &lt;u&gt;%2&lt;/u&gt; directory to store user settings.&lt;/p&gt;&lt;p align=&apos;justify&apos;&gt;This wizard will guide you through the process of backing up, copying, moving or merging your user settings and data which were created by the old KDE installation. Please note, however, that it does not migrate configuration files directly. It operates on the filesystem level and sets up the &lt;u&gt;%1&lt;/u&gt; directory the way you request in the next step.&lt;/p&gt;&lt;p align=&apos;justify&apos;&gt;Once you finish with this wizard, migration of the configuration files will be performed by KDE&amp;nbsp;4 applications themselves as necessary. Therefore, if you are upgrading from KDE&amp;nbsp;3, it is &lt;strong&gt;highly recommended&lt;/strong&gt; to enable backing up of your old settings and data in the next step to avoid data loss in hopefully rare cases when some KDE&amp;nbsp;4 applications fail to migrate your important user settings and/or data properly.&lt;/p&gt;&lt;p align=&apos;justify&apos;&gt;If you need to make manual adjustments, you can cancel the wizard. KDE will not start and the current session will be terminated. You will see this wizard when you try to start a KDE session again.&lt;/p&gt;</source>
         <oldsource>&lt;p align=&apos;justify&apos;&gt;This version of KDE&amp;nbsp;4 in Debian uses &lt;u&gt;%1&lt;/u&gt; directory (where ~ refers to the path of your Home directory) to store user settings and data. The wizard has detected that you have recently upgraded to this version of KDE&amp;nbsp;4 from KDE&amp;nbsp;3 and/or previous Debian KDE&amp;nbsp;4 release that used &lt;u&gt;%2&lt;/u&gt; directory to store user settings.&lt;/p&gt;&lt;p align=&apos;justify&apos;&gt;This wizard will guide you through the process of backing up, copying, moving or merging your user settings and data which were created by the old KDE installation. Please note, however, that it does not migrate configuration files directly. It operates on the filesystem level and sets up &lt;u&gt;%1&lt;/u&gt; directory the way you request in the next step.&lt;/p&gt;&lt;p align=&apos;justify&apos;&gt;Once you finish with this wizard, migration of the configuration files will be performed by KDE&amp;nbsp;4 applications themselves as necessary. Therefore, if you are upgrading from KDE&amp;nbsp;3, it is &lt;strong&gt;highly recommended&lt;/strong&gt; to enable backing up of your old settings and data in the next step to avoid data loss in hopefully rare cases when some KDE&amp;nbsp;4 applications fail to migrate your important user settings and/or data properly.&lt;/p&gt;&lt;p align=&apos;justify&apos;&gt;If you need to make manual adjustments, you can cancel the wizard. KDE will not start and the current session will be terminated. You will see this wizard when you try to start KDE session again.&lt;/p&gt;</oldsource>
-        <translation type="unfinished">&lt;p align=&apos;justify&apos;&gt;Questa versione di KDE&amp;nbsp;4 in Debian usa la directory &lt;u&gt;%1&lt;/u&gt; (dove ~ è il percorso della tua directory Home) per memorizzare i tuoi dati e le tue impostazioni. La procedura guidata ha rilevato che hai aggiornato recentemente a questa versione di KDE&amp;nbsp;4 da KDE&amp;nbsp;3 e/o da precedenti rilasci di KDE&amp;nbsp;4 in Debian che hanno usato la directory &lt;u&gt;%2&lt;/u&gt; per memorizzare le impostazioni utente.&lt;/p&gt;&lt;p align=&apos;justify&apos;&gt;Questa procedura ti guiderà per: salvare una copia di sicurezza, copiare, spostare oppure unire le impostazioni e i dati utente creati da una vecchia installazione di KDE. Tuttavia, non migra direttamente i file di configurazione, ma effettua operazioni al livello del file system e imposta la directory &lt;u&gt;%1&lt;/u&gt; nel modo richiesto nel passo successivo.&lt;/p&gt;&lt;p align=&apos;justify&apos;&gt;Una volta completata, la migrazione dei file di configurazione sarà effettuata - se necessario - dalle applicazioni stesse di KDE&amp;nbsp;4. Quindi, se stai aggiornando da KDE&amp;nbsp;3, è &lt;strong&gt;fortemente raccomandato&lt;/strong&gt; abilitare nel passo successivo la copia di sicurezza dei vecchi dati e delle vecchie impostazioni, per evitare di perdere dati nel poco probabile caso in cui un&apos;applicazione di KDE&amp;nbsp;4 non riesca a migrare correttamente impostazioni e/o dati importanti.&lt;/p&gt;&lt;p align=&apos;justify&apos;&gt;Se devi fare modifiche manualmente, puoi annullare questa procedura guidata. KDE non sarà avviato e la sessione corrente chiusa. Vedrai questa procedura guidata quando avvii nuovamente una sessione KDE.&lt;/p&gt;</translation>
+        <translation>&lt;p align=&apos;justify&apos;&gt;Questa versione di KDE&amp;nbsp;4 in Debian usa la directory &lt;u&gt;%1&lt;/u&gt; (dove ~ è il percorso della tua directory Home) per memorizzare i tuoi dati e le tue impostazioni. La procedura guidata ha rilevato che hai aggiornato recentemente a questa versione di KDE&amp;nbsp;4 da KDE&amp;nbsp;3 e/o da precedenti rilasci di KDE&amp;nbsp;4 in Debian che hanno usato la directory &lt;u&gt;%2&lt;/u&gt; per memorizzare le impostazioni utente.&lt;/p&gt;&lt;p align=&apos;justify&apos;&gt;Questa procedura ti guiderà per: salvare una copia di sicurezza, copiare, spostare oppure unire le impostazioni e i dati utente creati da una vecchia installazione di KDE. Tuttavia, non migra direttamente i file di configurazione, ma effettua operazioni al livello di file system e imposta la directory &lt;u&gt;%1&lt;/u&gt; nel modo richiesto nel passo successivo.&lt;/p&gt;&lt;p align=&apos;justify&apos;&gt;Una volta completata questa procedura guidata, la migrazione dei file di configurazione sarà effettuata - se necessario - dalle applicazioni stesse di KDE&amp;nbsp;4. Quindi, se stai aggiornando da KDE&amp;nbsp;3, è &lt;strong&gt;fortemente raccomandato&lt;/strong&gt; abilitare nel passo successivo la copia di sicurezza dei vecchi dati e delle vecchie impostazioni, per evitare di perdere dati nel poco probabile caso in cui un&apos;applicazione di KDE&amp;nbsp;4 non riesca a migrare correttamente impostazioni e/o dati importanti.&lt;/p&gt;&lt;p align=&apos;justify&apos;&gt;Se devi fare modifiche manualmente, puoi annullare questa procedura guidata. KDE non sarà avviato e la sessione corrente chiusa. Vedrai questa procedura guidata quando avvii nuovamente una sessione KDE.&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -313,7 +313,7 @@
         <location filename="migrationpage.cpp" line="51"/>
         <source>WARNING: If you go back, changes made so far will not be undone.</source>
         <oldsource>WARNING: if you go back, migration process will restarted over current state.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>ATTENZIONE: se torni indietro, le modifiche effettuate potrebbero non essere annullate.</translation>
     </message>
     <message>
         <location filename="migrationpage.cpp" line="56"/>
@@ -338,7 +338,7 @@
     <message>
         <location filename="migrationpage.cpp" line="90"/>
         <source>According to the migration options you selected, nothing needs to be done.</source>
-        <translation type="unfinished"></translation>
+        <translation>Secondo le opzioni di migrazioni selezionate, non deve essere fatto nulla.</translation>
     </message>
     <message>
         <location filename="migrationpage.cpp" line="106"/>
