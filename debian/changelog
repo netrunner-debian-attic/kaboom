@@ -1,4 +1,4 @@
-kaboom (1.1.1~pre1) UNRELEASED; urgency=low
+kaboom (1.1.1) unstable; urgency=high
 
   +++ Changes by George Kiagiadakis:
 
@@ -11,7 +11,7 @@ kaboom (1.1.1~pre1) UNRELEASED; urgency=low
 
   * Update Italian translation.
 
- -- Debian Qt/KDE Maintainers <debian-qt-kde@lists.debian.org>  Fri, 15 May 2009 16:09:09 +0200
+ -- Debian Qt/KDE Maintainers <debian-qt-kde@lists.debian.org>  Fri, 15 May 2009 17:20:57 +0300
 
 kaboom (1.1.0) unstable; urgency=low
 
