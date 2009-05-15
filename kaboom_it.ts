@@ -4,38 +4,6 @@
 <context>
     <name>ChoicePage</name>
     <message>
-        <source>Kaboom - Migration Tool</source>
-        <translation type="obsolete">Kaboom - Strumento di migrazione</translation>
-    </message>
-    <message>
-        <source>Please select your settings migration option</source>
-        <translation type="obsolete">Scegli come migrare le tue impostazioni</translation>
-    </message>
-    <message>
-        <source>Migrate settings from KDE3 to KDE4 (standard)</source>
-        <translation type="obsolete">Migra le impostazioni da KDE3 a KDE4 (standard)</translation>
-    </message>
-    <message>
-        <source>Use existing KDE 4 settings and &lt;b&gt;replace&lt;/b&gt; KDE 3 settings</source>
-        <translation type="obsolete">Usa le impostazioni esistenti di KDE 4 e &lt;b&gt;sostituisci&lt;/b&gt; le impostazioni di KDE 3</translation>
-    </message>
-    <message>
-        <source>Start with default KDE settings and data. This option will &lt;b&gt;remove&lt;/b&gt; all data and settings such as contacts, local stored mails, accounts in KMail and Kopete, bookmarks and other such data</source>
-        <translation type="obsolete">Incomincia con le impostazioni predefinite e i dati di KDE. Questa opzione &lt;b&gt;rimuoverà&lt;/b&gt; tutti i dati e le impostazioni quali contatti, posta elettronica salvata localmente, account di KMail e Kopete, segnalibri e altri dati</translation>
-    </message>
-    <message>
-        <source>Backup existing settings from KDE3 into .kde3-backup. (Highly recommended)</source>
-        <translation type="obsolete">Salva le impostazioni esistenti di KDE 3 in .kde3-backup (altamente raccomandato)</translation>
-    </message>
-    <message>
-        <source>The current KDE settings and data directory takes up %1 bytes</source>
-        <translation type="obsolete">I dati e le impostazioni correnti di KDE occupano %1 byte</translation>
-    </message>
-    <message>
-        <source>Recheck</source>
-        <translation type="obsolete">Controlla nuovamente</translation>
-    </message>
-    <message>
         <location filename="choicepage.cpp" line="54"/>
         <source>Setting migration options</source>
         <translation>Impostare le opzioni di migrazione</translation>
@@ -44,10 +12,6 @@
         <location filename="choicepage.cpp" line="60"/>
         <source>Current configuration:</source>
         <translation>Configurazione attuale:</translation>
-    </message>
-    <message>
-        <source>%1%2</source>
-        <translation type="obsolete">%1%2</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="66"/>
@@ -103,10 +67,6 @@
         <translation>La procedura guidata &lt;strong&gt;rimuoverà&lt;/strong&gt; (o ne creerà una copia di sicurezza) la directory delle impostazioni di KDE&amp;nbsp;3, con dati quali rubriche, posta elettronica salvata localmente, account in KMail e Kopete, segnalibri, ecc.</translation>
     </message>
     <message>
-        <source>&lt;p&gt;The wizard will remove current KDE&amp;nbsp;3 settings directory and move current KDE&amp;nbsp;4 settings directory into its place. Effectively, you will lose all settings and data the KDE&amp;nbsp;3 desktop and applications have stored unless the backup option below is enabled. This scenario should be useful for users who already actively and almost exclusively use KDE&amp;nbsp;4 desktop and applications as previously packaged by Debian and do not care about losing settings of (a few) KDE&amp;nbsp;3 applications anymore.&lt;/p&gt;</source>
-        <translation type="obsolete">&lt;p&gt;La procedura guidata non modificherà la directory delle impostazioni di KDE&amp;nbsp;3. Può salvare questa directory solo se l&apos;opzione sotto è abilitata. Questo scenario è raccomandato per utenti che non hanno già usato attivamente KDE&amp;nbsp;4 o alcuna delle sue applicazioni (ad es. Okular o KTorrent, fornite in Lenny) su questo sistema, e desiderano che KDE&amp;nbsp;4 e le sue applicazioni usino più impostazioni possibili dalle relative versioni KDE&amp;nbsp;3.&lt;/p&gt;</translation>
-    </message>
-    <message>
         <location filename="choicepage.cpp" line="120"/>
         <source>&lt;p&gt;The wizard will rename your current KDE&amp;nbsp;4 settings directory. Select this option if you would like to keep all KDE 4 settings and continue using the KDE 4 desktop as before.&lt;/p&gt;</source>
         <oldsource>&lt;p&gt;The wizard will rename your current old KDE&amp;nbsp;4 settings directory. Select this option if you would like to keep all KDE 4 settings and continue using KDE 4 desktop as before.&lt;/p&gt;</oldsource>
@@ -131,10 +91,6 @@
         <location filename="choicepage.cpp" line="145"/>
         <source>&lt;p&gt;%1The wizard will not touch KDE&amp;nbsp;4 settings directory if it exists. Choose this scenario if you would like to start with default KDE&amp;nbsp;4 desktop and/or want to do migration of old KDE settings manually (from backup).&lt;/p&gt;</source>
         <translation>&lt;p&gt;%1La procedura guidata non toccherà la directory delle impostazioni di KDE&amp;nbsp;4, se esiste. Scegli questo scenario se vuoi partire con il desktop predefinito di KDE&amp;nbsp;4 e/o migrare manualmente le vecchie impostazioni di KDE (usando la copia di sicurezza).&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;The wizard will &lt;strong&gt;remove&lt;/strong&gt; (or move to backup) existing KDE&amp;nbsp;3 settings directory including such data as contacts, locally stored mails, accounts in KMail and Kopete, bookmarks, etc. </source>
-        <translation type="obsolete">&lt;p&gt;La procedura guidata &lt;strong&gt;rimuoverà&lt;/strong&gt; (o sposterà nella copia di sicurezza) la directory delle impostazioni di KDE&amp;nbsp;3, con dati quali rubriche, posta elettronica salvata localmente, account in KMail e Kopete, segnalibri, ecc.</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="156"/>
@@ -198,50 +154,7 @@
     </message>
 </context>
 <context>
-    <name>DirOperations::Exception</name>
-    <message>
-        <source>User canceled the operation</source>
-        <translation type="obsolete">L&apos;utente ha annullato l&apos;operazione</translation>
-    </message>
-    <message>
-        <source>Access was denied to the file or directory &quot;%1&quot;</source>
-        <translation type="obsolete">Accesso non consentito al file o alla directory «%1»</translation>
-    </message>
-    <message>
-        <source>&quot;%1&quot;: No such file or directory</source>
-        <translation type="obsolete">«%1»: file o directory non esistente</translation>
-    </message>
-    <message>
-        <source>&quot;%1&quot; already exists</source>
-        <translation type="obsolete">«%1» esiste già</translation>
-    </message>
-    <message>
-        <source>Could not copy &quot;%1&quot;</source>
-        <translation type="obsolete">Impossibile copiare «%1»</translation>
-    </message>
-    <message>
-        <source>Could not create directory &quot;%1&quot;</source>
-        <translation type="obsolete">Impossibile create la directory «%1»</translation>
-    </message>
-    <message>
-        <source>Could not remove &quot;%1&quot;</source>
-        <translation type="obsolete">Impossibile rimuovere «%1»</translation>
-    </message>
-    <message>
-        <source>Unknown error</source>
-        <translation type="obsolete">Errore sconosciuto</translation>
-    </message>
-</context>
-<context>
     <name>IntroPage</name>
-    <message>
-        <source>Kaboom - Migration Tool</source>
-        <translation type="obsolete">Kaboom - Strumento di migrazione</translation>
-    </message>
-    <message>
-        <source>This wizard will guide you through the process of migrating your KDE settings as required</source>
-        <translation type="obsolete">Questa procedura ti guiderà nel processo di migrazione delle impostazioni di KDE, come richiesto</translation>
-    </message>
     <message>
         <location filename="intropage.cpp" line="22"/>
         <source>Welcome to the Debian KDE Settings Migration Wizard!</source>
@@ -256,14 +169,6 @@
 </context>
 <context>
     <name>MigrationPage</name>
-    <message>
-        <source>When you click &quot;Start&quot;, settings migration will start</source>
-        <translation type="obsolete">Quando premi &quot;avvia&quot; sarà avviata la migrazione delle impostazioni</translation>
-    </message>
-    <message>
-        <source>Start Migration</source>
-        <translation type="obsolete">Avvia la migrazione</translation>
-    </message>
     <message>
         <location filename="migrationpage.cpp" line="228"/>
         <source>Click &quot;Finish&quot; to exit the wizard and start loading KDE 4.</source>
@@ -293,21 +198,9 @@
         <translation>Avvia</translation>
     </message>
     <message>
-        <source>Errors occurred</source>
-        <translation type="obsolete">Errori</translation>
-    </message>
-    <message>
-        <source>Migration running</source>
-        <translation type="obsolete">Migrazione in corso</translation>
-    </message>
-    <message>
         <location filename="migrationpage.cpp" line="40"/>
         <source>Start migration process</source>
         <translation>Avvia migrazione</translation>
-    </message>
-    <message>
-        <source>WARNING: depending on the severity of the errors above, it might not be safe to go back and you may need to resolve problems manually!</source>
-        <translation type="obsolete">ATTENZIONE: a seconda dell&apos;importanza degli errori sopra, potrebbe non essere sicuro tornare indietro e potresti dover risolvere i problemi manualmente!</translation>
     </message>
     <message>
         <location filename="migrationpage.cpp" line="51"/>
@@ -360,10 +253,6 @@
         <source>Settings migration completed successfully.</source>
         <translation>Migrazione delle impostazioni completata correttamente.</translation>
     </message>
-    <message>
-        <source>Completed successfully.</source>
-        <translation type="obsolete">Completata correttamente.</translation>
-    </message>
 </context>
 <context>
     <name>MigrationTool</name>
@@ -396,49 +285,6 @@
         <location filename="migrationtool.cpp" line="42"/>
         <source>Cancel the wizard and terminate this session</source>
         <translation>Annulla la procedura guidata e termina la sessione</translation>
-    </message>
-</context>
-<context>
-    <name>QObject</name>
-    <message>
-        <source>User canceled the operation</source>
-        <translation type="obsolete">L&apos;utente ha annullato l&apos;operazione</translation>
-    </message>
-    <message>
-        <source>Access was denied to the file or directory %1</source>
-        <translation type="obsolete">Accesso non consentito al file o alla directory %1</translation>
-    </message>
-    <message>
-        <source>%1 already exists</source>
-        <translation type="obsolete">%1 esiste già</translation>
-    </message>
-    <message>
-        <source>Could not copy %1</source>
-        <translation type="obsolete">Impossibile copiare %1</translation>
-    </message>
-    <message>
-        <source>Could not create directory %1</source>
-        <translation type="obsolete">Impossibile creare la directory %1</translation>
-    </message>
-    <message>
-        <source>Could not remove %1</source>
-        <translation type="obsolete">Impossibile rimuovere %1</translation>
-    </message>
-    <message>
-        <source>Unknown error</source>
-        <translation type="obsolete">Errore sconosciuto</translation>
-    </message>
-    <message>
-        <source>Calculating... %1 bytes</source>
-        <translation type="obsolete">Calcolo... %1 byte</translation>
-    </message>
-    <message>
-        <source>Copying files...</source>
-        <translation type="obsolete">Copia dei file...</translation>
-    </message>
-    <message>
-        <source>Removing files...</source>
-        <translation type="obsolete">Rimozione dei file...</translation>
     </message>
 </context>
 <context>
