@@ -41,7 +41,7 @@
     <message>
         <location filename="choicepage.cpp" line="96"/>
         <source>&lt;p&gt;The wizard will not make any changes to your current KDE&amp;nbsp;3 settings directory. It may only optionally back this directory up if the appropriate option below is enabled. This scenario is recommended for users who have not actively used KDE&amp;nbsp;4 or any of its applications (e.g. Okular or KTorrent which were released with Lenny) on this system previously and wish the new KDE&amp;nbsp;4 desktop and its applications to use as much settings from the old KDE&amp;nbsp;3 counterparts as possible.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;An Ihren aktuellen KDE-3-Einstellungen werden keine Änderungen vorgenommen. Der Ordner wird lediglich gesichert, sofern Sie sie entsprechende Einstellung weiter unten gewählt haben. Dieses Szenario wird Benutzern empfohlen, die auf ihrem System KDE 4 bzw. KDE-4-Anwendungen (z.&amp;nbsp;B. Okular oder KTorrent, die in Lenny enthalten sind) noch nicht aktiv verwendet haben und die so viele Einstellungen wie möglich aus ihrem KDE-3-System übernehmen möchten.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="109"/>
@@ -56,7 +56,7 @@
     <message>
         <location filename="choicepage.cpp" line="113"/>
         <source>&lt;p&gt;The wizard will remove the current KDE&amp;nbsp;3 settings directory and copy the current KDE&amp;nbsp;4 settings directory to its place. Effectively, you will lose all settings and data the KDE&amp;nbsp;3 desktop and applications have stored unless the backup option below is enabled. This scenario is useful for users who already use a KDE&amp;nbsp;4 desktop and applications almost exclusively and do not care about losing settings of (a few) KDE&amp;nbsp;3 applications anymore.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;Die aktuellen KDE-3-Einstellungen werden gelöscht und die aktuellen KDE-4-Einstellungen an ihre Stelle kopiert. Sie verlieren so alle EInstellungen Ihres KDE-3-Systems, sofern Sie nicht die Sicherung aktivieren. Dieses Szenario wird Benutzern empfohlen, die bereits fast ausschließlich KDE 4 bzw. KDE-4-Anwendungen verwenden und denen die Einstellungen der übrig gebliebenen KDE-3-Anwendungen nicht wichtig sind.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="120"/>
@@ -71,7 +71,7 @@
     <message>
         <location filename="choicepage.cpp" line="130"/>
         <source>&lt;p&gt;The wizard will copy contents of the current KDE&amp;nbsp;4 settings directory on top of the current KDE&amp;nbsp;3 settings directory giving preference to the KDE&amp;nbsp;4 configuration files in case of filename collisions. In theory, this should let you preserve settings of both KDE&amp;nbsp;4 and a few KDE&amp;nbsp;3 applications you still use. The downside is that this migration path is not well tested and the resulting KDE&amp;nbsp;4 settings directory might get polluted with useless configuration and data files which KDE&amp;nbsp;4 ports no longer use. Use this scenario at your own risk.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;Die aktuellen KDE-4-Einstellungen werden über die aktuellen KDE-3-Einstellungen kopiert. Wenn Dateien mit gleichen Dateinamen in beiden Ordnern bestehen, werden die KDE-4-Dateien bevorzugt. Theoretisch sollten so sowohl die KDE-4-Einstellungen wie auch die Einstellungen der KDE-3-Programme erhalten bleiben. Dieses Szenario ist jedoch wenig getestet und die neuen KDE-4-Einstellungen können viele Altlasten (z.&amp;nbsp;B. von nicht mehr vorhandenen KDE-3-Anwendungen) enthalten. Verwenden Sie dieses Szenario mit Vorsicht.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="144"/>
@@ -81,12 +81,12 @@
     <message>
         <location filename="choicepage.cpp" line="145"/>
         <source>&lt;p&gt;%1The wizard will not touch KDE&amp;nbsp;4 settings directory if it exists. Choose this scenario if you would like to start with default KDE&amp;nbsp;4 desktop and/or want to do migration of old KDE settings manually (from backup).&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;%1Die aktuellen KDE-4-Einstellungen, sofern diese existieren, sind davon nicht betroffen. Wählen Sie dieses Szenario, wenn Sie KDE 4 mit den Standardeinstellungen starten, oder die alten Einstellungen manuell einspielen möchten.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="149"/>
         <source>The wizard will &lt;strong&gt;remove&lt;/strong&gt; (or leave a copy as backup) the existing KDE&amp;nbsp;3 settings directory including data such as contacts, locally stored mails, accounts in KMail and Kopete, bookmarks, etc. </source>
-        <translation type="unfinished"></translation>
+        <translation>Die bestehenden KDE-3-Einstellungen werden &lt;strong&gt;gelöscht&lt;/strong&gt; (oder als Sicherung kopiert). Das betrifft Kontakte, lokale gespeicherte E-Mails, Benutzerkonten in KMail und Kopete, Lesezeichen usw. </translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="156"/>
@@ -158,7 +158,8 @@
     <message>
         <location filename="intropage.cpp" line="23"/>
         <source>&lt;p align=&apos;justify&apos;&gt;This version of KDE&amp;nbsp;4 in Debian uses the &lt;u&gt;%1&lt;/u&gt; directory (where ~ refers to the path of your Home directory) to store user settings and data. The wizard has detected that you have recently upgraded to this version of KDE&amp;nbsp;4 from KDE&amp;nbsp;3 and/or a previous Debian KDE&amp;nbsp;4 release that used the &lt;u&gt;%2&lt;/u&gt; directory to store user settings.&lt;/p&gt;&lt;p align=&apos;justify&apos;&gt;This wizard will guide you through the process of backing up, copying, moving or merging your user settings and data which were created by the old KDE installation. Please note, however, that it does not migrate configuration files directly. It operates on the filesystem level and sets up the &lt;u&gt;%1&lt;/u&gt; directory the way you request in the next step.&lt;/p&gt;&lt;p align=&apos;justify&apos;&gt;Once you finish with this wizard, migration of the configuration files will be performed by KDE&amp;nbsp;4 applications themselves as necessary. Therefore, if you are upgrading from KDE&amp;nbsp;3, it is &lt;strong&gt;highly recommended&lt;/strong&gt; to enable backing up of your old settings and data in the next step to avoid data loss in hopefully rare cases when some KDE&amp;nbsp;4 applications fail to migrate your important user settings and/or data properly.&lt;/p&gt;&lt;p align=&apos;justify&apos;&gt;If you need to make manual adjustments, you can cancel the wizard. KDE will not start and the current session will be terminated. You will see this wizard when you try to start a KDE session again.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>ächz, stöhn, würg ...</translatorcomment>
+        <translation>&lt;p align=&quot;justify&quot;&gt;Diese Version von KDE&amp;nbsp;4 in Debian verwendet den Ordner &lt;u&gt;%1&lt;/u&gt; (~ steht für Ihr HOME-Verzeichnis), um Benutzereinstellungen und Daten zu speichern. Der Assistent hat festgestellt, dass Sie kürzlich von KDE&amp;nbsp;3 oder einer früheren Version von KDE&amp;nbsp;4, die den Ordner &lt;u&gt;%2&lt;/u&gt; verwendete, auf diese Version aktualisiert haben.&lt;/p&gt;&lt;p align=&apos;justify&apos;&gt;Sie weden jetzt durch den Migrationsprozess geführt, in dem Sie Ihre alten Einstellungen und Daten sichern, kopieren und zusammenführen können. Bachten Sie, dass dabei nicht die Konfigurationsdateien selbst migriert werden, sondern auf Dateisystem-Ebene operiert wird, um den Ordner &lt;u&gt;%1&lt;/u&gt; so einzurichten, wie Sie es im nächsten Schritt auswählen.&lt;/p&gt;&lt;p align=&apos;justify&apos;&gt;Sobald Sie diesen Assistenten erfolgreich beendet haben, werden die KDE-4-Programme, sofern nötig, selbst ihre Konfigurationsdateien anpassen. Daher wird bei einer Migration von KDE&amp;nbsp;3 &lt;strong&gt;empfohlen&lt;/strong&gt;, im nächsten Schritt die Sicherung der alten Einstellungen zu aktivieren. So gehen wichtige Daten nicht verloren, wenn der seltene Fall eintritt, dass eine KDE-4-Anwendung Ihre alten Einstellungen oder Daten migrieren kann.&lt;/p&gt;&lt;p align=&apos;justify&apos;&gt;Wenn Sie selbst Änderungen vornehmen möchten, können Sie den Assistenten jetzt beenden. KDE wird nicht starten und die aktuelle Sitzung wird beendet. Beim nächsten Start von KDE wird der Assistent erneut gestartet.&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -219,17 +220,17 @@
     <message>
         <location filename="migrationpage.cpp" line="89"/>
         <source>Migration - nothing to do</source>
-        <translation type="unfinished">Migration - Nichts zu tun</translation>
+        <translation>Migration - Keine Aktion</translation>
     </message>
     <message>
         <location filename="migrationpage.cpp" line="90"/>
         <source>According to the migration options you selected, nothing needs to be done.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mit denen von Ihnen gewählten Einstellungen muss keine Aktion durchgeführt werden.</translation>
     </message>
     <message>
         <location filename="migrationpage.cpp" line="106"/>
         <source>Migration is in progress...</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Einstellungen werden migriert ...</translation>
     </message>
     <message>
         <location filename="migrationpage.cpp" line="113"/>
@@ -346,7 +347,7 @@
     <message>
         <location filename="warningpage.cpp" line="22"/>
         <source>You have selected a potentially harmful operation and to not backup data. You will most likely lose data here. Are you completely sure?</source>
-        <translation type="unfinished"></translation>
+        <translation>Bei dieser Aktion können Daten verloren gehen und die Sicherung ist nicht ausgewählt. Sie werden sehr wahrscheinlich Daten verlieren. Sind sie ganz sicher?</translation>
     </message>
 </context>
 </TS>
