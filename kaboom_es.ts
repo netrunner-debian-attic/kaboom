@@ -98,76 +98,76 @@
         <location filename="choicepage.cpp" line="113"/>
         <source>&lt;p&gt;The wizard will remove the current KDE&amp;nbsp;3 settings directory and copy the current KDE&amp;nbsp;4 settings directory to its place. Effectively, you will lose all settings and data the KDE&amp;nbsp;3 desktop and applications have stored unless the backup option below is enabled. This scenario is useful for users who already use a KDE&amp;nbsp;4 desktop and applications almost exclusively and do not care about losing settings of (a few) KDE&amp;nbsp;3 applications anymore.&lt;/p&gt;</source>
         <oldsource>&lt;p&gt;The wizard will remove current KDE&amp;nbsp;3 settings directory and copy current KDE&amp;nbsp;4 settings directory to its place. Effectively, you will lose all settings and data the KDE&amp;nbsp;3 desktop and applications have stored unless the backup option below is enabled. This scenario should be useful for users who already actively and almost exclusively use KDE&amp;nbsp;4 desktop and applications as previously packaged by Debian and do not care about losing settings of (a few) KDE&amp;nbsp;3 applications anymore.&lt;/p&gt;</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;El asistente eliminará el directorio de configuraciones actual de KDE&amp;nbsp;3 y copiará el directorio de configuraciones de KDE&amp;nbsp;4 en su lugar. Effectivamente, usted perderá todas las configuraciones y datos del escritorio KDE&amp;nbsp;3 y sus aplicaciones a menos que la opción de copia de seguridad mas abajo haya sido seleccionada. Éste escenario es útil para los usuarios que ya han utilizado exclusivamente el escritorio KDE&amp;nbsp;4 y sus aplicaciones y no les molesta perder las configuraciones de (unas pocas) aplicaciones de KDE&amp;nbsp;3.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="149"/>
         <source>The wizard will &lt;strong&gt;remove&lt;/strong&gt; (or leave a copy as backup) the existing KDE&amp;nbsp;3 settings directory including data such as contacts, locally stored mails, accounts in KMail and Kopete, bookmarks, etc. </source>
         <oldsource>The wizard will &lt;strong&gt;remove&lt;/strong&gt; (or leave a copy as backup) existing KDE&amp;nbsp;3 settings directory including such data as contacts, locally stored mails, accounts in KMail and Kopete, bookmarks, etc. </oldsource>
-        <translation type="unfinished"></translation>
+        <translation>El asistente &lt;strong&gt;removerá&lt;/strong&gt; (o dejará una copia de seguridad) el directori de configuraciones de KDE&amp;nbsp;3, incluyendo datos como contactos, correo electrónico guardado localmente, cuentas en KMail y Kopete, marcadores, etc.</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="120"/>
         <source>&lt;p&gt;The wizard will rename your current KDE&amp;nbsp;4 settings directory. Select this option if you would like to keep all KDE 4 settings and continue using the KDE 4 desktop as before.&lt;/p&gt;</source>
         <oldsource>&lt;p&gt;The wizard will rename your current old KDE&amp;nbsp;4 settings directory. Select this option if you would like to keep all KDE 4 settings and continue using KDE 4 desktop as before.&lt;/p&gt;</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;El asistente renombrará el directorio de configuraciones de KDE&amp;nbsp;4 actual. Selecciones ésta opción si usted quiere mantener sus configuraciones de KDE&amp;nbsp;4 y seguilo utilizando como antes.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="129"/>
         <source>Merge current KDE&amp;nbsp;4 settings with current KDE&amp;nbsp;3 settings. (&lt;i&gt;experimental&lt;/i&gt;)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fusionar las configuraciones actuales de KDE&amp;nbsp;4 con las de KDE&amp;nbsp;3. (&lt;i&gt;experimental&lt;/i&gt;)</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="130"/>
         <source>&lt;p&gt;The wizard will copy contents of the current KDE&amp;nbsp;4 settings directory on top of the current KDE&amp;nbsp;3 settings directory giving preference to the KDE&amp;nbsp;4 configuration files in case of filename collisions. In theory, this should let you preserve settings of both KDE&amp;nbsp;4 and a few KDE&amp;nbsp;3 applications you still use. The downside is that this migration path is not well tested and the resulting KDE&amp;nbsp;4 settings directory might get polluted with useless configuration and data files which KDE&amp;nbsp;4 ports no longer use. Use this scenario at your own risk.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;El asistente copiará los contenidos de el directorio actual de configuraciones de KDE&amp;nbsp;4 sobre el directorio actual de configuraciones de KDE&amp;nbsp;3 dándole preferencia a los archivos de configuración de KDE&amp;nbsp;4 en caso de colisión de nombre de archivo. En teoría, ésto le permitiría preservar las configuraciones de tanto KDE&amp;nbsp;4 como de KDE&amp;nbsp;3 que usted todavía utilice. El lado malo es que éste camino de migración no ha sido lo suficientemente probado y el directorio de configuraciones de KDE&amp;nbsp;4 resultante puede quedar polucionado con archivos de configuración y datos que KDE&amp;nbsp;4 no utiliza mas. Utilice éste escenario bajo su propio riesgo.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="144"/>
         <source>Start with default KDE settings and data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Empezar con los datos y configuraciones por defecto de KDE.</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="145"/>
         <source>&lt;p&gt;%1The wizard will not touch KDE&amp;nbsp;4 settings directory if it exists. Choose this scenario if you would like to start with default KDE&amp;nbsp;4 desktop and/or want to do migration of old KDE settings manually (from backup).&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;%1El asistente no tocará el directorio de configuraciones de KDE&amp;nbsp;4 si existe. Elija éste escenario si desea empezar con un escritorio KDE&amp;nbsp;4 por defecto y/o quiere migrar las configuraciones y datos de KDE manualmente (desde una copia de seguridad).&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="156"/>
         <source>Backup existing KDE 3 settings (highly recommended)</source>
-        <translation type="unfinished"></translation>
+        <translation>Hacer copia de seguridad de las configuraciones de KDE 3 (altamente recomendado)</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="186"/>
         <source>Check again</source>
-        <translation type="unfinished"></translation>
+        <translation>Corroborar otra vez</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="193"/>
         <source>&lt;strong&gt;Warning&lt;/strong&gt;: insufficient free space to complete a backup. Consider freeing up some space.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;strong&gt;Atención&lt;/strong&gt;: insuficiente espacio libre para completar la copia de seguridad. Considere liberar algo de espacio.</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="196"/>
         <source>To free up some disk space, cancel the wizard now or switch to the Linux virtual terminal.</source>
         <oldsource>To free up some disk case, cancel the wizard now or switch to the Linux virtual terminal.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Para liberar algo de espacio, cancele el asistente ahora o cambie a una consola virtual de Linux.</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="269"/>
         <source>&lt;p&gt;&lt;i&gt;The current KDE&amp;nbsp;3 settings and data directory take up %1&lt;/i&gt;&lt;/p&gt;</source>
         <oldsource>&lt;p&gt;&lt;i&gt;The current KDE&amp;nbsp;3 settings and data directory takes up %1&lt;/i&gt;&lt;/p&gt;</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;&lt;i&gt;El directorio de datos y configuraciones actual de KDE&amp;nbsp;3 ocupa %1&lt;/i&gt;&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="272"/>
         <source>%1% of disk space currently used</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 % del espacio en disco actualmente utilizado</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="277"/>
         <source>Backup needs &lt;strong&gt;%1&lt;/strong&gt; of free disk space</source>
-        <translation type="unfinished"></translation>
+        <translation>La copia de seguridad necesita &lt;strong&gt;%1&lt;/strong&gt; de espacio libre en disco</translation>
     </message>
 </context>
 <context>
@@ -175,22 +175,22 @@
     <message>
         <location filename="diroperations/diroperations.cpp" line="32"/>
         <source>%L1 GiB</source>
-        <translation type="unfinished"></translation>
+        <translation>%L1 GiB</translation>
     </message>
     <message>
         <location filename="diroperations/diroperations.cpp" line="35"/>
         <source>%L1 MiB</source>
-        <translation type="unfinished"></translation>
+        <translation>%L1 MiB</translation>
     </message>
     <message>
         <location filename="diroperations/diroperations.cpp" line="38"/>
         <source>%L1 KiB</source>
-        <translation type="unfinished"></translation>
+        <translation>%L1 KiB</translation>
     </message>
     <message>
         <location filename="diroperations/diroperations.cpp" line="41"/>
         <source>%L1 bytes</source>
-        <translation type="unfinished"></translation>
+        <translation>%L1 bytes</translation>
     </message>
 </context>
 <context>
@@ -217,13 +217,13 @@
     <message>
         <location filename="intropage.cpp" line="22"/>
         <source>Welcome to the Debian KDE Settings Migration Wizard!</source>
-        <translation type="unfinished"></translation>
+        <translation>¡Bienvenidos al asistente de migración de configuraciones de Debian KDE!</translation>
     </message>
     <message>
         <location filename="intropage.cpp" line="23"/>
         <source>&lt;p align=&apos;justify&apos;&gt;This version of KDE&amp;nbsp;4 in Debian uses the &lt;u&gt;%1&lt;/u&gt; directory (where ~ refers to the path of your Home directory) to store user settings and data. The wizard has detected that you have recently upgraded to this version of KDE&amp;nbsp;4 from KDE&amp;nbsp;3 and/or a previous Debian KDE&amp;nbsp;4 release that used the &lt;u&gt;%2&lt;/u&gt; directory to store user settings.&lt;/p&gt;&lt;p align=&apos;justify&apos;&gt;This wizard will guide you through the process of backing up, copying, moving or merging your user settings and data which were created by the old KDE installation. Please note, however, that it does not migrate configuration files directly. It operates on the filesystem level and sets up the &lt;u&gt;%1&lt;/u&gt; directory the way you request in the next step.&lt;/p&gt;&lt;p align=&apos;justify&apos;&gt;Once you finish with this wizard, migration of the configuration files will be performed by KDE&amp;nbsp;4 applications themselves as necessary. Therefore, if you are upgrading from KDE&amp;nbsp;3, it is &lt;strong&gt;highly recommended&lt;/strong&gt; to enable backing up of your old settings and data in the next step to avoid data loss in hopefully rare cases when some KDE&amp;nbsp;4 applications fail to migrate your important user settings and/or data properly.&lt;/p&gt;&lt;p align=&apos;justify&apos;&gt;If you need to make manual adjustments, you can cancel the wizard. KDE will not start and the current session will be terminated. You will see this wizard when you try to start a KDE session again.&lt;/p&gt;</source>
         <oldsource>&lt;p align=&apos;justify&apos;&gt;This version of KDE&amp;nbsp;4 in Debian uses &lt;u&gt;%1&lt;/u&gt; directory (where ~ refers to the path of your Home directory) to store user settings and data. The wizard has detected that you have recently upgraded to this version of KDE&amp;nbsp;4 from KDE&amp;nbsp;3 and/or previous Debian KDE&amp;nbsp;4 release that used &lt;u&gt;%2&lt;/u&gt; directory to store user settings.&lt;/p&gt;&lt;p align=&apos;justify&apos;&gt;This wizard will guide you through the process of backing up, copying, moving or merging your user settings and data which were created by the old KDE installation. Please note, however, that it does not migrate configuration files directly. It operates on the filesystem level and sets up &lt;u&gt;%1&lt;/u&gt; directory the way you request in the next step.&lt;/p&gt;&lt;p align=&apos;justify&apos;&gt;Once you finish with this wizard, migration of the configuration files will be performed by KDE&amp;nbsp;4 applications themselves as necessary. Therefore, if you are upgrading from KDE&amp;nbsp;3, it is &lt;strong&gt;highly recommended&lt;/strong&gt; to enable backing up of your old settings and data in the next step to avoid data loss in hopefully rare cases when some KDE&amp;nbsp;4 applications fail to migrate your important user settings and/or data properly.&lt;/p&gt;&lt;p align=&apos;justify&apos;&gt;If you need to make manual adjustments, you can cancel the wizard. KDE will not start and the current session will be terminated. You will see this wizard when you try to start KDE session again.&lt;/p&gt;</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p align=&apos;justify&apos;&gt;Ésta versión de KDE&amp;nbsp;4 en Debian utiliza el directorio &lt;u&gt;%1&lt;/u&gt; (donde ~ se refiere a la ruta a su directorio Home) para guardar las configuraciones y datos de usuario. El asistente ha detectado que usted ha actualizado recientemente a ésta versión de KDE&amp;nbsp;4 desde KDE&amp;nbsp;3 y/o de una versión previa de KDE&amp;nbsp;4 en Debian que utilizaba el directorio &lt;u&gt;%2&lt;/u&gt; para guardar las configuraciones de usuario.&lt;/p&gt;&lt;p align=&apos;justify&apos;&gt;Éste asistente lo guiará a través del proceso de hacer una copia de seguridad, copiar, mover o fusionar sus configuraciones y datos de usuario que fueron creados por la instalación antigua de KDE. Por favor tenga en cuenta que no se migran los archivos de configuración directamente. Se opera sobre el sistema de archivos y prepara un directorio &lt;u&gt;%1&lt;/u&gt; de la manera que usted lo pida en el próximo paso.&lt;/p&gt;&lt;p align=&apos;justify&apos;&gt;Una vez que haya terminado con éste asistente, la migración de los archivos de configuración será realizada por las aplicaciones de KDE&amp;nbsp;4 mismas de manera que vaya siendo necesario. Por lo tanto, si usted se encuentra actualizando desde KDE&amp;nbsp;3, es &lt;strong&gt;altamente recomendado&lt;/strong&gt; que habilite la opción de copia de seguridad de sus datos antigüos en el próximo paso para evitar la pérdida de datos en los (esperemos) pocos raros casos que una aplicación de KDE&amp;nbsp;4 no pueda migrar sus datos o configuraciones de usuario importantes de forma propia.&lt;/p&gt;&lt;p align=&apos;justify&apos;&gt;Si necesita hacer ajustes manuales, puede cancelar el asistente. KDE no se iniciará y la sesión actual será terminada. Usted verá éste asistente cuando intente iniciar una sesión KDE otra vez.&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -239,22 +239,22 @@
     <message>
         <location filename="migrationpage.cpp" line="228"/>
         <source>Click &quot;Finish&quot; to exit the wizard and start loading KDE 4.</source>
-        <translation type="unfinished"></translation>
+        <translation>Haga click en &quot;Finalizar&quot; para salir del asistente y empezar a cargar KDE 4.</translation>
     </message>
     <message>
         <location filename="migrationpage.cpp" line="264"/>
         <source>&lt;strong&gt;Selected scenario:&lt;/strong&gt; %1&lt;br/&gt;&lt;strong&gt;Backup:&lt;/strong&gt; %2</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;strong&gt;Escenario elegido:&lt;/strong&gt; %1&lt;br/&gt;&lt;strong&gt;Copia de seguridad:&lt;/strong&gt; %2</translation>
     </message>
     <message>
         <location filename="migrationpage.cpp" line="267"/>
         <source>enabled</source>
-        <translation type="unfinished"></translation>
+        <translation>habilitada</translation>
     </message>
     <message>
         <location filename="migrationpage.cpp" line="267"/>
         <source>disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>deshabilitada</translation>
     </message>
 </context>
 <context>
@@ -275,58 +275,58 @@
     <message>
         <location filename="migrationpage.cpp" line="40"/>
         <source>Start migration process</source>
-        <translation type="unfinished"></translation>
+        <translation>Empezar el proceso de migración</translation>
     </message>
     <message>
         <location filename="migrationpage.cpp" line="51"/>
         <source>WARNING: If you go back, changes made so far will not be undone.</source>
         <oldsource>WARNING: if you go back, migration process will restarted over current state.</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>ADVERTENCIA: si retorna, los cambios hechos hasta el momento no serán deshechos.</translation>
     </message>
     <message>
         <location filename="migrationpage.cpp" line="56"/>
         <source>The following error(s) occurred during migration process:</source>
-        <translation type="unfinished"></translation>
+        <translation>Los siguientes errores ocurrieron durante el proceso de migración:</translation>
     </message>
     <message>
         <location filename="migrationpage.cpp" line="83"/>
         <source>Ready to start migration process</source>
-        <translation type="unfinished"></translation>
+        <translation>Listo para empezar el proceso de migración</translation>
     </message>
     <message>
         <location filename="migrationpage.cpp" line="84"/>
         <source>Please click &quot;Start&quot; button to proceed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor haga click en el botón &quot;Empezar&quot; para proceder.</translation>
     </message>
     <message>
         <location filename="migrationpage.cpp" line="89"/>
         <source>Migration - nothing to do</source>
-        <translation type="unfinished"></translation>
+        <translation>Migración - nada que hacer</translation>
     </message>
     <message>
         <location filename="migrationpage.cpp" line="90"/>
         <source>According to the migration options you selected, nothing needs to be done.</source>
-        <translation type="unfinished"></translation>
+        <translation>De acuerdo a las opciones de migración que usted seleccionó, no se necesita hacer nada.</translation>
     </message>
     <message>
         <location filename="migrationpage.cpp" line="106"/>
         <source>Migration is in progress...</source>
-        <translation type="unfinished"></translation>
+        <translation>Migración en progreso...</translation>
     </message>
     <message>
         <location filename="migrationpage.cpp" line="113"/>
         <source>Migration finished</source>
-        <translation type="unfinished"></translation>
+        <translation>Migración finalizada</translation>
     </message>
     <message>
         <location filename="migrationpage.cpp" line="116"/>
         <source>Settings migration completed with errors.</source>
-        <translation type="unfinished"></translation>
+        <translation>Migración de las configuraciones terminada con errores.</translation>
     </message>
     <message>
         <location filename="migrationpage.cpp" line="120"/>
         <source>Settings migration completed successfully.</source>
-        <translation type="unfinished"></translation>
+        <translation>Migración de las configuraciones terminada con éxito.</translation>
     </message>
 </context>
 <context>
@@ -349,17 +349,17 @@
     <message>
         <location filename="migrationtool.cpp" line="35"/>
         <source>Kaboom - Debian KDE Settings Migration Wizard</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaboom - El asistente de migración de configuraciones de Debian KDE</translation>
     </message>
     <message>
         <location filename="migrationtool.cpp" line="41"/>
         <source>&amp;Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Cancelar</translation>
     </message>
     <message>
         <location filename="migrationtool.cpp" line="42"/>
         <source>Cancel the wizard and terminate this session</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancelar el asistente y terminar ésta sesión</translation>
     </message>
 </context>
 <context>
@@ -414,32 +414,32 @@
     <message>
         <location filename="diroperations/recursivedirjob.cpp" line="40"/>
         <source>Access was denied to the file or directory &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>El acceso fué denegado al archivo o directorio &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="diroperations/recursivedirjob.cpp" line="41"/>
         <source>&quot;%1&quot;: No such file or directory</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot;: éste archivo o directorio no existe</translation>
     </message>
     <message>
         <location filename="diroperations/recursivedirjob.cpp" line="42"/>
         <source>&quot;%1&quot; already exists</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; ya existe</translation>
     </message>
     <message>
         <location filename="diroperations/recursivedirjob.cpp" line="43"/>
         <source>Could not copy &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>No se puede copiar &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="diroperations/recursivedirjob.cpp" line="44"/>
         <source>Could not create directory &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>No se puede crear el directorio &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="diroperations/recursivedirjob.cpp" line="45"/>
         <source>Could not remove &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>No se puede remover &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="diroperations/recursivedirjob.cpp" line="46"/>
