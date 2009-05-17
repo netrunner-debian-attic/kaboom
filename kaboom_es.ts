@@ -46,53 +46,53 @@
     <message>
         <location filename="choicepage.cpp" line="54"/>
         <source>Setting migration options</source>
-        <translation type="unfinished"></translation>
+        <translation>Configurar opciones de migración</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="60"/>
         <source>Current configuration:</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuración actual:</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="66"/>
         <source>&lt;strong&gt;KDE&amp;nbsp;3&lt;/strong&gt; settings and data are at &lt;u&gt;%1&lt;/u&gt;&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Las configuraciones y datos de &lt;strong&gt;KDE&amp;nbsp;3&lt;/strong&gt; se encuentran en &lt;u&gt;%1&lt;/u&gt;&lt;br/&gt;</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="68"/>
         <source>&lt;strong&gt;KDE&amp;nbsp;4&lt;/strong&gt; settings and data are at &lt;u&gt;%1&lt;/u&gt;&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Las configuraciones y datos de &lt;strong&gt;KDE&amp;nbsp;4&lt;/strong&gt; se encuentran en &lt;u&gt;%1&lt;/u&gt;&lt;br/&gt;</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="74"/>
         <source>Once you finish with this wizard, &lt;strong&gt;KDE&amp;nbsp;4&lt;/strong&gt; will use &lt;u&gt;%1&lt;/u&gt; to store user settings and data. Optionally, &lt;strong&gt;KDE&amp;nbsp;3&lt;/strong&gt; settings and data may be backed up to &lt;u&gt;%2&lt;/u&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Una vez que finalice éste asistente, &lt;strong&gt;KDE&amp;nbsp;4&lt;strong&gt; utilizará &lt;u&gt;%1&lt;/u&gt; para guardar las configuraciones y datos del usuario. Opcionalmente, las configuraciones y datos de &lt;strong&gt;KDE&amp;nbsp;3&lt;/strong&gt;pueden llegar a ser guardadas en &lt;u&gt;%2&lt;/u&gt;.</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="82"/>
         <source>Please choose one of the following migration scenarios:</source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor, elija alguno de los siguientes escenarios de migración:</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="95"/>
         <source>Use current KDE&amp;nbsp;3 settings as initial settings for KDE&amp;nbsp;4. (&lt;i&gt;standard&lt;/i&gt;)</source>
         <oldsource>Use current KDE&amp;nbsp;3 settings as initial for KDE&amp;nbsp;4. (&lt;i&gt;standard&lt;/i&gt;)</oldsource>
-        <translation type="unfinished"></translation>
+        <translation>Utilizar las configuraciones de KDE&amp;nbsp;3 como iniciales para KDE&amp;nbsp;4. (&lt;i&gt;standard&lt;/i&gt;)</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="96"/>
         <source>&lt;p&gt;The wizard will not make any changes to your current KDE&amp;nbsp;3 settings directory. It may only optionally back this directory up if the appropriate option below is enabled. This scenario is recommended for users who have not actively used KDE&amp;nbsp;4 or any of its applications (e.g. Okular or KTorrent which were released with Lenny) on this system previously and wish the new KDE&amp;nbsp;4 desktop and its applications to use as much settings from the old KDE&amp;nbsp;3 counterparts as possible.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;Éste asistente no realizará ningún cambio a su directorio de configuración actual de KDE&amp;nbsp;3. Opcionalmente puede hacer una copia de seguridad del mismo si la opción apropiada es marcada mas abajo. Éste escenario es recomendado para usuarios que no hayan utilizado previamente KDE&amp;nbsp;4 o alguna de sus aplicaciones (por ejemplo, Okular o KTorrent distribuídos con Lenny) en éste sistema, y desean que el escritorio KDE&amp;nbsp;4 y sus aplicaciones usen las configuraciones de KDE&amp;nbsp;3 tanto como sea posible.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="109"/>
         <source>&lt;html&gt;Use existing KDE&amp;nbsp;4 settings%1.&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;Usar las configuraciones de KDE&amp;nbsp;4 existentes%1.&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="111"/>
         <source> and &lt;strong&gt;replace&lt;/strong&gt; current KDE&amp;nbsp;3 settings</source>
-        <translation type="unfinished"></translation>
+        <translation>y &lt;strong&gt;reemplazar&lt;/strong&gt; las configuraciones actuales de KDE&amp;nbsp;3</translation>
     </message>
     <message>
         <location filename="choicepage.cpp" line="113"/>
@@ -444,7 +444,7 @@
     <message>
         <location filename="diroperations/recursivedirjob.cpp" line="46"/>
         <source>Unknown error</source>
-        <translation type="unfinished">Error desconocido</translation>
+        <translation>Error desconocido</translation>
     </message>
 </context>
 <context>
@@ -452,17 +452,17 @@
     <message>
         <location filename="diroperations/recursivedirjob.cpp" line="213"/>
         <source>Calculating the size of &quot;%1&quot;... %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Calculando el tamaño de &quot;%1&quot;... %2</translation>
     </message>
     <message>
         <location filename="diroperations/recursivedirjob.cpp" line="259"/>
         <source>Copying files from &quot;%1&quot; to &quot;%2&quot;...</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiando archivos desde &quot;%1&quot; hacia &quot;%2&quot;...</translation>
     </message>
     <message>
         <location filename="diroperations/recursivedirjob.cpp" line="371"/>
         <source>Removing directory &quot;%1&quot;...</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliminando el directorio &quot;%1&quot;...</translation>
     </message>
 </context>
 <context>
