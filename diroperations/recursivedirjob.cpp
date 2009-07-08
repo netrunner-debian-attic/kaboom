@@ -246,7 +246,9 @@ void RecursiveDirJobHelper::recursiveCpDir(const QString & sourcePath, const QSt
         }
     }
 
-    dest.mkdir(dest.absolutePath());
+    if ( dest.mkdir(dest.absolutePath()) ) {
+        QFile::setPermissions(destPath, QFile::permissions(sourcePath));
+    }
 
     QFileInfoList currentList = source.entryInfoList(dirFilters);
     QFileInfo currentItem;
@@ -289,13 +291,20 @@ void RecursiveDirJobHelper::recursiveCpDir(const QString & sourcePath, const QSt
             else if ( currentItem.isDir() )
             {
                 bool ok = false;
+                QFile::Permissions sourcePermissions = QFile::permissions(source.absoluteFilePath(currentName));
+
                 if ( !(ok = source.cd(currentName)) ) {
                     emit errorOccured(Error(Error::AccessDenied, source.absoluteFilePath(currentName)));
                 }
                 if ( ok && !dest.cd(currentName) ) {
                     //if the target dir doesn't exist, create it and try again.
-                    if ( !dest.mkdir(currentName) )
+                    if ( !dest.mkdir(currentName) ) {
                         emit errorOccured(Error(Error::MkdirFail, dest.absoluteFilePath(currentName)));
+                    }
+
+                    //preserve permissions of the directory
+                    QFile::setPermissions(dest.absoluteFilePath(currentName), sourcePermissions);
+
                     if ( !dest.cd(currentName) ) {
                          //quite impossible to happen
                         emit errorOccured(Error(Error::AccessDenied, dest.absoluteFilePath(currentName)));
