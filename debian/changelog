@@ -4,6 +4,9 @@ kaboom (1.1.2) UNRELEASED; urgency=low
 
   * Bugfix: create the stamp's parent directory if it doesn't exist.
   * Preserve directory permissions while copying.
+  * Correctly remove ~/.kde if it is a symlink and the user has requested
+    to remove it. kaboom will now remove both the target directory and
+    the symlink itself.
 
   +++ Changes by Lisandro D. N. Pérez Meyer:
 
