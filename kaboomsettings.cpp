@@ -1,6 +1,7 @@
 /*
     Copyright (C) 2009 Modestas Vainius <modestas@vainius.eu>
                   2009 Sune Vuorela <sune@vuorela.dk>
+                  2009 George Kiagiadakis <gkiagia@users.sourceforge.net>
 
     This library is free software; you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
@@ -139,8 +140,28 @@ bool KaboomSettings::stampExists() const
 
 void KaboomSettings::touchStamp()
 {
+    QDir stampDir(QFileInfo(m_stampFile.fileName()).dir());
+    if ( !stampDir.exists() ) {
+        qDebug() << "Stamp's parent directory does not exist. Creating...";
+        //If the stampDir path is absolute, the QDir object that creates it doesn't matter.
+        //If the stampDir path is relative, it is probably given from the command line, so
+        //it is relative to the current working directory, thus we create it as a child of
+        //QDir::current(), which represents the current working directory.
+        if ( !QDir::current().mkpath(stampDir.path()) ) {
+            qCritical() << "Could not create directory" << QDir::current().filePath(stampDir.path());
+        } else {
+            // ~/.local should always have drwx------ permissions
+            if ( stampDir == QDir(QDir::homePath() + "/.local") ) {
+                QFile::setPermissions(QDir::home().filePath(".local"),
+                                      QFile::ReadOwner | QFile::WriteOwner | QFile::ExeOwner);
+            }
+        }
+    }
+
     if (m_stampFile.open(QIODevice::WriteOnly)) {
         fsync(m_stampFile.handle());
         m_stampFile.close();
+    } else {
+        qCritical() << "Could not create stamp file";
     }
 }
