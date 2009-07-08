@@ -238,9 +238,14 @@ void RecursiveDirJobHelper::recursiveCpDir(const QString & sourcePath, const QSt
 
     QDir dest(destPath);
     if ( dest.exists() ) {
-        if ( options & RecursiveDirJob::RemoveDestination )
-            recursiveRmDir(destPath);
-        else if ( !(options & RecursiveDirJob::OverWrite) ) {
+        if ( options & RecursiveDirJob::RemoveDestination ) {
+            //in case the destination is a symlink to another directory, we remove first
+            //the symlink target (returned by dest.canonicalPath()) and then the symlink itself.
+            recursiveRmDir(dest.canonicalPath());
+            if ( QFileInfo(destPath).isSymLink() ) {
+                QFile::remove(destPath);
+            }
+        } else if ( !(options & RecursiveDirJob::OverWrite) ) {
             emit errorOccured(Error(Error::FileOrDirectoryExists, destPath));
             return;
         }
