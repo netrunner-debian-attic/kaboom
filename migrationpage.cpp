@@ -131,7 +131,8 @@ bool MigrationPagePrivate::haveSomethingToDo()
 {
   if ((selection == MigrationTool::Migrate && !backup) ||
       (selection == MigrationTool::Clean &&
-       !KaboomSettings::instance().kdehomeDir().exists()))
+       !KaboomSettings::instance().kdehomeDir().exists() &&
+       !QFileInfo(KaboomSettings::instance().kdehomeDir().path()).isSymLink()))
       return false;
   else
       return true;
@@ -159,8 +160,6 @@ void MigrationPagePrivate::doMagic()
   switch(selection)
   {
       case MigrationTool::Migrate:
-        progress->setMaximum(1); //fake the progress bar progress.
-        progress->setValue(1);
         qDebug() << "operation: do nothing, let kconf_update do magic";
         break;
       case MigrationTool::Merge:
@@ -171,7 +170,12 @@ void MigrationPagePrivate::doMagic()
         break;
       case MigrationTool::Clean:
         qDebug() << "operation: do recursive rm of .kde dir if exists";
-        job = RecursiveDirJob::recursiveRmDir(KaboomSettings::instance().kdehomeDir().path());
+        if ( KaboomSettings::instance().kdehomeDir().exists() ) {
+            job = RecursiveDirJob::recursiveRmDir(KaboomSettings::instance().kdehomeDir().canonicalPath());
+        }
+        if ( QFileInfo(KaboomSettings::instance().kdehomeDir().path()).isSymLink() ) {
+            QFile::remove(KaboomSettings::instance().kdehomeDir().path());
+        }
         break;
       case MigrationTool::Move:
         job = RecursiveDirJob::recursiveCpDir(KaboomSettings::instance().kde4homeDir().canonicalPath(),
@@ -185,6 +189,9 @@ void MigrationPagePrivate::doMagic()
     connect(job, SIGNAL(errorOccured(QString)), this, SLOT(errorhandling(QString)) );
     job->synchronousRun(progress);
     delete job;
+  } else {
+    progress->setMaximum(1); //fake the progress bar progress.
+    progress->setValue(1);
   }
 
   if (errorbox->isVisible()) // if errors, ...
