@@ -122,7 +122,7 @@
     <message>
         <location filename="choicepage.cpp" line="277"/>
         <source>Backup needs &lt;strong&gt;%1&lt;/strong&gt; of free disk space</source>
-        <translation>Die Sicherung benötigt &lt;strong&gt;%1&lt;/stong&gt; freien Speicherplatz</translation>
+        <translation>Die Sicherung benötigt &lt;strong&gt;%1&lt;/strong&gt; freien Speicherplatz</translation>
     </message>
 </context>
 <context>
@@ -172,7 +172,7 @@
     <message>
         <location filename="migrationpage.cpp" line="271"/>
         <source>&lt;strong&gt;Selected scenario:&lt;/strong&gt; %1&lt;br/&gt;&lt;strong&gt;Backup:&lt;/strong&gt; %2</source>
-        <translation>&lt;strong&gt;Gewähltes Szenario:&lt;/strong&gt; %1&lt;br/&gt;&lt;strong&gt;Sicherung:&lt;/strong %2</translation>
+        <translation>&lt;strong&gt;Gewähltes Szenario:&lt;/strong&gt; %1&lt;br/&gt;&lt;strong&gt;Sicherung:&lt;/strong&gt; %2</translation>
     </message>
     <message>
         <location filename="migrationpage.cpp" line="274"/>
