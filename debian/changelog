@@ -1,5 +1,6 @@
 kaboom (1.1.2) UNRELEASED; urgency=low
 
+  [ Debian Qt/KDE Maintainers ]
   +++ Changes by George Kiagiadakis:
 
   * Bugfix: create the stamp's parent directory if it doesn't exist.
@@ -24,7 +25,11 @@ kaboom (1.1.2) UNRELEASED; urgency=low
 
   * Add French translation
 
- -- Debian Qt/KDE Maintainers <debian-qt-kde@lists.debian.org>  Mon, 18 May 2009 01:48:53 +0200
+  +++ Changes by Quique:
+
+  * Complete Spanish translation
+
+ -- Quique <quique@bronchales.unizar.es>  Wed, 12 Aug 2009 09:42:08 +0200
 
 kaboom (1.1.1) unstable; urgency=high
 
