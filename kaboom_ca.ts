@@ -237,22 +237,22 @@
         <translation type="obsolete">Iniciar Migraciò</translation>
     </message>
     <message>
-        <location filename="migrationpage.cpp" line="228"/>
+        <location filename="migrationpage.cpp" line="235"/>
         <source>Click &quot;Finish&quot; to exit the wizard and start loading KDE 4.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="migrationpage.cpp" line="264"/>
+        <location filename="migrationpage.cpp" line="271"/>
         <source>&lt;strong&gt;Selected scenario:&lt;/strong&gt; %1&lt;br/&gt;&lt;strong&gt;Backup:&lt;/strong&gt; %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="migrationpage.cpp" line="267"/>
+        <location filename="migrationpage.cpp" line="274"/>
         <source>enabled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="migrationpage.cpp" line="267"/>
+        <location filename="migrationpage.cpp" line="274"/>
         <source>disabled</source>
         <translation type="unfinished"></translation>
     </message>
@@ -455,12 +455,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="diroperations/recursivedirjob.cpp" line="259"/>
+        <location filename="diroperations/recursivedirjob.cpp" line="266"/>
         <source>Copying files from &quot;%1&quot; to &quot;%2&quot;...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="diroperations/recursivedirjob.cpp" line="371"/>
+        <location filename="diroperations/recursivedirjob.cpp" line="385"/>
         <source>Removing directory &quot;%1&quot;...</source>
         <translation type="unfinished"></translation>
     </message>

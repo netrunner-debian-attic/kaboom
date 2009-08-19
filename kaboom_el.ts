@@ -170,22 +170,22 @@
 <context>
     <name>MigrationPage</name>
     <message>
-        <location filename="migrationpage.cpp" line="228"/>
+        <location filename="migrationpage.cpp" line="235"/>
         <source>Click &quot;Finish&quot; to exit the wizard and start loading KDE 4.</source>
         <translation>Πατήστε &quot;Τέλος&quot; για να τερματίσετε τον οδηγό και να ξεκινήσει να φορτώνει το KDE 4.</translation>
     </message>
     <message>
-        <location filename="migrationpage.cpp" line="264"/>
+        <location filename="migrationpage.cpp" line="271"/>
         <source>&lt;strong&gt;Selected scenario:&lt;/strong&gt; %1&lt;br/&gt;&lt;strong&gt;Backup:&lt;/strong&gt; %2</source>
         <translation>&lt;strong&gt;Επιλεγμένο σενάριο:&lt;/strong&gt; %1&lt;br/&gt;&lt;strong&gt;Αντίγραφο ασφαλείας:&lt;/strong&gt; %2</translation>
     </message>
     <message>
-        <location filename="migrationpage.cpp" line="267"/>
+        <location filename="migrationpage.cpp" line="274"/>
         <source>enabled</source>
         <translation>ενεργοποιημένο</translation>
     </message>
     <message>
-        <location filename="migrationpage.cpp" line="267"/>
+        <location filename="migrationpage.cpp" line="274"/>
         <source>disabled</source>
         <translation>απενεργοποιημένο</translation>
     </message>
@@ -333,12 +333,12 @@
         <translation>Γίνεται υπολογισμός του μεγέθους του &quot;%1&quot;... %2</translation>
     </message>
     <message>
-        <location filename="diroperations/recursivedirjob.cpp" line="259"/>
+        <location filename="diroperations/recursivedirjob.cpp" line="266"/>
         <source>Copying files from &quot;%1&quot; to &quot;%2&quot;...</source>
         <translation>Γίνεται αντιγραφή αρχείων από το &quot;%1&quot; στο &quot;%2&quot;...</translation>
     </message>
     <message>
-        <location filename="diroperations/recursivedirjob.cpp" line="371"/>
+        <location filename="diroperations/recursivedirjob.cpp" line="385"/>
         <source>Removing directory &quot;%1&quot;...</source>
         <translation>Γίνεται διαγραφή του καταλόγου &quot;%1&quot;...</translation>
     </message>

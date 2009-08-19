@@ -170,22 +170,22 @@
 <context>
     <name>MigrationPage</name>
     <message>
-        <location filename="migrationpage.cpp" line="228"/>
+        <location filename="migrationpage.cpp" line="235"/>
         <source>Click &quot;Finish&quot; to exit the wizard and start loading KDE 4.</source>
         <translation>Pulse «Finalizar» para salir del asistente y empezar a cargar KDE 4.</translation>
     </message>
     <message>
-        <location filename="migrationpage.cpp" line="264"/>
+        <location filename="migrationpage.cpp" line="271"/>
         <source>&lt;strong&gt;Selected scenario:&lt;/strong&gt; %1&lt;br/&gt;&lt;strong&gt;Backup:&lt;/strong&gt; %2</source>
         <translation>&lt;strong&gt;Escenario seleccionado:&lt;/strong&gt; %1&lt;br/&gt;&lt;strong&gt;Copia de respaldo:&lt;/strong&gt; %2</translation>
     </message>
     <message>
-        <location filename="migrationpage.cpp" line="267"/>
+        <location filename="migrationpage.cpp" line="274"/>
         <source>enabled</source>
         <translation>habilitada</translation>
     </message>
     <message>
-        <location filename="migrationpage.cpp" line="267"/>
+        <location filename="migrationpage.cpp" line="274"/>
         <source>disabled</source>
         <translation>inhabilitada</translation>
     </message>
@@ -333,12 +333,12 @@
         <translation>Calculando el tamaño de «%1»... %2</translation>
     </message>
     <message>
-        <location filename="diroperations/recursivedirjob.cpp" line="259"/>
+        <location filename="diroperations/recursivedirjob.cpp" line="266"/>
         <source>Copying files from &quot;%1&quot; to &quot;%2&quot;...</source>
         <translation>Copiando los ficheros de «%1» a «%2»...</translation>
     </message>
     <message>
-        <location filename="diroperations/recursivedirjob.cpp" line="371"/>
+        <location filename="diroperations/recursivedirjob.cpp" line="385"/>
         <source>Removing directory &quot;%1&quot;...</source>
         <translation>Eliminando el directorio «%1»...</translation>
     </message>

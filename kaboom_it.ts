@@ -170,22 +170,22 @@
 <context>
     <name>MigrationPage</name>
     <message>
-        <location filename="migrationpage.cpp" line="228"/>
+        <location filename="migrationpage.cpp" line="235"/>
         <source>Click &quot;Finish&quot; to exit the wizard and start loading KDE 4.</source>
         <translation>Premi «Fine» per uscire dalla procedura guidata e avviare KDE 4.</translation>
     </message>
     <message>
-        <location filename="migrationpage.cpp" line="264"/>
+        <location filename="migrationpage.cpp" line="271"/>
         <source>&lt;strong&gt;Selected scenario:&lt;/strong&gt; %1&lt;br/&gt;&lt;strong&gt;Backup:&lt;/strong&gt; %2</source>
         <translation>&lt;strong&gt;Scenario selezionato:&lt;/strong&gt; %1&lt;br/&gt;&lt;strong&gt;Copia di sicurezza:&lt;/strong&gt; %2</translation>
     </message>
     <message>
-        <location filename="migrationpage.cpp" line="267"/>
+        <location filename="migrationpage.cpp" line="274"/>
         <source>enabled</source>
         <translation>abilitata</translation>
     </message>
     <message>
-        <location filename="migrationpage.cpp" line="267"/>
+        <location filename="migrationpage.cpp" line="274"/>
         <source>disabled</source>
         <translation>disabilitata</translation>
     </message>
@@ -333,12 +333,12 @@
         <translation>Calcolo dello spazio di «%1»... %2</translation>
     </message>
     <message>
-        <location filename="diroperations/recursivedirjob.cpp" line="259"/>
+        <location filename="diroperations/recursivedirjob.cpp" line="266"/>
         <source>Copying files from &quot;%1&quot; to &quot;%2&quot;...</source>
         <translation>Copia dei file da «%1» a «%2»...</translation>
     </message>
     <message>
-        <location filename="diroperations/recursivedirjob.cpp" line="371"/>
+        <location filename="diroperations/recursivedirjob.cpp" line="385"/>
         <source>Removing directory &quot;%1&quot;...</source>
         <translation>Rimozione della directory «%1»...</translation>
     </message>
