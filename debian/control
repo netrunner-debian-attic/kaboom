@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Debian Qt/KDE Maintainers <debian-qt-kde@lists.debian.org>
 Uploaders: George Kiagiadakis <gkiagiad@csd.uoc.gr>
 Build-Depends: debhelper (>= 7), libqt4-dev
-Standards-Version: 3.8.0
+Standards-Version: 3.8.3
 
 Package: kaboom
 Architecture: any

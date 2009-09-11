@@ -1,12 +1,15 @@
-kaboom (1.1.2) UNRELEASED; urgency=low
+kaboom (1.1.2) unstable; urgency=low
 
   +++ Changes by George Kiagiadakis:
 
-  * Bugfix: create the stamp's parent directory if it doesn't exist.
+  * Create the stamp's parent directory if it doesn't exist. This fixes
+    the bug where kaboom runs even on fresh installations of kde4 on
+    the second login. (Closes: #541136)
   * Preserve directory permissions while copying.
   * Correctly remove ~/.kde if it is a symlink and the user has requested
     to remove it. kaboom will now remove both the target directory and
     the symlink itself.
+  * Bump standards version to version 3.8.3 (no changes required).
 
   +++ Changes by Lisandro D. N. Pérez Meyer:
 
@@ -22,13 +25,13 @@ kaboom (1.1.2) UNRELEASED; urgency=low
 
   +++ Changes by Frederik Schwarzer:
 
-  * Add German translation
+  * Add German translation.
 
   +++ Changes by Didier Raboud:
 
-  * Add French translation
+  * Add French translation.
 
- -- Debian Qt/KDE Maintainers <debian-qt-kde@lists.debian.org>  Wed, 12 Aug 2009 17:52:46 +0200
+ -- Debian Qt/KDE Maintainers <debian-qt-kde@lists.debian.org>  Fri, 11 Sep 2009 13:53:35 +0300
 
 kaboom (1.1.1) unstable; urgency=high
 
