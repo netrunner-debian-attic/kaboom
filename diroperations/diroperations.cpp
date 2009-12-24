@@ -19,6 +19,7 @@
 #include <QtCore/QFile>
 #include <QtCore/QDebug>
 #include <QtCore/QCoreApplication>
+#include <QtCore/QVarLengthArray>
 #include <climits> //for PATH_MAX
 #include <unistd.h> //for readlink()
 #define _FILE_OFFSET_BITS 64
@@ -44,8 +45,20 @@ QString bytesToString(quint64 bytes)
 
 QString relativeSymLinkTarget(const QString & fileName)
 {
+    const QByteArray encodedFileName = QFile::encodeName(fileName);
+#ifdef PATH_MAX
     char buff[PATH_MAX+1];
-    int len = ::readlink(QFile::encodeName(fileName), buff, PATH_MAX);
+    int buff_size = sizeof(buff);
+#else
+    int path_max = pathconf(encodedFileName.data(), _PC_PATH_MAX);
+    if (path_max <= 0) {
+        path_max = 4096;
+    }
+    QVarLengthArray<char, 4096> varbuff(path_max);
+    char *buff = varbuff.data();
+    int buff_size = varbuff.size();
+#endif
+    int len = ::readlink(encodedFileName.data(), buff, buff_size - 1);
     if ( len < 0 )
         return QString();
     buff[len] = '\0';
