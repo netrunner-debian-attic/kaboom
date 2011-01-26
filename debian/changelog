@@ -1,7 +1,6 @@
 kaboom (1.1.3) UNRELEASED; urgency=low
 
-  +++ Changes by Pino Toscano:
-
+  [ Pino Toscano ]
   * Make relativeSymLinkTarget() compiling (and hopefully working) also
     on OSes without PATH_MAX defined (e.g. GNU/Hurd).
 
