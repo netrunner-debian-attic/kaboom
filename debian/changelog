@@ -7,6 +7,13 @@ kaboom (1.1.3) UNRELEASED; urgency=low
 
  -- Debian Qt/KDE Maintainers <debian-qt-kde@lists.debian.org>  Thu, 24 Dec 2009 15:48:36 +0100
 
+kaboom (1.1.2+nmu1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Actualy Add French translation. (Closes: #605753) 
+
+ -- David Prévot <david@tilapin.org>  Thu, 09 Dec 2010 17:01:58 -0400
+
 kaboom (1.1.2) unstable; urgency=low
 
   +++ Changes by George Kiagiadakis:
